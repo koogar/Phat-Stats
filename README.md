@@ -32,4 +32,8 @@ along with this program; If not, see <http://www.gnu.org/licenses/>.
 =======
 # Phat-Stats TFT
  Arduino PC Hardware Performance Serial Display
->>>>>>> d57be6e398036f3e5cbfd942fde5359d20762f32
+Phat-Stats ILI9341 TFT
+
+https://runawaybrainz.blogspot.com/2021/03/phat-stats-ili9341-tft-display-hook-up.html
+
+![](https://github.com/koogar/Gnat-Stats/blob/master/TFT_PhatStats/images/7245421623855690457.png)
