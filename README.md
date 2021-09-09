@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
  
   #GNATSTATS OLED, PHATSTATS TFT PC Performance Monitor & HardwareSerialMonitor Windows Client  
    Rupert Hirst & Colin Conway © 2016-2018
@@ -7,7 +7,7 @@
   http://runawaybrainz.blogspot.com/  
   https://hackaday.io/project/19018-gnat-stats-tiny-oled-pc-performance-monitor
   
-  =======
+
 # Phat-Stats TFT
  Arduino PC Hardware Performance Serial Display
 Phat-Stats ILI9341 TFT
