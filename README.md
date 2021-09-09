@@ -1,3 +1,4 @@
+<<<<<<< HEAD
  
   #GNATSTATS OLED, PHATSTATS TFT PC Performance Monitor & HardwareSerialMonitor Windows Client  
    Rupert Hirst & Colin Conway © 2016-2018
@@ -28,3 +29,7 @@ You should have received a copy of the GNU General Public License
 along with this program; If not, see <http://www.gnu.org/licenses/>.
 
 
+=======
+# Phat-Stats TFT
+ Arduino PC Hardware Performance Serial Display
+>>>>>>> d57be6e398036f3e5cbfd942fde5359d20762f32
