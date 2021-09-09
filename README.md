@@ -5,7 +5,7 @@
 
   http://tallmanlabs.com
   http://runawaybrainz.blogspot.com/  
-  https://hackaday.io/project/19018-gnat-stats-tiny-oled-pc-performance-monitor
+ https://hackaday.io/project/19018-phat-stats-pc-performance-tft-display
   
 
 # Phat-Stats TFT
