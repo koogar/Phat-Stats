@@ -1,2 +1,2 @@
 # Phat-Stats
- Phat-Stats TFT PC Hardware Monitor Display 
+ Arduino PC Hardware Performance Serial Display
