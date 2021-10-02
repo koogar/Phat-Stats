@@ -191,6 +191,7 @@ String set_GPUram = "xx";
 //-------------------------------- NeoPixel Modes -------------------------------------
 
 #define enableNeopixelGauges     // NeoPixel ring bargraph example
+//#define PCB_enableThesholdtriggers // NeoPixels For PhatStats TFT Interface PCB
 
 /* VERY EXPERIMENTAL!!! SLIGHTLY LAGGY, HAS TO WAIT FOR SCREEN REFRESH*/
 //#define Neo_BrightnessAuto   // Adjust NeoPixel brightness together with screen brightness using the rotary encoder
