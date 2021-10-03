@@ -116,8 +116,8 @@
 //--------------------------- Micro Controller Selection---------------------------------
 
 /* Uncomment your Micro Processor,*/
-#define Adafruit_QTPY
-//define Seeeduino_XIAO
+//#define Adafruit_QTPY
+#define Seeeduino_XIAO
 
 //--------------------------- CPU/GPU Display Settings -----------------------------------
 /* Uncomment your CPU,*/
