@@ -103,6 +103,9 @@
   V2.0.7
       Fix CPU & GPU Overclock gains "-+" bug
 
+  V2.0.8 (ESP32 only)
+      ESP32 Board BT ID
+
   Note: Gnat-Stats/Phat-Stats is optimised for desktop CPU's with dedicated graphics cards, such as Nvidia/Radeon.
       You may get wierd results on mobile CPUs and integrated GPU's (iGPU's) on laptops.
 
@@ -129,6 +132,12 @@
   one is Send, the other is Receive.
   When you know the correct port for Send you can disable the other in Device Manager
   so it does not to show up in HardwareSerialMonitor.*/
+  
+//--------------------------- ESP32 BT Board Windows ID -----------------------------------
+
+//#define  LOLIN_32v1
+//#define  LOLIN_D32
+#define  LOLIN32_LITE
 
 //--------------------------- Bluetooth or USB serial -----------------------------------
 /*ESP32 Communication type, Uncomment only one option!!!*/
@@ -171,6 +180,7 @@ int TX_LED_Delay = 200; // TX blink delay
   No advice will be given, or implied regarding which you should use etc.
 
   Use the battery/type in accordance with the manufacturer's recommendations.*/
+
 
 //--------------------------- CPU/GPU Display Settings -----------------------------------
 
@@ -275,3 +285,18 @@ int baud = 115200; //do not adjust
 
 /* Debug Screen, Update Erasers, */
 //#define Debug
+
+
+
+// BT Board ID
+#ifdef LOLIN_32v1
+#define device_BT "TMLabs_BT_32v1"
+#endif
+
+#ifdef LOLIN_D32
+#define device_BT "TMLabs_BT_D32"
+#endif
+
+#ifdef LOLIN32_LITE
+#define device_BT "TMLabs_BT_32Lite"
+#endif
