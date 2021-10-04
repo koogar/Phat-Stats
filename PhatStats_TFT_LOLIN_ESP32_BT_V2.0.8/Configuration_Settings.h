@@ -104,7 +104,10 @@
       Fix CPU & GPU Overclock gains "-+" bug
 
   V2.0.8 (ESP32 only)
-      ESP32 Board BT ID
+      Add Support for LolinD32      (Tested)
+      Add Support for Lolin32 LITE  (Tested)   
+      Add ESP32 BT ESP Board ID
+      
 
   Note: Gnat-Stats/Phat-Stats is optimised for desktop CPU's with dedicated graphics cards, such as Nvidia/Radeon.
       You may get wierd results on mobile CPUs and integrated GPU's (iGPU's) on laptops.
