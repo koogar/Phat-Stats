@@ -18,7 +18,7 @@
 
 // ------------------- CPU load / Temp Event  --------------------
 
-void PCB_TriggerCPU_load(int cpuUsage ) {
+void uVol_TriggerCPU_load(int cpuUsage ) {
 
   float CPUloadfactor = cpuUsage ;
 
@@ -47,7 +47,7 @@ void PCB_TriggerCPU_load(int cpuUsage ) {
 }
 
 
-void PCB_TriggerCPU_temp(int cpuDegree ) {
+void uVol_TriggerCPU_temp(int cpuDegree ) {
 
   float CPUtempfactor = cpuDegree ;
 
@@ -81,7 +81,7 @@ void PCB_TriggerCPU_temp(int cpuDegree ) {
 // -------------------  GPU Load / Temp Event  --------------------
 
 
-void PCB_TriggerGPU_load(int gpuUsage ) {
+void uVol_TriggerGPU_load(int gpuUsage ) {
 
   float GPUloadfactor = gpuUsage ;
 
@@ -114,7 +114,7 @@ void PCB_TriggerGPU_load(int gpuUsage ) {
 }
 
 
-void PCB_TriggerGPU_temp(int gpuDegree ) {
+void uVol_TriggerGPU_temp(int gpuDegree ) {
 
   float GPUtempfactor = gpuDegree ;
 

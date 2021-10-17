@@ -59,6 +59,7 @@ void DisplayStyle_CircleGauge_ATSAMD ()  // Landscape only
 #endif
 
     //--------------------------------------- Display Background ----------------------------------------------------
+    touch.setRotation(3);
     tft.setRotation(3);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
 
     backlightON (); //Turn ON display when there is  activity
@@ -498,16 +499,7 @@ void DisplayStyle_CircleGauge_ATSAMD ()  // Landscape only
 
 
     //--------------------------Trigger an event when CPU or GPU threshold is met ---------------------------------
-    
-#ifdef PCB_enableThesholdtriggers
 
-  //PCB_TriggerCPU_temp( cpuString1.toInt() ); // Neopixel CPU  Temperature
-  PCB_TriggerCPU_load( cpuString2.toInt() ); // Neopixel CPU  Load
-
-  //PCB_TriggerGPU_temp( gpuString1.toInt() ); // Neopixel GPU  Temperature
-  PCB_TriggerGPU_load( gpuString2.toInt() ); // Neopixel GPU  Load
-
-#endif
 
 #ifdef enable_CustomThesholdtriggers
 

@@ -38,47 +38,47 @@ void DisplayStyle_CircleGauge_ATSAMD ()  // Landscape only
 
     if (bootMode) {
 
-      tft.fillScreen(ILI9341_BLACK);
+      tft2.fillScreen(ILI9341_BLACK);
 
-      tft.setFont(); // set to default Adafruit library font
+      tft2.setFont(); // set to default Adafruit library font
 
-      //tft.fillCircle(136 - X_Offset, 120 + Y_Offset, 112, ILI9341_RED); // landscape circle 119 for radius -1 for line thickness
-      tft.fillCircle  (136 - X_Offset, 120 + Y_Offset, 112, ILI9341_BLACK); // landscape circle 119 for radius -1 for line thickness
+      //tft2.fillCircle(136 - X_Offset, 120 + Y_Offset, 112, ILI9341_RED); // landscape circle 119 for radius -1 for line thickness
+      tft2.fillCircle  (136 - X_Offset, 120 + Y_Offset, 112, ILI9341_BLACK); // landscape circle 119 for radius -1 for line thickness
 
-      //tft.invertDisplay(true);
+      //tft2.invertDisplay(true);
 
       bootMode = false;
     }
 
     lastActiveConn = millis();
-    //tft.setTextColor(ILI9341_BLACK, ILI9341_WHITE);
-    tft.setTextColor(ILI9341_WHITE, ILI9341_BLACK);
+    //tft2.setTextColor(ILI9341_BLACK, ILI9341_WHITE);
+    tft2.setTextColor(ILI9341_WHITE, ILI9341_BLACK);
 
 #ifdef Debug
-    tft.setTextColor(ILI9341_BLACK, ILI9341_RED); // used to stop flickering when updating digits that do not increase in length. CPU/GPU load still need a clear box on the end digits
+    tft2.setTextColor(ILI9341_BLACK, ILI9341_RED); // used to stop flickering when updating digits that do not increase in length. CPU/GPU load still need a clear box on the end digits
 #endif
 
     //--------------------------------------- Display Background ----------------------------------------------------
-    tft.setRotation(3);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
+    tft2.setRotation(3);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
 
     backlightON (); //Turn ON display when there is  activity
     //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 
     //>>>>>>>>>>>>>>>>>>>>>>>> Left Side Circle Apperture  >>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    tft.fillCircle   (10 - X_Offset,   10, 6, ILI9341_BLUE); // top left corner  LS 0,0
-    tft.drawCircle   (10 - X_Offset,   10, 7, ILI9341_WHITE); // top left corner  LS 0,0
+    tft2.fillCircle   (10 - X_Offset,   10, 6, ILI9341_BLUE); // top left corner  LS 0,0
+    tft2.drawCircle   (10 - X_Offset,   10, 7, ILI9341_WHITE); // top left corner  LS 0,0
 
-    tft.fillCircle   (10 - X_Offset,   228, 6, ILI9341_RED);  // bottom left corner LS
-    tft.drawCircle   (10 - X_Offset,   228, 7, ILI9341_WHITE); // bottom left corner LS
+    tft2.fillCircle   (10 - X_Offset,   228, 6, ILI9341_RED);  // bottom left corner LS
+    tft2.drawCircle   (10 - X_Offset,   228, 7, ILI9341_WHITE); // bottom left corner LS
 
 
 
     //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-    //tft.drawFastVLine(160 - X_Offset, 10 + Y_Offset, 220, ILI9341_WHITE);
-    tft.drawRect     (26 - X_Offset, 118 + Y_Offset, 220, 4, ILI9341_RED);
-    tft.drawFastHLine(26 - X_Offset, 120 + Y_Offset, 220, ILI9341_WHITE);
+    //tft2.drawFastVLine(160 - X_Offset, 10 + Y_Offset, 220, ILI9341_WHITE);
+    tft2.drawRect     (26 - X_Offset, 118 + Y_Offset, 220, 4, ILI9341_RED);
+    tft2.drawFastHLine(26 - X_Offset, 120 + Y_Offset, 220, ILI9341_WHITE);
 
 
     //---------------------------------------CPU & GPU Hardware ID---------------------------------------------------------
@@ -104,15 +104,15 @@ void DisplayStyle_CircleGauge_ATSAMD ()  // Landscape only
       else
         cpuName = inputString.substring(cpuNameStart);
 
-      tft.setTextSize(1);
-      tft.setCursor(98 - X_Offset, 19 + Y_Offset); // (Left/Right, UP/Down)
+      tft2.setTextSize(1);
+      tft2.setCursor(98 - X_Offset, 19 + Y_Offset); // (Left/Right, UP/Down)
 
       /* CPU Manual Name*/
 #ifdef Manual_cpuName
-      tft.println(set_CPUname);
+      tft2.println(set_CPUname);
 #else
       /* CPU Auto Detect Name*/
-      tft.println(cpuName);
+      tft2.println(cpuName);
 #endif
 
     }
@@ -137,37 +137,37 @@ void DisplayStyle_CircleGauge_ATSAMD ()  // Landscape only
       String gpuName = inputString.substring(gpuNameStart, gpuNameEnd);
 #endif
 
-      tft.setTextSize(1);
-      tft.setCursor(51 - X_Offset, 130 + Y_Offset); // Position GPU Name
-      tft.println(gpuName);
+      tft2.setTextSize(1);
+      tft2.setCursor(51 - X_Offset, 130 + Y_Offset); // Position GPU Name
+      tft2.println(gpuName);
     }
 
     //------------------------------------------------------RX indicator---------------------------------------------------
 
 #ifdef enable_BT
 
-    tft.drawCircle(136 - X_Offset, 120 + Y_Offset, 111, ILI9341_BLUE); // landscape circle 119 for radius -1 for line tickness
-    tft.drawCircle(136 - X_Offset, 120 + Y_Offset, 112, ILI9341_BLUE); // landscape circle 119 for radius -1 for line tickness
-    tft.drawCircle(136 - X_Offset, 120 + Y_Offset, 113, ILI9341_BLUE); // landscape circle 119 for radius -1 for line tickness
-    tft.drawCircle(136 - X_Offset, 120 + Y_Offset, 114, ILI9341_BLUE); // landscape circle 119 for radius -1 for line tickness
-    tft.drawCircle(136 - X_Offset, 120 + Y_Offset, 115, ILI9341_BLUE); // landscape circle 119 for radius -1 for line tickness
-    tft.drawCircle(136 - X_Offset, 120 + Y_Offset, 116, ILI9341_WHITE); // landscape circle 119 for radius -1 for line tickness
+    tft2.drawCircle(136 - X_Offset, 120 + Y_Offset, 111, ILI9341_BLUE); // landscape circle 119 for radius -1 for line tickness
+    tft2.drawCircle(136 - X_Offset, 120 + Y_Offset, 112, ILI9341_BLUE); // landscape circle 119 for radius -1 for line tickness
+    tft2.drawCircle(136 - X_Offset, 120 + Y_Offset, 113, ILI9341_BLUE); // landscape circle 119 for radius -1 for line tickness
+    tft2.drawCircle(136 - X_Offset, 120 + Y_Offset, 114, ILI9341_BLUE); // landscape circle 119 for radius -1 for line tickness
+    tft2.drawCircle(136 - X_Offset, 120 + Y_Offset, 115, ILI9341_BLUE); // landscape circle 119 for radius -1 for line tickness
+    tft2.drawCircle(136 - X_Offset, 120 + Y_Offset, 116, ILI9341_WHITE); // landscape circle 119 for radius -1 for line tickness
 #else
 
-    tft.drawCircle(136 - X_Offset, 120 + Y_Offset, 111, ILI9341_RED); // // flash circle surround
-    tft.drawCircle(136 - X_Offset, 120 + Y_Offset, 112, ILI9341_RED); // // flash circle surround
-    tft.drawCircle(136 - X_Offset, 120 + Y_Offset, 113, ILI9341_RED); // // flash circle surround
-    tft.drawCircle(136 - X_Offset, 120 + Y_Offset, 114, ILI9341_RED); // // flash circle surround
-    tft.drawCircle(136 - X_Offset, 120 + Y_Offset, 115, ILI9341_RED); // // flash circle surround
-    tft.drawCircle(136 - X_Offset, 120 + Y_Offset, 116, ILI9341_WHITE); // // flash circle surround
+    tft2.drawCircle(136 - X_Offset, 120 + Y_Offset, 111, ILI9341_RED); // // flash circle surround
+    tft2.drawCircle(136 - X_Offset, 120 + Y_Offset, 112, ILI9341_RED); // // flash circle surround
+    tft2.drawCircle(136 - X_Offset, 120 + Y_Offset, 113, ILI9341_RED); // // flash circle surround
+    tft2.drawCircle(136 - X_Offset, 120 + Y_Offset, 114, ILI9341_RED); // // flash circle surround
+    tft2.drawCircle(136 - X_Offset, 120 + Y_Offset, 115, ILI9341_RED); // // flash circle surround
+    tft2.drawCircle(136 - X_Offset, 120 + Y_Offset, 116, ILI9341_WHITE); // // flash circle surround
 #endif
 
     //--------------------------------------------DATA CLEARING BOXES------------------------------------------------------
 
-    /* New Update Clearing Boxes see: tft.setTextColor(ILI9341_WHITE, ILI9341_BLACK);*/
+    /* New Update Clearing Boxes see: tft2.setTextColor(ILI9341_WHITE, ILI9341_BLACK);*/
 #ifdef Debug
 
-    tft.setTextColor(ILI9341_WHITE, ILI9341_RED);
+    tft2.setTextColor(ILI9341_WHITE, ILI9341_RED);
 
 #define ILI9341_updateBox ILI9341_GREY  // Fill boxes grey for text alignment 
 
@@ -196,30 +196,30 @@ void DisplayStyle_CircleGauge_ATSAMD ()  // Landscape only
     if (cpuString2.length() == 2) cpuString2 = "  " + cpuString2;
 
     /* CPU TEMPERATURE */
-    tft.setTextSize(3);
-    tft.setCursor(64 - X_Offset, 72 + Y_Offset); // (Left/Right, UP/Down)
-    tft.print(cpuString1);  // CPU TEMP
+    tft2.setTextSize(3);
+    tft2.setCursor(64 - X_Offset, 72 + Y_Offset); // (Left/Right, UP/Down)
+    tft2.print(cpuString1);  // CPU TEMP
 
 
-    tft.setTextSize(1);
+    tft2.setTextSize(1);
 #ifdef noDegree
-    tft.print("C");       // Centigrade Symbol
+    tft2.print("C");       // Centigrade Symbol
 #else
-    tft.print((char)247); //Degrees Symbol
-    tft.print("C");       // Centigrade Symbol
+    tft2.print((char)247); //Degrees Symbol
+    tft2.print("C");       // Centigrade Symbol
 #endif
 
     /* CPU LOAD, ALL CORES */
-    tft.setTextSize(3);
-    tft.setCursor(122 - X_Offset, 72 + Y_Offset); // (Left/Right, UP/Down)
-    tft.print(cpuString2);  // CPU Load
+    tft2.setTextSize(3);
+    tft2.setCursor(122 - X_Offset, 72 + Y_Offset); // (Left/Right, UP/Down)
+    tft2.print(cpuString2);  // CPU Load
 
 #ifdef  smallPercent
-    tft.setTextSize(2);
-    tft.print("%");
+    tft2.setTextSize(2);
+    tft2.print("%");
 #else
-    tft.setTextSize(3);
-    tft.print("%");
+    tft2.setTextSize(3);
+    tft2.print("%");
 #endif
 
     //------------------------------------------ CPU Freq -------------------------------------------------
@@ -241,41 +241,41 @@ void DisplayStyle_CircleGauge_ATSAMD ()  // Landscape only
     double cpuOverclockGainPercentSum = cpuOverclockSum / (CPU_BOOST / 100); // % of gain over Stock CPU
 
     /* CPU  Freq Display */
-    tft.setTextSize(4);
-    tft.setCursor(90 - X_Offset, 35 + Y_Offset ); // (Left/Right, UP/Down)
-    tft.print(cpuClockString);
-    tft.setTextSize(1);
-    tft.print("MHz");
+    tft2.setTextSize(4);
+    tft2.setCursor(90 - X_Offset, 35 + Y_Offset ); // (Left/Right, UP/Down)
+    tft2.print(cpuClockString);
+    tft2.setTextSize(1);
+    tft2.print("MHz");
 
 
 #ifdef  enable_ShowFrequencyGain
 
     /* CPU OVERCLOCK Display Freq Gain in MHz */
-    tft.setCursor(182 - X_Offset, 47 + Y_Offset);// (Left/Right, UP/Down)
-    tft.fillRect (184 - X_Offset, 47 + Y_Offset , 37, 10, ILI9341_BLACK);
+    tft2.setCursor(182 - X_Offset, 47 + Y_Offset);// (Left/Right, UP/Down)
+    tft2.fillRect (184 - X_Offset, 47 + Y_Offset , 37, 10, ILI9341_BLACK);
 
 #ifdef ShowFrequencyGainMHz
-    tft.setTextSize(1);
+    tft2.setTextSize(1);
 
     if (cpuOverclockSum > 0)
-      tft.print (" +");
+      tft2.print (" +");
     else
-      tft.print ("  ");
+      tft2.print ("  ");
 
-    tft.print(cpuOverclockSum, 0);            // Show Value in MHz
-    //tft.setTextSize(1);
-    //tft.println ("MHz");
+    tft2.print(cpuOverclockSum, 0);            // Show Value in MHz
+    //tft2.setTextSize(1);
+    //tft2.println ("MHz");
 #endif
 #ifdef ShowFrequencyGain%
-    tft.setTextSize(1);
+    tft2.setTextSize(1);
 
     if (cpuOverclockGainPercentSum > 0)
-      tft.print (" +");
+      tft2.print (" +");
     else
-      tft.print ("  ");
+      tft2.print ("  ");
 
-    tft.print(cpuOverclockGainPercentSum, 0); // Show Value in %
-    tft.println ("%");
+    tft2.print(cpuOverclockGainPercentSum, 0); // Show Value in %
+    tft2.println ("%");
 #endif
 #endif
 
@@ -296,29 +296,29 @@ void DisplayStyle_CircleGauge_ATSAMD ()  // Landscape only
     if (gpuString2.length() == 2) gpuString2 = "  " + gpuString2;
 
     /* GPU TEMPERATURE */
-    tft.setTextSize(3);
-    tft.setCursor(64 - X_Offset, 144 + Y_Offset); // (Left/Right, UP/Down)
-    tft.print(gpuString1);
-    tft.setTextSize(1);
+    tft2.setTextSize(3);
+    tft2.setCursor(64 - X_Offset, 144 + Y_Offset); // (Left/Right, UP/Down)
+    tft2.print(gpuString1);
+    tft2.setTextSize(1);
 
 #ifdef noDegree
-    tft.print("C");       // Centigrade Symbol
+    tft2.print("C");       // Centigrade Symbol
 #else
-    tft.print((char)247); //Degrees Symbol
-    tft.print("C");       // Centigrade Symbol
+    tft2.print((char)247); //Degrees Symbol
+    tft2.print("C");       // Centigrade Symbol
 #endif
 
     /* GPU LOAD */
-    tft.setTextSize(3);
-    tft.setCursor(112 - X_Offset, 144 + Y_Offset); // (Left/Right, UP/Down)
-    tft.print(gpuString2);
+    tft2.setTextSize(3);
+    tft2.setCursor(112 - X_Offset, 144 + Y_Offset); // (Left/Right, UP/Down)
+    tft2.print(gpuString2);
 
 #ifdef  smallPercent
-    tft.setTextSize(2);
-    tft.print("%");
+    tft2.setTextSize(2);
+    tft2.print("%");
 #else
-    tft.setTextSize(3);
-    tft.print("%");
+    tft2.setTextSize(3);
+    tft2.print("%");
 #endif
 
 
@@ -344,43 +344,43 @@ void DisplayStyle_CircleGauge_ATSAMD ()  // Landscape only
 
 #ifdef  enable_ShowFrequencyGain
     /* GPU OVERCLOCK Display Freq Gain, */
-    //tft.setCursor(225, 56);// (Left/Right, UP/Down)
-    tft.setCursor(182 - X_Offset, 180 + Y_Offset);
-    tft.fillRect (182 - X_Offset, 179 + Y_Offset , 40, 10, ILI9341_BLACK);
+    //tft2.setCursor(225, 56);// (Left/Right, UP/Down)
+    tft2.setCursor(182 - X_Offset, 180 + Y_Offset);
+    tft2.fillRect (182 - X_Offset, 179 + Y_Offset , 40, 10, ILI9341_BLACK);
 
 #ifdef ShowFrequencyGainMHz
-    tft.setTextSize(1);
+    tft2.setTextSize(1);
 
     if (gpuOverclockSum > 0)
-      tft.print (" +");
+      tft2.print (" +");
     else
-      tft.print ("  ");
+      tft2.print ("  ");
 
-    tft.print(gpuOverclockSum, 0);            // Show Value in MHz
-    //tft.setTextSize(1);
-    //tft.println ("MHz");
+    tft2.print(gpuOverclockSum, 0);            // Show Value in MHz
+    //tft2.setTextSize(1);
+    //tft2.println ("MHz");
 #endif
 #ifdef ShowFrequencyGain%
-    tft.setTextSize(1);
+    tft2.setTextSize(1);
 
 
     if (gpuOverclockGainPercentSum > 0)
-      tft.print (" +");
+      tft2.print (" +");
     else
-      tft.print ("  ");
+      tft2.print ("  ");
 
-    tft.print(gpuOverclockGainPercentSum, 0); // Show Value in %
-    tft.println ("%");
+    tft2.print(gpuOverclockGainPercentSum, 0); // Show Value in %
+    tft2.println ("%");
 #endif
 
 #endif
 
     // GPU Frequency
-    tft.setTextSize(4);
-    tft.setCursor(90 - X_Offset, 170 + Y_Offset); // (Left/Right, UP/Down)
-    tft.print(gpuCoreClockString);
-    tft.setTextSize(1);
-    tft.print("MHz");
+    tft2.setTextSize(4);
+    tft2.setCursor(90 - X_Offset, 170 + Y_Offset); // (Left/Right, UP/Down)
+    tft2.print(gpuCoreClockString);
+    tft2.setTextSize(1);
+    tft2.print("MHz");
 
     //----------------------------------------------GPU Memory Total----------------------------------------------------------
 
@@ -394,17 +394,17 @@ void DisplayStyle_CircleGauge_ATSAMD ()  // Landscape only
     double totalGPUmemSum = totalGPUmem / 1024;    // divide by 1024 to get the correct value
     float  totalGPUmemSumDP = totalGPUmemSum ;     // float to handle the decimal point when printed (totalGPUmemSumDP, 0)
 
-    tft.setTextSize(1);
-    tft.setCursor(201 - X_Offset, 130 + Y_Offset); // Position GPU Total Memory
+    tft2.setTextSize(1);
+    tft2.setCursor(201 - X_Offset, 130 + Y_Offset); // Position GPU Total Memory
 
 #ifdef Manual_gpuRam
-    tft.print(set_GPUram);
+    tft2.print(set_GPUram);
 #else
-    tft.print(totalGPUmemSumDP, 0); // Show Value in GB
+    tft2.print(totalGPUmemSumDP, 0); // Show Value in GB
 #endif
 
-    tft.setTextSize(1);
-    tft.print("GB");
+    tft2.setTextSize(1);
+    tft2.print("GB");
     //----------------------------------------------GPU Memory Used----------------------------------------------------------
 
     /*GPU Memory Used */
@@ -414,12 +414,12 @@ void DisplayStyle_CircleGauge_ATSAMD ()  // Landscape only
     //Char erase and spacing adjust, MaDerer
     while (gpuMemoryUsedString.length() < 4) gpuMemoryUsedString = " " + gpuMemoryUsedString;
 
-    tft.setCursor(103 - X_Offset, 204 + Y_Offset); // (Left/Right, UP/Down)
-    tft.setTextSize(3);
-    tft.print(gpuMemoryUsedString); //  show values in MB
+    tft2.setCursor(103 - X_Offset, 204 + Y_Offset); // (Left/Right, UP/Down)
+    tft2.setTextSize(3);
+    tft2.print(gpuMemoryUsedString); //  show values in MB
 
-    tft.setTextSize(1);
-    tft.print("MB");
+    tft2.setTextSize(1);
+    tft2.print("MB");
 
 
 
@@ -433,11 +433,11 @@ void DisplayStyle_CircleGauge_ATSAMD ()  // Landscape only
     //Char erase and spacing adjust, MaDerer
     while (gpuPowerString.length() < 6) gpuPowerString = " " + gpuPowerString;
 
-    tft.setTextSize(1);
-    tft.setCursor(46 - X_Offset, 180 + Y_Offset);   // (Left/Right, UP/Down)
-    tft.print(gpuPowerString); //GPU Power Watts
-    tft.setTextSize(1);
-    tft.print("w");
+    tft2.setTextSize(1);
+    tft2.setCursor(46 - X_Offset, 180 + Y_Offset);   // (Left/Right, UP/Down)
+    tft2.print(gpuPowerString); //GPU Power Watts
+    tft2.setTextSize(1);
+    tft2.print("w");
 #endif
 
     //----------------------------------------SYSTEM RAM USAGE---------------------------------------------------
@@ -464,21 +464,21 @@ void DisplayStyle_CircleGauge_ATSAMD ()  // Landscape only
 
     /* RAM & TOTAL */
 
-    tft.setCursor(86 - X_Offset, 100 + Y_Offset); // (Left/Right, UP/Down)
-    tft.setTextSize(2);
-    tft.print(intRamSum, 0) ; tft.setTextSize(0); tft.print("GB"); tft.print(" / ");
-    tft.setTextSize(2);
-    tft.print(ramString)    ; tft.setTextSize(0); tft.println("GB");
+    tft2.setCursor(86 - X_Offset, 100 + Y_Offset); // (Left/Right, UP/Down)
+    tft2.setTextSize(2);
+    tft2.print(intRamSum, 0) ; tft2.setTextSize(0); tft2.print("GB"); tft2.print(" / ");
+    tft2.setTextSize(2);
+    tft2.print(ramString)    ; tft2.setTextSize(0); tft2.println("GB");
 
     //------------------------------------------ RX indicator Clear------------------------------------------------
 
     delay(TX_LED_Delay);
 
-    tft.drawCircle(136 - X_Offset, 120 + Y_Offset, 111, ILI9341_BLACK); // landscape circle 119 for radius -1 for line thickness
-    tft.drawCircle(136 - X_Offset, 120 + Y_Offset, 112, ILI9341_BLACK); // landscape circle 119 for radius -1 for line thickness
-    tft.drawCircle(136 - X_Offset, 120 + Y_Offset, 113, ILI9341_BLACK); // landscape circle 119 for radius -1 for line thickness
-    tft.drawCircle(136 - X_Offset, 120 + Y_Offset, 114, ILI9341_BLACK); // landscape circle 119 for radius -1 for line thickness
-    tft.drawCircle(136 - X_Offset, 120 + Y_Offset, 115, ILI9341_BLACK); // landscape circle 119 for radius -1 for line thickness
+    tft2.drawCircle(136 - X_Offset, 120 + Y_Offset, 111, ILI9341_BLACK); // landscape circle 119 for radius -1 for line thickness
+    tft2.drawCircle(136 - X_Offset, 120 + Y_Offset, 112, ILI9341_BLACK); // landscape circle 119 for radius -1 for line thickness
+    tft2.drawCircle(136 - X_Offset, 120 + Y_Offset, 113, ILI9341_BLACK); // landscape circle 119 for radius -1 for line thickness
+    tft2.drawCircle(136 - X_Offset, 120 + Y_Offset, 114, ILI9341_BLACK); // landscape circle 119 for radius -1 for line thickness
+    tft2.drawCircle(136 - X_Offset, 120 + Y_Offset, 115, ILI9341_BLACK); // landscape circle 119 for radius -1 for line thickness
 
     //-------------------------------------------------------------------------------------------------------------
 
@@ -555,7 +555,7 @@ void CustomTriggerCPU_BOOST_Circle(int cpuClockString ) {
 
 
   delay(350); // Small delay so Turbo frequency gains stay on screen longer
-  //tft.drawRoundRect  (106, 90, 88, 22, 4, ILI9341_WHITE); //
+  //tft2.drawRoundRect  (106, 90, 88, 22, 4, ILI9341_WHITE); //
 
   if (CPUboostfactor >  CPU_BOOST) {  // i5-9600k boost is 3700Mhz to 4700Mhz
     //Do Something!!!
@@ -567,12 +567,12 @@ void CustomTriggerCPU_BOOST_Circle(int cpuClockString ) {
 #else
     /* CPU Turbo Clock, */
     //                 (   X,    Y,   Length, Height, Radius,   Colour    )
-    tft.fillRoundRect  (  90 - X_Offset,    35 + Y_Offset,    93,      28,     3,   ILI9341_WHITE); //
-    tft.fillRoundRect  (  92 - X_Offset,    37 + Y_Offset,    89,      24,     2,   ILI9341_GREEN); //
-    tft.setTextSize(2);
-    tft.setCursor(110 - X_Offset, 42 + Y_Offset);
-    tft.setTextColor(ILI9341_BLACK);
-    tft.println("TURBO");
+    tft2.fillRoundRect  (  90 - X_Offset,    35 + Y_Offset,    93,      28,     3,   ILI9341_WHITE); //
+    tft2.fillRoundRect  (  92 - X_Offset,    37 + Y_Offset,    89,      24,     2,   ILI9341_GREEN); //
+    tft2.setTextSize(2);
+    tft2.setCursor(110 - X_Offset, 42 + Y_Offset);
+    tft2.setTextColor(ILI9341_BLACK);
+    tft2.println("TURBO");
 
 #endif
 
@@ -590,12 +590,12 @@ void CustomTriggerGPU_BOOST_Circle(int gpuCoreClockString ) {
 
     /* GPU Boost Clock, */
     //                 (   X,    Y,   Length, Height, Radius,   Colour    )
-    tft.fillRoundRect  (  91 - X_Offset,    170 + Y_Offset,    93,      28,     3,   ILI9341_WHITE); //
-    tft.fillRoundRect  (  93 - X_Offset,    172 + Y_Offset,    89,      24,     2,   ILI9341_GREEN); //
-    tft.setTextSize(2);
-    tft.setCursor(111 - X_Offset, 177 + Y_Offset);
-    tft.setTextColor(ILI9341_BLACK);
-    tft.println("BOOST"); //
+    tft2.fillRoundRect  (  91 - X_Offset,    170 + Y_Offset,    93,      28,     3,   ILI9341_WHITE); //
+    tft2.fillRoundRect  (  93 - X_Offset,    172 + Y_Offset,    89,      24,     2,   ILI9341_GREEN); //
+    tft2.setTextSize(2);
+    tft2.setCursor(111 - X_Offset, 177 + Y_Offset);
+    tft2.setTextColor(ILI9341_BLACK);
+    tft2.println("BOOST"); //
 
   }
 }
@@ -611,13 +611,13 @@ void CustomTriggerCPU_ThrottleIndicator_Circle(int cpuDegree ) {  // i5-9600k TJ
 
     /* CPU Junction Max Throttle Temp, */
     //                 (   X,    Y,   Length, Height, Radius,   Colour    )
-    tft.fillRoundRect  (  90 - X_Offset,    35 + Y_Offset,    93,      28,     3,   ILI9341_WHITE); //
-    tft.fillRoundRect  (  92 - X_Offset,    37 + Y_Offset,    89,      24,     2,   ILI9341_RED); //
-    tft.setTextSize(2);
-    tft.setCursor(110 - X_Offset, 42 + Y_Offset);
-    tft.setTextColor(ILI9341_WHITE);
+    tft2.fillRoundRect  (  90 - X_Offset,    35 + Y_Offset,    93,      28,     3,   ILI9341_WHITE); //
+    tft2.fillRoundRect  (  92 - X_Offset,    37 + Y_Offset,    89,      24,     2,   ILI9341_RED); //
+    tft2.setTextSize(2);
+    tft2.setCursor(110 - X_Offset, 42 + Y_Offset);
+    tft2.setTextColor(ILI9341_WHITE);
 
-    tft.println("TJMax");
+    tft2.println("TJMax");
   }
 }
 
@@ -633,13 +633,13 @@ void CustomTriggerGPU_ThrottleIndicator_Circle(int gpuDegree ) {
     /* GPU Junction Max Throttle Temp, */
 
     //                 (   X,    Y,   Length, Height, Radius,   Colour    )
-    tft.fillRoundRect  (  91 - X_Offset,    170 + Y_Offset,    93,      28,     3,   ILI9341_WHITE); //
-    tft.fillRoundRect  (  93 - X_Offset,    172 + Y_Offset,    89,      24,     2,   ILI9341_RED); //
-    tft.setTextSize(2);
-    tft.setCursor(111 - X_Offset, 177 + Y_Offset);
-    tft.setTextColor(ILI9341_WHITE);
+    tft2.fillRoundRect  (  91 - X_Offset,    170 + Y_Offset,    93,      28,     3,   ILI9341_WHITE); //
+    tft2.fillRoundRect  (  93 - X_Offset,    172 + Y_Offset,    89,      24,     2,   ILI9341_RED); //
+    tft2.setTextSize(2);
+    tft2.setCursor(111 - X_Offset, 177 + Y_Offset);
+    tft2.setTextColor(ILI9341_WHITE);
 
-    tft.println("TJMax");
+    tft2.println("TJMax");
   }
 }
 
@@ -654,7 +654,7 @@ void CustomTriggerGPU_ThrottleIndicator_Circle(int gpuDegree ) {
 void CPU_tempLevelGauge(int cpuDegree ) {
 
   /*Top CPU Temp Level Clear Box,*/
-  tft.fillRoundRect(293 - X_Offset, 0 + Y_Offset,   8, 102 , 1, ILI9341_BLACK);
+  tft2.fillRoundRect(293 - X_Offset, 0 + Y_Offset,   8, 102 , 1, ILI9341_BLACK);
 
   float CPUtempfactor = cpuDegree;
 
@@ -663,36 +663,36 @@ void CPU_tempLevelGauge(int cpuDegree ) {
 
   if (CPUtempfactor >= 0 ) {
     /*Top CPU Temp Bar Scale,*/
-    tft.fillRoundRect(293 - X_Offset, 1 + Y_Offset,   8, CPUtempScalefactor  , 1, ILI9341_GREEN); // Top CPU Temp Scale
+    tft2.fillRoundRect(293 - X_Offset, 1 + Y_Offset,   8, CPUtempScalefactor  , 1, ILI9341_GREEN); // Top CPU Temp Scale
   }
 
   if (CPUtempfactor >= 45 ) {
     /*Top CPU Temp Bar Scale,*/
-    tft.fillRoundRect(293 - X_Offset, 1 + Y_Offset,   8, CPUtempScalefactor   , 1, ILI9341_GREEN); // Top CPU Temp Scale
+    tft2.fillRoundRect(293 - X_Offset, 1 + Y_Offset,   8, CPUtempScalefactor   , 1, ILI9341_GREEN); // Top CPU Temp Scale
   }
 
   if (CPUtempfactor >= 65 ) {
     /*Top CPU Temp Bar Scale,*/
-    tft.fillRoundRect(293 - X_Offset, 1 + Y_Offset,   8, CPUtempScalefactor   , 1, ILI9341_ORANGE); // Top CPU Temp Scale
+    tft2.fillRoundRect(293 - X_Offset, 1 + Y_Offset,   8, CPUtempScalefactor   , 1, ILI9341_ORANGE); // Top CPU Temp Scale
   }
 
   if (CPUtempfactor >= 85 ) {
     /*Top CPU Temp Bar Scale,*/
-    tft.fillRoundRect(293 - X_Offset, 1 + Y_Offset,   8, CPUtempScalefactor  , 1, ILI9341_RED); // Top CPU Temp Scale
+    tft2.fillRoundRect(293 - X_Offset, 1 + Y_Offset,   8, CPUtempScalefactor  , 1, ILI9341_RED); // Top CPU Temp Scale
   }
 
-  tft.drawRoundRect(293 - X_Offset, 0 + Y_Offset,   8, 94  , 1, ILI9341_WHITE); // Draw rectangle round CPU temp bar
+  tft2.drawRoundRect(293 - X_Offset, 0 + Y_Offset,   8, 94  , 1, ILI9341_WHITE); // Draw rectangle round CPU temp bar
 
   /*Stop Scale running into MAX box,*/
-  tft.fillRect (288 - X_Offset , 94 + Y_Offset,  27, 19 , ILI9341_BLACK); // Stop Scale running into MAX box
+  tft2.fillRect (288 - X_Offset , 94 + Y_Offset,  27, 19 , ILI9341_BLACK); // Stop Scale running into MAX box
 
   // Max Text box CPU
-  tft.setTextColor(ILI9341_WHITE, ILI9341_BLACK);
-  tft.setCursor(295 - X_Offset , 100 + Y_Offset);
-  tft.setTextSize(1);
-  tft.setTextColor(ILI9341_WHITE);
-  tft.print("MAX");
-  tft.drawRoundRect(292 - X_Offset , 97 + Y_Offset,  23, 13 , 1, ILI9341_WHITE);
+  tft2.setTextColor(ILI9341_WHITE, ILI9341_BLACK);
+  tft2.setCursor(295 - X_Offset , 100 + Y_Offset);
+  tft2.setTextSize(1);
+  tft2.setTextColor(ILI9341_WHITE);
+  tft2.print("MAX");
+  tft2.drawRoundRect(292 - X_Offset , 97 + Y_Offset,  23, 13 , 1, ILI9341_WHITE);
 
 }
 
@@ -702,7 +702,7 @@ void CPU_tempLevelGauge(int cpuDegree ) {
 void CPU_loadLevelGauge(int cpuUsage ) {
 
   /*Top CPU Load Level Clear Box,*/
-  tft.fillRoundRect(306 - X_Offset, 0 + Y_Offset,   8, 102 , 1, ILI9341_BLACK);
+  tft2.fillRoundRect(306 - X_Offset, 0 + Y_Offset,   8, 102 , 1, ILI9341_BLACK);
 
   float CPUloadfactor = cpuUsage;
 
@@ -712,25 +712,25 @@ void CPU_loadLevelGauge(int cpuUsage ) {
 
   if (CPUloadfactor >= 0 ) {
     /*Top CPU Load Bar Scale,*/
-    tft.fillRoundRect(306 - X_Offset, 1 + Y_Offset,   8,  CPUloadScalefactor   , 1, ILI9341_GREEN); // Top CPU Load Scale
+    tft2.fillRoundRect(306 - X_Offset, 1 + Y_Offset,   8,  CPUloadScalefactor   , 1, ILI9341_GREEN); // Top CPU Load Scale
   }
 
   if (CPUloadfactor >= 50 ) {
     /*Top CPU Load Bar Scale,*/
-    tft.fillRoundRect(306 - X_Offset, 1 + Y_Offset,   8,  CPUloadScalefactor   , 1, ILI9341_GREEN); // Top CPU Load Scale
+    tft2.fillRoundRect(306 - X_Offset, 1 + Y_Offset,   8,  CPUloadScalefactor   , 1, ILI9341_GREEN); // Top CPU Load Scale
   }
 
   if (CPUloadfactor >= 75) {
     /*Top CPU Load Bar Scale,*/
-    tft.fillRoundRect(306 - X_Offset, 1 + Y_Offset,   8,  CPUloadScalefactor   , 1, ILI9341_ORANGE); // Top CPU Load Scale
+    tft2.fillRoundRect(306 - X_Offset, 1 + Y_Offset,   8,  CPUloadScalefactor   , 1, ILI9341_ORANGE); // Top CPU Load Scale
   }
 
   if (CPUloadfactor >= 83 ) {
     /*Top CPU Load Bar Scale,*/
-    tft.fillRoundRect(306 - X_Offset, 1 + Y_Offset,   8,  CPUloadScalefactor  , 1, ILI9341_RED); // Top CPU Load Scale
+    tft2.fillRoundRect(306 - X_Offset, 1 + Y_Offset,   8,  CPUloadScalefactor  , 1, ILI9341_RED); // Top CPU Load Scale
   }
 
-  tft.drawRoundRect(306 - X_Offset, 0 + Y_Offset,   8,  94 , 1, ILI9341_WHITE); // Draw rectangle round CPU load bar
+  tft2.drawRoundRect(306 - X_Offset, 0 + Y_Offset,   8,  94 , 1, ILI9341_WHITE); // Draw rectangle round CPU load bar
 }
 
 
@@ -742,7 +742,7 @@ void CPU_loadLevelGauge(int cpuUsage ) {
 void GPU_tempLevelGauge(int gpuDegree ) {
 
   /*Bottom GPU Temp Level Clear Box,*/
-  tft.fillRoundRect(293 - X_Offset , 129 + Y_Offset,   8, 102 , 1, ILI9341_BLACK);
+  tft2.fillRoundRect(293 - X_Offset , 129 + Y_Offset,   8, 102 , 1, ILI9341_BLACK);
 
   float GPUtempfactor = gpuDegree;
 
@@ -751,41 +751,41 @@ void GPU_tempLevelGauge(int gpuDegree ) {
 
   if (GPUtempfactor >= 0 ) {
     /*Bottom GPU Temp Bar Scale,*/
-    tft.fillRoundRect(293 - X_Offset , 130 + Y_Offset,  8, GPUtempScalefactor , 1, ILI9341_GREEN); // Bottom GPU Temp Scale
+    tft2.fillRoundRect(293 - X_Offset , 130 + Y_Offset,  8, GPUtempScalefactor , 1, ILI9341_GREEN); // Bottom GPU Temp Scale
   }
 
   if (GPUtempfactor >= 25 ) {
     /*Bottom GPU Temp Bar Scale,*/
-    tft.fillRoundRect(293 - X_Offset , 130 + Y_Offset,  8, GPUtempScalefactor , 1, ILI9341_GREEN); // Bottom GPU Temp Scale
+    tft2.fillRoundRect(293 - X_Offset , 130 + Y_Offset,  8, GPUtempScalefactor , 1, ILI9341_GREEN); // Bottom GPU Temp Scale
   }
 
   if (GPUtempfactor >= 50 ) {
     /*Bottom GPU Temp Bar Scale,*/
-    tft.fillRoundRect(293 - X_Offset , 130 + Y_Offset,  8, GPUtempScalefactor , 1, ILI9341_GREEN); // Bottom GPU Temp Scale
+    tft2.fillRoundRect(293 - X_Offset , 130 + Y_Offset,  8, GPUtempScalefactor , 1, ILI9341_GREEN); // Bottom GPU Temp Scale
   }
 
   if (GPUtempfactor >= 75 ) {
     /*Bottom GPU Temp Bar Scale,*/
-    tft.fillRoundRect(293 - X_Offset , 130 + Y_Offset,  8, GPUtempScalefactor , 1, ILI9341_ORANGE); // Bottom GPU Temp Scale
+    tft2.fillRoundRect(293 - X_Offset , 130 + Y_Offset,  8, GPUtempScalefactor , 1, ILI9341_ORANGE); // Bottom GPU Temp Scale
   }
 
   if (GPUtempfactor >= 83 ) {
     /*Bottom GPU Temp Bar Scale,*/
-    tft.fillRoundRect(293 - X_Offset , 130 + Y_Offset,  8, GPUtempScalefactor , 1, ILI9341_RED); // Bottom GPU Temp Scale
+    tft2.fillRoundRect(293 - X_Offset , 130 + Y_Offset,  8, GPUtempScalefactor , 1, ILI9341_RED); // Bottom GPU Temp Scale
   }
 
-  tft.drawRoundRect(293 - X_Offset , 129 + Y_Offset,   8, 94 , 1, ILI9341_WHITE); // Draw rectangle round GPU temp bar
+  tft2.drawRoundRect(293 - X_Offset , 129 + Y_Offset,   8, 94 , 1, ILI9341_WHITE); // Draw rectangle round GPU temp bar
 
   /*Stop Scale running into MAX box,*/
-  tft.fillRect (289 - X_Offset , 223 + Y_Offset,  27, 17 , ILI9341_BLACK);
+  tft2.fillRect (289 - X_Offset , 223 + Y_Offset,  27, 17 , ILI9341_BLACK);
 
   // Max Text box GPU
-  tft.setTextColor(ILI9341_WHITE, ILI9341_BLACK);
-  tft.setCursor(295 - X_Offset , 229 + Y_Offset);
-  tft.setTextSize(1);
-  tft.setTextColor(ILI9341_WHITE);
-  tft.print("MAX");
-  tft.drawRoundRect(292 - X_Offset , 226 + Y_Offset,  23, 13 , 1, ILI9341_WHITE);
+  tft2.setTextColor(ILI9341_WHITE, ILI9341_BLACK);
+  tft2.setCursor(295 - X_Offset , 229 + Y_Offset);
+  tft2.setTextSize(1);
+  tft2.setTextColor(ILI9341_WHITE);
+  tft2.print("MAX");
+  tft2.drawRoundRect(292 - X_Offset , 226 + Y_Offset,  23, 13 , 1, ILI9341_WHITE);
 }
 
 //>>>>>>>>>>>> GPU LOAD
@@ -793,7 +793,7 @@ void GPU_tempLevelGauge(int gpuDegree ) {
 void GPU_loadLevelGauge(int gpuUsage ) {
 
   /*Bottom GPU Load Level Clear Box,*/
-  tft.fillRoundRect(306 - X_Offset , 129 + Y_Offset,   8, 102 , 1, ILI9341_BLACK);
+  tft2.fillRoundRect(306 - X_Offset , 129 + Y_Offset,   8, 102 , 1, ILI9341_BLACK);
 
   float GPUloadfactor = gpuUsage;
 
@@ -802,24 +802,24 @@ void GPU_loadLevelGauge(int gpuUsage ) {
 
   if (GPUloadfactor >= 0 ) {
     /*Bottom GPU Load Bar Scale,*/
-    tft.fillRoundRect(306 - X_Offset , 130 + Y_Offset, 8, GPUloadScalefactor , 1, ILI9341_GREEN);
+    tft2.fillRoundRect(306 - X_Offset , 130 + Y_Offset, 8, GPUloadScalefactor , 1, ILI9341_GREEN);
   }
   if (GPUloadfactor >= 25 ) {
     /*Bottom GPU Load Bar Scale,*/
-    tft.fillRoundRect(306 - X_Offset , 130 + Y_Offset, 8, GPUloadScalefactor , 1, ILI9341_GREEN);
+    tft2.fillRoundRect(306 - X_Offset , 130 + Y_Offset, 8, GPUloadScalefactor , 1, ILI9341_GREEN);
   }
   if (GPUloadfactor >= 50 ) {
     /*Bottom GPU Load Bar Scale,*/
-    tft.fillRoundRect(306 - X_Offset , 130 + Y_Offset, 8, GPUloadScalefactor  , 1, ILI9341_GREEN);
+    tft2.fillRoundRect(306 - X_Offset , 130 + Y_Offset, 8, GPUloadScalefactor  , 1, ILI9341_GREEN);
   }
   if (GPUloadfactor >= 75 ) {
     /*Bottom GPU Load Bar Scale,*/
-    tft.fillRoundRect(306 - X_Offset , 130 + Y_Offset, 8, GPUloadScalefactor , 1, ILI9341_ORANGE);
+    tft2.fillRoundRect(306 - X_Offset , 130 + Y_Offset, 8, GPUloadScalefactor , 1, ILI9341_ORANGE);
   }
   if (GPUloadfactor >= 90 ) {
     /*Bottom GPU Load Bar Scale,*/
-    tft.fillRoundRect(306 - X_Offset , 130 + Y_Offset, 8, GPUloadScalefactor , 1, ILI9341_RED);
+    tft2.fillRoundRect(306 - X_Offset , 130 + Y_Offset, 8, GPUloadScalefactor , 1, ILI9341_RED);
   }
 
-  tft.drawRoundRect(306 - X_Offset , 129 + Y_Offset,   8, 94 , 1, ILI9341_WHITE); // Draw rectangle round GPU load bar
+  tft2.drawRoundRect(306 - X_Offset , 129 + Y_Offset,   8, 94 , 1, ILI9341_WHITE); // Draw rectangle round GPU load bar
 }

@@ -115,7 +115,7 @@
 
 //---------------------------------------------------------------------------------------
 #include <Adafruit_NeoPixel.h>
-#define NEOPIN      6
+#define NEOPIN      99
 #define NUM_PIXELS 16
 
 /*onboard XIAO BUILD in LED for TX*/
@@ -150,7 +150,7 @@ Adafruit_NeoPixel TX_pixel(1, TX_NeoPin, NEO_GRB + NEO_KHZ800);
 
 /* ATSAMD21 SPi Hardware only for speed */
 
-//#define TFT_CS2 // 1,2,3 Reserved//https://forum.arduino.cc/t/dual-displays/368633/6   https://forum.arduino.cc/t/2-tft-touchscreen/364030
+#define TFT_CS2    6 // 1,2,3 Reserved//https://forum.arduino.cc/t/dual-displays/368633/6   https://forum.arduino.cc/t/2-tft-touchscreen/364030
 
 #define TFT_CS     5  // 1,2,3
 #define TFT_DC     7
@@ -162,7 +162,7 @@ Adafruit_NeoPixel TX_pixel(1, TX_NeoPin, NEO_GRB + NEO_KHZ800);
 
 Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC, TFT_RST); // Use hardware SPI
 
-Adafruit_ILI9341 tft2 = Adafruit_ILI9341(TFT_CS, TFT_DC, TFT_RST); // Reserved Use hardware SPI
+Adafruit_ILI9341 tft2 = Adafruit_ILI9341(TFT_CS2, TFT_DC); // Reserved Use hardware SPI
 
 //-----------------------------------------------------------------------------
 
@@ -281,6 +281,7 @@ void setup() {
 
   delay(1000); // Give the micro time to initiate the SPi bus
   tft.begin(); //ILI9341
+  delay(1000); // Give the micro time to initiate the SPi bus
   tft2.begin(); //ILI9341
 
   tft.setRotation(ASPECT);// Rotate the display :  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
@@ -339,6 +340,7 @@ void loop() {
 
   /*Encoder Mode Button, moved to its own tab*/
   encoder_Modes();
+
 
 }
 
@@ -461,6 +463,7 @@ void splashScreen() {
 
   tft.setFont(&Org_01);
   tft.fillScreen(ILI9341_BLACK);
+  tft2.fillScreen(ILI9341_BLACK);
 
   tft.drawRoundRect  (0, 0  , 240, 320, 8,    ILI9341_RED);
 

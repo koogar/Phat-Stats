@@ -631,13 +631,16 @@ tft.setCursor(109, 94); // (Left/Right, UP/Down)
 #ifdef batteryMonitor
     // Show Battery Level Indicator on DisplayStyle
     /* Battery Level, */
+      
+    tft.setTextSize(1);
     tft.setCursor(200, 88);// (Left/Right, UP/Down)
     tft.print ("Batt:");
-    tft.setTextSize(2); //set background txt font size
+
     tft.setCursor(200, 98);// (Left/Right, UP/Down)
-    tft.print(BL.getBatteryChargeLevel());
-    //tft.setTextSize(1);
-    tft.print("% ");
+    tft.print(""); tft.print(BL.getBatteryChargeLevel()); tft.print("% ");
+    tft.setCursor(200, 108);// (Left/Right, UP/Down)
+    tft.print(BL.getBatteryVolts()); tft.print("v");
+
 #endif
 #endif
 

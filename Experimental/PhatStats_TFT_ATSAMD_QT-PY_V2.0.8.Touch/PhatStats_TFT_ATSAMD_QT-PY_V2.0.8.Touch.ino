@@ -1,4 +1,4 @@
-#define CODE_VERS  "2.0.7"  // Code version number
+#define CODE_VERS  "2.0.8.Touch"  // Code version number
 
 
 /*
@@ -64,6 +64,7 @@
 #include "HID-Project.h"  //https://github.com/NicoHood/HID/wiki/Consumer-API
 
 
+
 #include "Configuration_Settings.h" // load settings
 #include "Bitmaps.h"
 
@@ -78,23 +79,19 @@
   ---------------------
   (TFT)
   CS     =  5
-  RST    =  9
+  RST    =  0 
   DC     =  7
   SCLK   =  8
   MOSI   =  10
-
+  MISO   =  9 (for touch screen)
 
   B.LIGHT =  4
   ---------------------
-  Rotary Encoder
+  Rotary Encoder or Touchscreen
   ---------------------
-  EncoderA = 3
-  EncoderB = 2
-  EncButton= 1
-
-  ---------------------
-
-  InfraRed = 0
+  TFT T_IRQ or EncoderA = 3
+  TFT T_CS  or EncoderB = 2
+  EncButton         = 1
 
   ---------------------
   i2c
@@ -149,23 +146,39 @@ Adafruit_NeoPixel TX_pixel(1, TX_NeoPin, NEO_GRB + NEO_KHZ800);
 #include <Adafruit_ILI9341.h>  // v1.5.6 Adafruit Standard
 
 /* ATSAMD21 SPi Hardware only for speed*/
-//#define TFT_CS2 // 1,2,3 Reserved
-
-#define TFT_CS     5  // 1,2,3
+#define TFT_CS     5
 #define TFT_DC     7
-#define TFT_RST    9
+#define TFT_RST    0 // changed from previous(9) to allow for MISO connection for Touch
+
 
 /* These pins do not have to be defined as they are hardware pins */
 //Connect TFT_SCLK to pin   8
 //Connect TFT_MOSI to pin   10
+//Connect TFT_MISO to pin   9 (for XPT2046 touch)
+
 
 Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC, TFT_RST); // Use hardware SPI
 
 //-----------------------------------------------------------------------------
 
+#ifdef  touchScreen
+/* XPT2046 touch_Button modes*/
+#include <XPT2046_Touchscreen.h> /* https://github.com/PaulStoffregen/XPT2046_Touchscreen */
+
+#define TOUCH_IRQ_PIN  3 // T_IRQ Touch Screen Interupt pin)
+#define TOUCH_CS_PIN   2 // T_CS  Touch Screen select
+
+//XPT2046_Touchscreen touch(TOUCH_CS_PIN);  // Param 2 - NULL - No interrupts
+//XPT2046_Touchscreen touch(TOUCH_CS_PIN, 255);  // Param 2 - 255 - No interrupts
+XPT2046_Touchscreen touch( TOUCH_CS_PIN, TOUCH_IRQ_PIN ); // Param 2 - Touch IRQ Pin - interrupt enabled polling
+
+
+int touch_Button_counter = 0;
+#endif
+
 /* Rotary Encoder*/
-#define encoderOutA 2 // CLK
-#define encoderOutB 3 // DT
+#define encoderOutA 92 // CLK
+#define encoderOutB 93 // DT
 
 RotaryFullStep rotary(encoderOutA, encoderOutB);
 
@@ -174,7 +187,7 @@ int encoder_Button     = 1;
 int enc_Button_counter = 0;
 
 /* Screen TFT backlight Pin */
-int TFT_backlight_PIN = 4;
+int TFT_backlight_PIN =  4;
 
 /* Encoder TFT Brightness*/
 //volatile int brightness_count = 150; // Start Up PWM Brightness, moved to CFG!!!
@@ -232,6 +245,10 @@ void setup() {
   Serial.begin(9600);  //  USB Serial Baud Rate
   inputString.reserve(200); // String Buffer
 
+#ifdef  touchScreen
+  touch.begin();
+#endif
+
   /* Setup HID*/
   // Sends a clean report to the host. This is important on any Arduino type.
   Consumer.begin();
@@ -252,8 +269,8 @@ void setup() {
 
   /* Set up the NeoPixel*/
   pixels.begin();    // This initializes the NeoPixel library.
- 
-#ifdef enableTX_LED 
+
+#ifdef enableTX_LED
 #ifdef Adafruit_QTPY
   TX_pixel.begin();  // This initializes the library for the Built in NeoPixel.
 #endif
@@ -328,7 +345,10 @@ void loop() {
   //-----------------------------
 
   /*Encoder Mode Button, moved to its own tab*/
-  encoder_Modes();
+  //encoder_Modes();
+  #ifdef  touchScreen 
+  touch_Modes();
+  #endif
 
 }
 

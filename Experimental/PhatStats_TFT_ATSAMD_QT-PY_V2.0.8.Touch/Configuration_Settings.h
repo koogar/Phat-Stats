@@ -97,6 +97,16 @@
    V2.0.7
         Fix CPU & GPU Overclock gains "-+" bug
 
+   v2.0.8.Touch (QT-PY experimental)
+        Move "RST" pin from 9 to 0 to re-instate the MISO pin for the touch screen.
+        
+        Note:  Rotary Encoder functions must be disabled to use the touch Screen. 
+        The ILI9341 T_CS and T_IRQ are shared with the Rotary Encoder pins 2 and 3.
+          
+        Currently the touch function is limited to changing the DisplayStyles when touched.
+        
+  
+  
   Note: Gnat-Stats/Phat-Stats is optimised for desktop CPU's with dedicated graphics cards, such as Nvidia/Radeon.
       You may get wierd results on mobile CPUs and integrated GPU's (iGPU's) on laptops.
 
@@ -116,8 +126,8 @@
 //--------------------------- Micro Controller Selection---------------------------------
 
 /* Uncomment your Micro Processor,*/
-//#define Adafruit_QTPY
-#define Seeeduino_XIAO
+#define Adafruit_QTPY
+//define Seeeduino_XIAO
 
 //--------------------------- CPU/GPU Display Settings -----------------------------------
 /* Uncomment your CPU,*/
@@ -191,11 +201,10 @@ String set_GPUram = "xx";
 //-------------------------------- NeoPixel Modes -------------------------------------
 
 #define enableNeopixelGauges     // NeoPixel ring bargraph example
-//#define PCB_enableThesholdtriggers // NeoPixels For PhatStats TFT Interface PCB
 
 /* VERY EXPERIMENTAL!!! SLIGHTLY LAGGY, HAS TO WAIT FOR SCREEN REFRESH*/
 //#define Neo_BrightnessAuto   // Adjust NeoPixel brightness together with screen brightness using the rotary encoder
-int     Neo_DivideBy = 5;    // Divide NeoPixel brightness v's TFT brightness (less is brighter)
+int Neo_DivideBy = 5;    // Divide NeoPixel brightness v's TFT brightness (less is brighter)
 
 /* If  NeoBrightness = 0 Phat-Stats will start with no NeoPixels lit. Turn the Rotary Encoder to turn on the NeoPixels, */
 int NeoBrightness   = 20;           // Global start up brightness
@@ -211,6 +220,11 @@ int NeoBrightness   = 20;           // Global start up brightness
 #define Encoder_PWM2 // Use rotary encoder for PWM screen brightness control  3.3v
 volatile int brightness_count = 160; // Start Up PWM Brightness
 
+//----------------------------- Touch Screen Button---------------------------------------
+
+/* Use touch screen to change DisplayStyles (Rotary Encoder modes must be disabled)*/
+#define touchScreen // Use touch screen to change DisplayStyles
+int debounceTouchscreenButton = 0;
 //-------------------------- Display Activity Shutdown -----------------------------------
 
 /* Uncomment below to turn off the screen on serial timeout, else keep last display info eg: incase of PC Crash*/
