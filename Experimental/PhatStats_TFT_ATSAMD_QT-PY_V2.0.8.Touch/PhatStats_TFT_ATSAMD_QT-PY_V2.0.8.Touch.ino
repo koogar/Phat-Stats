@@ -83,7 +83,7 @@
   DC     =  7
   SCLK   =  8
   MOSI   =  10
-  MISO   =  9 (for touch screen)
+  MISO   =  9 (Touch Screen)
 
   B.LIGHT =  4
   ---------------------
@@ -343,13 +343,12 @@ void loop() {
 #endif
 
   //-----------------------------
-
-  /*Encoder Mode Button, moved to its own tab*/
-  //encoder_Modes();
-  #ifdef  touchScreen 
+#ifdef  touchScreen
   touch_Modes();
-  #endif
-
+#else
+  /*Encoder Mode Button, moved to its own tab*/
+  encoder_Modes();
+#endif
 }
 
 /* END of Main Loop */

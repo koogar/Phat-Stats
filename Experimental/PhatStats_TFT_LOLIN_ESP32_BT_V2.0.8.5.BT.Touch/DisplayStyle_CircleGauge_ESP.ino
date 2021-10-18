@@ -72,7 +72,7 @@ void DisplayStyle_CircleGauge_ESP ()  // Landscape only
 #endif
 
     //--------------------------------------- Display Background ----------------------------------------------------
-    tft.setRotation(3);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
+    tft.setRotation(1);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
 
     backlightON (); //Turn ON display when there is  activity
     //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

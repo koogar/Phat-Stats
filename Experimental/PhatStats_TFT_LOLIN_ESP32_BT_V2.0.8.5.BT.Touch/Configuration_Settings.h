@@ -103,6 +103,20 @@
   V2.0.7
       Fix CPU & GPU Overclock gains "-+" bug
 
+  V2.0.8 (ESP32 only)
+      Add Support for LolinD32      (Tested)
+      Add Support for Lolin32 LITE  (Tested)
+      Add ESP32 BT ESP Board ID
+
+  v2.0.8.5.Touch (ESP32 experimental)
+        Move "RST" pin from 19 to 15 to re-instate the MISO pin for the touch screen.
+
+        Note:  Rotary Encoder Mode function must be disabled to use the touch Screen.
+
+        Currently the touch function is limited to changing the DisplayStyles when touched.
+
+
+
   Note: Gnat-Stats/Phat-Stats is optimised for desktop CPU's with dedicated graphics cards, such as Nvidia/Radeon.
       You may get wierd results on mobile CPUs and integrated GPU's (iGPU's) on laptops.
 
@@ -130,14 +144,20 @@
   When you know the correct port for Send you can disable the other in Device Manager
   so it does not to show up in HardwareSerialMonitor.*/
 
+//--------------------------- ESP32 BT Board Windows ID -----------------------------------
+
+//#define  LOLIN_32v1
+//#define  LOLIN_D32
+#define  LOLIN32_LITE
+
 //--------------------------- Bluetooth or USB serial -----------------------------------
 /*ESP32 Communication type, Uncomment only one option!!!*/
 
 /*Uncomment to enable BT, else default to USB serial only,*/
-#define enable_BT              // enable only Bluetooth serial connection
+//#define enable_BT              // enable only Bluetooth serial connection
 
 /*Uncomment to enable BT and USB serial. (Not Currently working),*/
-//#define enable_DualSerialEvent // enable Bluetooth and USB serial connection
+#define enable_DualSerialEvent // enable Bluetooth and USB serial connection
 
 /* Enable the built in LED blinking when transmitting, saves power when using battery if disabled,*/
 #define enableTX_LED //
@@ -171,6 +191,11 @@ int TX_LED_Delay = 200; // TX blink delay
   No advice will be given, or implied regarding which you should use etc.
 
   Use the battery/type in accordance with the manufacturer's recommendations.*/
+
+//--------------------------- Enable Touchscreen Button  -----------------------------------
+
+#define touchScreen // If enabled EncoderButton_Modes is disabled
+int debounceTouchscreenButton = 0;
 
 //--------------------------- CPU/GPU Display Settings -----------------------------------
 
@@ -216,9 +241,9 @@ String set_GPUram = "xx";
 #define GPU_BOOST 1683  //  Enter Stock GPU Frequency eg. MSi GamingX 1080  = 1683MHz
 
 /* Remove Specific GPU items Power/Fan RPM/Fan% */
-//#define enable_gpuPowerStats // Nvidia Specific???
-//#define enable_gpuFanStats%
-//#define enable_gpuFanStatsRPM
+#define enable_gpuPowerStats // Nvidia Specific???
+#define enable_gpuFanStats%
+#define enable_gpuFanStatsRPM
 
 //--------------------------- Throttle/Boost Gains MHZ or % ------------------------------
 /* Uncomment to show Frequency gain MHz or Percent,*/
@@ -249,7 +274,8 @@ int NeoBrightness   = 20;           // Global start up brightness
 
 /* Use the Rotary Encoder for variable PWM control, connected direct to the MCU PIN,*/
 /* If commented the screen brightness will default to the fixed level below,*/
-//#define Encoder_PWM2 // Use rotary encoder for PWM screen brightness control  3.3v
+
+#define Encoder_PWM2 // Use rotary encoder for PWM screen brightness control  3.3v
 
 /*TFT Start Up Brightness*/
 volatile int brightness_count = 150; // Start Up Brightness
@@ -275,3 +301,18 @@ int baud = 115200; //do not adjust
 
 /* Debug Screen, Update Erasers, */
 //#define Debug
+
+
+
+// BT Board ID
+#ifdef LOLIN_32v1
+#define device_BT "TMLabs_BT_32v1"
+#endif
+
+#ifdef LOLIN_D32
+#define device_BT "TMLabs_BT_D32"
+#endif
+
+#ifdef LOLIN32_LITE
+#define device_BT "TMLabs_BT_32Lite"
+#endif

@@ -1,5 +1,3 @@
-#define CODE_VERS  "2.0.7.BT"  // Code version number
-#define device_BT "TallmanLabs_BT"
 
 
 /*
@@ -51,13 +49,18 @@
   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 */
 
+#define CODE_VERS  "2.0.8.5.BT.Touch"  // Code version number
+
 #include <Arduino.h>
 #include <Wire.h>
 #include <SPI.h>
+#include <analogWrite.h>
+
 #include <Adafruit_GFX.h>
 #include <Fonts/Org_01.h>
-#include <analogWrite.h>
+
 #include <TML_ErriezRotaryFullStep.h>
+
 
 #include "Configuration_Settings.h" // load settings
 #include "Bitmaps.h"
@@ -73,18 +76,27 @@ BluetoothSerial SerialBT;    // Bluetooth Classic, not BLE
 /*
   eBay Special Red PCB pinouots VCC(3.3v), GND, CS, RST, D/C, MOSI, SCK, BL, (MISO, T_CLK, T_CS, T_DIN, T_DO, T_IRQ)
 
-  Wemos ESP32 Lolin32 v1   (Compiles/Tested)
-  Wemos ESP32 Lolin32 Lite (Compiles/Untested)
-  Wemos ESP32 LoLin32 D32  (Compiles/Untested)
+  Wemos ESP32 LoLin32 D32  (Compiles/Tested)
+  https://www.wemos.cc/en/latest/d32/d32.html
+
+  **Wemos ESP32 Lolin32 Lite** (Compiles/Tested)
+  **Wemos ESP32 Lolin32 v1  **  (Compiles/Tested)
+  **discontinued, Clones Available**
+
   --------------------------------------------
   CS     =  17             (15)
-  RST    =  19             (-1)
+  RST    =  15             (-1)(15)(19)
   DC     =  16             (2)
 
   SCLK   =  18
   MOSI   =  23
 
-  MISO   =  19   (*Not Required for Reference only!!!)
+  Touch
+  --------------------
+  MISO      = 19   (for XPT2046 touch)
+
+  TFT T_IRQ = 32
+  TFT T_CS  = 33
 
   B.LIGHT =  4             (0, 13)
   ---------------------
@@ -97,11 +109,7 @@ BluetoothSerial SerialBT;    // Bluetooth Classic, not BLE
 
   EncButton= 0            (0,17)
   ---------------------
-  i2c
-  ---------------------
-  SCL = 22  (*Not Required for Reference only!!!)
-  SDA = 21  (*Not Required for Reference only!!!)
-  ---------------------
+
 
   Neopixel / LED's
   ---------------------
@@ -111,10 +119,17 @@ BluetoothSerial SerialBT;    // Bluetooth Classic, not BLE
   Battery Monitor   Voltage divider (GND ---[100K]--- (Pin34 ADC) ----[100k]--- BATT+) 3.2v to 4.2v Range
   --------------------
   Battery Monitor = 34
+
+
+    i2c
+  ---------------------
+  SCL = 22  (*Not Required for Reference only!!!)
+  SDA = 21  (*Not Required for Reference only!!!)
+  ---------------------
   ==========================================================================================================
 */
 
-#ifdef batteryMonitor 
+#ifdef batteryMonitor
 
 /* Battery Monitor Settings*/
 #include <Pangodream_18650_CL.h> // Copyright (c) 2019 Pangodream
@@ -150,17 +165,32 @@ Adafruit_NeoPixel pixels(NUM_PIXELS, NEOPIN, NEO_GRB + NEO_KHZ800);
 /* ILI9321 TFT setup */
 #include <Adafruit_ILI9341.h>  // v1.5.6 Adafruit Standard
 
-/* ATSAMD21 SPi Hardware only for speed*/
+/*  SPi Hardware only for speed*/
 #define TFT_CS     17
 #define TFT_DC     16
-#define TFT_RST    19
+#define TFT_RST    15  // Moved from 19
 
 /* These pins do not have to be defined as they are hardware pins */
-//Connect TFT_SCLK to pin   18
-//Connect TFT_MOSI to pin   23
-
+// Connect TFT_SCLK to pin   18
+// Connect TFT_MOSI to pin   23
+// Connect TFT_MISO to pin   19
 Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC, TFT_RST); // Use hardware SPI
 
+#ifdef  touchScreen
+
+/* XPT2046 touch_Modes*/
+
+#include <XPT2046_Touchscreen.h> /* https://github.com/PaulStoffregen/XPT2046_Touchscreen */
+
+// Connect TFT_MISO to pin 19
+#define TOUCH_IRQ_PIN  32 // 32 T_IRQ Touch Screen Interupt pin)
+#define TOUCH_CS_PIN   33 // 33 T_CS  Touch Screen select
+
+//XPT2046_Touchscreen touch(TOUCH_CS_PIN);  // Param 2 - NULL - No interrupts
+//XPT2046_Touchscreen touch(TOUCH_CS_PIN, 255);  // Param 2 - 255 - No interrupts
+XPT2046_Touchscreen touch( TOUCH_CS_PIN, TOUCH_IRQ_PIN ); // Param 2 - Touch IRQ Pin - interrupt enabled polling
+int touch_Button_counter = 0;
+#endif
 //-----------------------------------------------------------------------------
 
 /* Rotary Encoder*/
@@ -230,7 +260,9 @@ boolean stringComplete = false;
 
 void setup() {
 
-
+#ifdef  touchScreen
+  touch.begin();
+#endif
 
 #ifdef enable_DualSerialEvent
   SerialBT.begin(device_BT); //Bluetooth device name
@@ -304,8 +336,13 @@ void loop() {
 #endif
   //-----------------------------
 
+// disable encoder_Modes(button) if touchScreen is enabled
+#ifdef  touchScreen
+  touch_Modes();
+#else
   /*Encoder Mode Button, moved to its own tab*/
   encoder_Modes();
+#endif
 
 }
 
@@ -472,7 +509,7 @@ void splashScreen() {
   tft.drawBitmap(44, 20, HSM_BG_BMP,  142, 128, ILI9341_WHITE);
   tft.drawBitmap(44, 20, HSM_BG2_BMP, 142, 128, ILI9341_RED);
   tft.drawBitmap(44, 20, HSM_BMP,     142, 128, ILI9341_GREY);
-  
+
 #ifdef batteryMonitor
   // Battery Level Indicator on Boot Screen
   tft.drawBitmap(170, 10, BATTERY_BMP, 60, 20, ILI9341_WHITE);
@@ -510,7 +547,7 @@ void splashScreen() {
   tft.setFont(); // Set Default Adafruit GRFX Font
   tft.setTextColor(ILI9341_WHITE);
   tft.setTextSize(1);
-  tft.setCursor(130, 290);
+  tft.setCursor(115, 290);
   tft.print("TFT: v");
   tft.print (CODE_VERS);
 
@@ -544,7 +581,7 @@ void splashScreen() {
 #ifdef enable_BT
   tft.drawRoundRect  (0, 0  , 240, 320, 8,    ILI9341_RED);
   tft.drawBitmap(82, 62, WaitingDataBMP_BT, 76, 190, ILI9341_BLUE);
-  
+
 #ifdef batteryMonitor
   // Show Battery Level Indicator on waiting for data screen
   tft.drawBitmap(33 + 40, 280, BATTERY_BMP, 60, 20, ILI9341_GREEN);
