@@ -26,8 +26,13 @@
   ---------------------
   i2c
   ---------------------
+  
   SCL = 22  (*Not Required for Reference only!!!)
   SDA = 21  (*Not Required for Reference only!!!)
+
+  (Lolin32 Lite)
+  SCL = 23  (*Not Required for Reference only!!!)
+  SDA = 19  (*Not Required for Reference only!!!)
   ---------------------
 
   Neopixel / LED's

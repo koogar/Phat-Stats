@@ -18,7 +18,7 @@ void DisplayStyle_Landscape_ATSAMD () {
   if (stringComplete) {
 
     if (bootMode) {
-
+backlightOFF();
       //splashScreen2();
 
       tft.fillScreen(ILI9341_BLACK);
@@ -32,7 +32,10 @@ void DisplayStyle_Landscape_ATSAMD () {
 
     backlightON (); //Turn ON display when there is  activity
 
-touch.setRotation(3);
+#ifdef  touchScreen
+    touch.setRotation(3);
+#endif
+
     tft.setRotation(3);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
     tft.setFont(); // set to default Adafruit library font
     tft.setTextColor(ILI9341_WHITE, ILI9341_BLACK);

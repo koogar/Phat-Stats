@@ -72,13 +72,13 @@
 BluetoothSerial SerialBT;    // Bluetooth Classic, not BLE
 /*
   eBay Special Red PCB pinouots VCC(3.3v), GND, CS, RST, D/C, MOSI, SCK, BL, (MISO, T_CLK, T_CS, T_DIN, T_DO, T_IRQ)
-  
+
   Wemos ESP32 LoLin32 D32  (Compiles/Tested)
   https://www.wemos.cc/en/latest/d32/d32.html
 
   **Wemos ESP32 Lolin32 Lite** (Compiles/Tested)
   **Wemos ESP32 Lolin32 v1  **  (Compiles/Tested)
-  **discontinued, Clones Available** 
+  **discontinued, Clones Available**
 
   --------------------------------------------
   CS     =  17             (15)
@@ -105,6 +105,11 @@ BluetoothSerial SerialBT;    // Bluetooth Classic, not BLE
   ---------------------
   SCL = 22  (*Not Required for Reference only!!!)
   SDA = 21  (*Not Required for Reference only!!!)
+
+ (Lolin32 Lite)
+  SCL = 23  (*Not Required for Reference only!!!)
+  SDA = 19  (*Not Required for Reference only!!!)
+  ---------------------
   ---------------------
 
   Neopixel / LED's
@@ -118,7 +123,7 @@ BluetoothSerial SerialBT;    // Bluetooth Classic, not BLE
   ==========================================================================================================
 */
 
-#ifdef batteryMonitor 
+#ifdef batteryMonitor
 
 /* Battery Monitor Settings*/
 #include <Pangodream_18650_CL.h> // Copyright (c) 2019 Pangodream
@@ -476,7 +481,7 @@ void splashScreen() {
   tft.drawBitmap(44, 20, HSM_BG_BMP,  142, 128, ILI9341_WHITE);
   tft.drawBitmap(44, 20, HSM_BG2_BMP, 142, 128, ILI9341_RED);
   tft.drawBitmap(44, 20, HSM_BMP,     142, 128, ILI9341_GREY);
-  
+
 #ifdef batteryMonitor
   // Battery Level Indicator on Boot Screen
   tft.drawBitmap(170, 10, BATTERY_BMP, 60, 20, ILI9341_WHITE);
@@ -548,7 +553,7 @@ void splashScreen() {
 #ifdef enable_BT
   tft.drawRoundRect  (0, 0  , 240, 320, 8,    ILI9341_RED);
   tft.drawBitmap(82, 62, WaitingDataBMP_BT, 76, 190, ILI9341_BLUE);
-  
+
 #ifdef batteryMonitor
   // Show Battery Level Indicator on waiting for data screen
   tft.drawBitmap(33 + 40, 280, BATTERY_BMP, 60, 20, ILI9341_GREEN);

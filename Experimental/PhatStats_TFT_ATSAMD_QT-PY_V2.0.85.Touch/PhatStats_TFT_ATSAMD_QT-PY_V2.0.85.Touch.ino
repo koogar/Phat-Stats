@@ -1,4 +1,4 @@
-#define CODE_VERS  "2.0.8.Touch"  // Code version number
+#define CODE_VERS  "2.0.85.Touch"  // Code version number
 
 
 /*
@@ -79,7 +79,7 @@
   ---------------------
   (TFT)
   CS     =  5
-  RST    =  0 
+  RST    =  0
   DC     =  7
   SCLK   =  8
   MOSI   =  10
@@ -172,15 +172,17 @@ Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC, TFT_RST); // Use hardwar
 //XPT2046_Touchscreen touch(TOUCH_CS_PIN, 255);  // Param 2 - 255 - No interrupts
 XPT2046_Touchscreen touch( TOUCH_CS_PIN, TOUCH_IRQ_PIN ); // Param 2 - Touch IRQ Pin - interrupt enabled polling
 
-
 int touch_Button_counter = 0;
-#endif
+
+#else
 
 /* Rotary Encoder*/
-#define encoderOutA 92 // CLK
-#define encoderOutB 93 // DT
-
+#define encoderOutA 2 // CLK
+#define encoderOutB 3 // DT
 RotaryFullStep rotary(encoderOutA, encoderOutB);
+
+#endif
+
 
 /* Encoder Button pin*/
 int encoder_Button     = 1;
@@ -295,6 +297,11 @@ void setup() {
 
   delay(1000); // Give the micro time to initiate the SPi bus
   tft.begin(); //ILI9341
+
+#ifdef  touchScreen
+  touch.setRotation(ASPECT);
+#endif
+
   tft.setRotation(ASPECT);// Rotate the display :  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
 
   /* stops text wrapping*/
@@ -431,6 +438,11 @@ void activityChecker() {
     tft.setFont();
 
     tft.fillScreen(ILI9341_BLACK);
+
+#ifdef  touchScreen
+    touch.setRotation(0);
+#endif
+
     tft.setRotation(0);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
     tft.drawRoundRect  (0, 0  , 240, 320, 8,    ILI9341_RED);
     tft.setTextColor(ILI9341_RED);
@@ -466,6 +478,9 @@ void splashScreen() {
   /* Initial Boot Screen, */
 
   allNeoPixelsOff();
+#ifdef  touchScreen
+  touch.setRotation(0);
+#endif
   tft.setRotation(0);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
 
   tft.setFont(&Org_01);

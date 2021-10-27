@@ -7,11 +7,14 @@ void encoder_Modes() {
   int enc_buttonVal = digitalRead(encoder_Button);
   if (enc_buttonVal == LOW)
 
+
   {
     delay(debounceEncButton); // Debounce Button
     enc_Button_counter ++;
-
+    
     /* Clear Screen*/
+    
+    backlightOFF();
     tft.fillScreen(ILI9341_BLACK);
 
     /* Reset count if over max mode number, */

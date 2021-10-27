@@ -97,6 +97,10 @@
    V2.0.7
         Fix CPU & GPU Overclock gains "-+" bug
 
+   V2.0.8
+
+        Hide Screen refresh on DisplayStyle button Change
+
   Note: Gnat-Stats/Phat-Stats is optimised for desktop CPU's with dedicated graphics cards, such as Nvidia/Radeon.
       You may get wierd results on mobile CPUs and integrated GPU's (iGPU's) on laptops.
 

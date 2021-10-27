@@ -97,7 +97,14 @@
    V2.0.7
         Fix CPU & GPU Overclock gains "-+" bug
 
-   v2.0.8.Touch (QT-PY experimental)
+   V2.0.8
+
+        Hide Screen refresh on DisplayStyle button Change
+            
+
+   v2.0.85.Touch (QT-PY PIN CHANGES!!!! experimental)
+
+        
         Move "RST" pin from 9 to 0 to re-instate the MISO pin for the touch screen.
         
         Note:  Rotary Encoder functions must be disabled to use the touch Screen. 
@@ -207,7 +214,7 @@ String set_GPUram = "xx";
 int Neo_DivideBy = 5;    // Divide NeoPixel brightness v's TFT brightness (less is brighter)
 
 /* If  NeoBrightness = 0 Phat-Stats will start with no NeoPixels lit. Turn the Rotary Encoder to turn on the NeoPixels, */
-int NeoBrightness   = 20;           // Global start up brightness
+int NeoBrightness   = 10;           // Global start up brightness
 
 //----------------------------- Rotary Encoder Usage ------------------------------------
 
@@ -223,8 +230,9 @@ volatile int brightness_count = 160; // Start Up PWM Brightness
 //----------------------------- Touch Screen Button---------------------------------------
 
 /* Use touch screen to change DisplayStyles (Rotary Encoder modes must be disabled)*/
-#define touchScreen // Use touch screen to change DisplayStyles
-int debounceTouchscreenButton = 0;
+
+//#define touchScreen // Use touch screen to change DisplayStyles
+int debounceTouchscreenButton = 100;
 //-------------------------- Display Activity Shutdown -----------------------------------
 
 /* Uncomment below to turn off the screen on serial timeout, else keep last display info eg: incase of PC Crash*/

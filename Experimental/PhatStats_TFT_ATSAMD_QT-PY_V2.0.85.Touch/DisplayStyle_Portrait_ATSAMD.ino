@@ -18,7 +18,7 @@ void DisplayStyle_Portrait_ATSAMD () {
   if (stringComplete) {
 
     if (bootMode) {
-
+backlightOFF();
       //splashScreen2();
 
       tft.fillScreen(ILI9341_BLACK);
@@ -34,9 +34,11 @@ void DisplayStyle_Portrait_ATSAMD () {
 
     backlightON (); //Turn ON display when there is  activity
 
+#ifdef  touchScreen
+    touch.setRotation(0);
+#endif
 
     tft.setRotation(0);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
-    touch.setRotation(0);
     tft.setFont(); // set to default Adafruit library font
     tft.setTextColor(ILI9341_WHITE, ILI9341_BLACK); // used to stop flickering when updating digits that do not increase in length. CPU/GPU load still need a clear box on the end digits
 

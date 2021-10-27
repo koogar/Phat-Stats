@@ -1,4 +1,4 @@
-#define CODE_VERS  "V1.6.5.9.2"  // Code version number
+#define CODE_VERS  "V1.6.5.9.3"  // Code version number
 
 /*
   GNATSTATS OLED, PHATSTATS TFT PC Performance Monitor & HardwareSerialMonitor Windows Client

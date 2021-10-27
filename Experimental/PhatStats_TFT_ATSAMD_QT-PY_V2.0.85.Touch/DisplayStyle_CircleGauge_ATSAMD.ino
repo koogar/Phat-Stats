@@ -37,7 +37,7 @@ void DisplayStyle_CircleGauge_ATSAMD ()  // Landscape only
   if (stringComplete) {
 
     if (bootMode) {
-
+backlightOFF();
       tft.fillScreen(ILI9341_BLACK);
 
       tft.setFont(); // set to default Adafruit library font
@@ -59,7 +59,10 @@ void DisplayStyle_CircleGauge_ATSAMD ()  // Landscape only
 #endif
 
     //--------------------------------------- Display Background ----------------------------------------------------
+    #ifdef  touchScreen 
     touch.setRotation(3);
+    #endif
+    
     tft.setRotation(3);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
 
     backlightON (); //Turn ON display when there is  activity

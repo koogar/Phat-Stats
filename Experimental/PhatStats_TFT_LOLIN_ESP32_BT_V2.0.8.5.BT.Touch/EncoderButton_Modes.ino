@@ -12,6 +12,7 @@ void encoder_Modes() {
     enc_Button_counter ++;
 
     /* Clear Screen*/
+    backlightOFF();
     tft.fillScreen(ILI9341_BLACK);
 
     /* Reset count if over max mode number, */

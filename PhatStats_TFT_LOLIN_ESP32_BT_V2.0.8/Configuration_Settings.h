@@ -107,6 +107,7 @@
       Add Support for LolinD32      (Tested)
       Add Support for Lolin32 LITE  (Tested)   
       Add ESP32 BT ESP Board ID
+      Workaround for Dual Mode
       
 
   Note: Gnat-Stats/Phat-Stats is optimised for desktop CPU's with dedicated graphics cards, such as Nvidia/Radeon.
@@ -146,10 +147,10 @@
 /*ESP32 Communication type, Uncomment only one option!!!*/
 
 /*Uncomment to enable BT, else default to USB serial only,*/
-#define enable_BT              // enable only Bluetooth serial connection
+//#define enable_BT              // enable only Bluetooth serial connection
 
 /*Uncomment to enable BT and USB serial. (Not Currently working),*/
-//#define enable_DualSerialEvent // enable Bluetooth and USB serial connection
+#define enable_DualSerialEvent // enable Bluetooth and USB serial connection
 
 /* Enable the built in LED blinking when transmitting, saves power when using battery if disabled,*/
 #define enableTX_LED //
@@ -283,7 +284,7 @@ int debounceEncButton = 200; //  Use a 0.1uf/100nf/(104) ceramic capacitor from 
 /* Delay screen event, to stop screen data corruption ESP8622 / ESP32 use 25, most others 5 or 0 will do*/
 int Serial_eventDelay = 15;  // 15 is the minimum setting for an ESP32 with a Silicon Labs CP210x serial chip
 
-int baud = 115200; //do not adjust
+int baud = 9600; //do not adjust USB Serial Baud Rate work around for dual mode
 //----------------------------- Debug Screen Erasers ---------------------------------------
 
 /* Debug Screen, Update Erasers, */
