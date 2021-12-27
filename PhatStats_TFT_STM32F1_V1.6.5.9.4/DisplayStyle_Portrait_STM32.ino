@@ -12,13 +12,13 @@
 
 /* Optimised for ILI9341 320 x 240 in portrait,*/
 
-void DisplayStyle_Portrait_ATSAMD () {
+void DisplayStyle_Portrait_STM32 () {
 
   /* TFT DRAW STATS, */
   if (stringComplete) {
 
     if (bootMode) {
-      backlightOFF();
+
       //splashScreen2();
 
       tft.fillScreen(ILI9341_BLACK);
@@ -34,9 +34,6 @@ void DisplayStyle_Portrait_ATSAMD () {
 
     backlightON (); //Turn ON display when there is  activity
 
-#ifdef  touchScreen
-    touch.setRotation(0);
-#endif
 
     tft.setRotation(0);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
     tft.setFont(); // set to default Adafruit library font
@@ -116,10 +113,6 @@ void DisplayStyle_Portrait_ATSAMD () {
 
     /*CPU & GPU Hardware ID*/
 
-    /*CPU Manual Position Test*/
-
-
-
     if (inputString.indexOf("CPU") > -1)
     {
 
@@ -140,6 +133,7 @@ void DisplayStyle_Portrait_ATSAMD () {
       }
       else
         cpuName = inputString.substring(cpuNameStart);
+
 
       tft.setTextSize(1);
       tft.setCursor(16, 8); // (Left/Right, UP/Down)
@@ -393,18 +387,18 @@ void DisplayStyle_Portrait_ATSAMD () {
     int gpuMemClockStart = inputString.indexOf("GMC") + 3;
     int gpuMemClockEnd = inputString.indexOf("|", gpuMemClockStart);
     String gpuMemClockString = inputString.substring(gpuMemClockStart, gpuMemClockEnd);
-    
+
     //Char erase and spacing adjust, MaDerer
     while (gpuMemClockString.length() < 4) gpuMemClockString = " " + gpuMemClockString;
-    
+
     /* GPU SHADER Freq, */
     int gpuShaderClockStart = inputString.indexOf("GSC") + 3;
     int gpuShaderClockEnd = inputString.indexOf("|", gpuShaderClockStart);
     String gpuShaderClockString = inputString.substring(gpuShaderClockStart, gpuShaderClockEnd);
-    
+
     //Char erase and spacing adjust, MaDerer
     while (gpuShaderClockString.length() < 4) gpuShaderClockString = " " + gpuShaderClockString;
-    
+
     /* GPU OVERCLOCK Freq Gain in MHz, */
     double gpuOverclockGain = atof(gpuCoreClockString.c_str());
     double  gpuOverclockSum = gpuOverclockGain - GPU_BOOST; //values in Mhz    tft.print(gpuOverclockSum, 0);
@@ -448,7 +442,6 @@ void DisplayStyle_Portrait_ATSAMD () {
     tft.setTextSize(3);
     tft.setCursor(105, 172);
     //tft.print("Core   :");
-
     tft.print(gpuCoreClockString);
     tft.setTextSize(1);
     tft.print("MHz");       // Centigrade Symbol
@@ -457,7 +450,6 @@ void DisplayStyle_Portrait_ATSAMD () {
     tft.setCursor(125, 200);
     tft.setTextSize(1);
     tft.print("VRAM     :");
-
     tft.print(gpuMemClockString);
     tft.setTextSize(1);
     tft.print("MHz");
@@ -468,7 +460,6 @@ void DisplayStyle_Portrait_ATSAMD () {
     tft.print(gpuShaderClockString);
     tft.setTextSize(1);
     tft.print("MHz");
-
 
     //---------------------------------------------Total GPU Memory-----------------------------------------------------------
 

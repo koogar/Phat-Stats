@@ -12,13 +12,28 @@
 
 /* Optimised for ILI9341 320 x 240 in portrait,*/
 
-void DisplayStyle_Portrait_ATSAMD () {
+void DisplayStyle_Portrait_ESP () {
+
+
+#ifdef enable_DualSerialEvent
+  serialBTEvent();    // Check for Bluetooth Serial Activity
+#endif
+
+#ifdef enable_BT
+  serialBTEvent();    // Check for Bluetooth Serial Activity
+#else //USB
+  serialEvent();     // Check for USB Serial Activity
+#endif
+
+#ifdef  enableActivityChecker
+  activityChecker();      // Turn off screen when no activity
+#endif
 
   /* TFT DRAW STATS, */
   if (stringComplete) {
 
     if (bootMode) {
-      backlightOFF();
+
       //splashScreen2();
 
       tft.fillScreen(ILI9341_BLACK);
@@ -34,9 +49,6 @@ void DisplayStyle_Portrait_ATSAMD () {
 
     backlightON (); //Turn ON display when there is  activity
 
-#ifdef  touchScreen
-    touch.setRotation(0);
-#endif
 
     tft.setRotation(0);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
     tft.setFont(); // set to default Adafruit library font
@@ -182,10 +194,17 @@ void DisplayStyle_Portrait_ATSAMD () {
     }
 
     //------------------------------------------------------RX indicator---------------------------------------------------
+#ifdef enable_BT
+    tft.setCursor(203, 11);
+    tft.println("BT");
+    tft.fillCircle(226, 14, 6, ILI9341_BLUE);// Flash top right corner when updating  //see "serialEvent();" loop
+    tft.drawCircle(226, 14, 7, ILI9341_WHITE);
+#else
     tft.setCursor(203, 11);
     tft.println("RX");
     tft.fillCircle(226, 14, 6, ILI9341_RED);// Flash top right corner when updating  //see "serialEvent();" loop
     tft.drawCircle(226, 14, 7, ILI9341_WHITE);
+#endif
 
     //--------------------------------------------DATA CLEARING BOXES------------------------------------------------------
 
@@ -281,13 +300,12 @@ void DisplayStyle_Portrait_ATSAMD () {
     tft.setCursor(200, 103);// (Left/Right, UP/Down)
     tft.print ("CLOCK");
 
-
 #ifdef ShowFrequencyGainMHz
     tft.setCursor(109 - 6, 94); // (Left/Right, UP/Down)
     tft.setTextSize(2);
 
     if (cpuOverclockSum > 0)
-      tft.print (" +");
+      tft.print ("+");
     else
       tft.print (" ");
 
@@ -296,12 +314,11 @@ void DisplayStyle_Portrait_ATSAMD () {
     tft.println ("MHz");
 #endif
 #ifdef ShowFrequencyGain%
-
-    tft.setCursor(109, 94);// (Left/Right, UP/Down)
+    tft.setCursor(109, 94); // (Left/Right, UP/Down)
     tft.setTextSize(2);
 
     if (cpuOverclockGainPercentSum > 0)
-      tft.print (" +");
+      tft.print ("  +");
     else
       tft.print ("  ");
 
@@ -393,18 +410,18 @@ void DisplayStyle_Portrait_ATSAMD () {
     int gpuMemClockStart = inputString.indexOf("GMC") + 3;
     int gpuMemClockEnd = inputString.indexOf("|", gpuMemClockStart);
     String gpuMemClockString = inputString.substring(gpuMemClockStart, gpuMemClockEnd);
-    
+
     //Char erase and spacing adjust, MaDerer
     while (gpuMemClockString.length() < 4) gpuMemClockString = " " + gpuMemClockString;
-    
+
     /* GPU SHADER Freq, */
     int gpuShaderClockStart = inputString.indexOf("GSC") + 3;
     int gpuShaderClockEnd = inputString.indexOf("|", gpuShaderClockStart);
     String gpuShaderClockString = inputString.substring(gpuShaderClockStart, gpuShaderClockEnd);
-    
+
     //Char erase and spacing adjust, MaDerer
     while (gpuShaderClockString.length() < 4) gpuShaderClockString = " " + gpuShaderClockString;
-    
+
     /* GPU OVERCLOCK Freq Gain in MHz, */
     double gpuOverclockGain = atof(gpuCoreClockString.c_str());
     double  gpuOverclockSum = gpuOverclockGain - GPU_BOOST; //values in Mhz    tft.print(gpuOverclockSum, 0);
@@ -414,6 +431,7 @@ void DisplayStyle_Portrait_ATSAMD () {
 
 #ifdef  enable_ShowFrequencyGain
     /* GPU OVERCLOCK Display Freq Gain, */
+
 
 #ifdef ShowFrequencyGainMHz
     tft.setCursor(16 - 6, 237); // (Left/Right, UP/Down)
@@ -430,14 +448,13 @@ void DisplayStyle_Portrait_ATSAMD () {
 #endif
 
 #ifdef ShowFrequencyGain%
-    tft.setCursor(16, 237);// (Left/Right, UP/Down)
+    tft.setCursor(16, 237); // (Left/Right, UP/Down)
     tft.setTextSize(2);
-    //tft.print ("  +");
 
     if (gpuOverclockGainPercentSum > 0)
       tft.print ("  +");
     else
-      tft.print ("   ");
+      tft.print ("  ");
 
     tft.print(gpuOverclockGainPercentSum, 0); // Show Value in %
     tft.println ("%");
@@ -448,7 +465,6 @@ void DisplayStyle_Portrait_ATSAMD () {
     tft.setTextSize(3);
     tft.setCursor(105, 172);
     //tft.print("Core   :");
-
     tft.print(gpuCoreClockString);
     tft.setTextSize(1);
     tft.print("MHz");       // Centigrade Symbol
@@ -457,7 +473,6 @@ void DisplayStyle_Portrait_ATSAMD () {
     tft.setCursor(125, 200);
     tft.setTextSize(1);
     tft.print("VRAM     :");
-
     tft.print(gpuMemClockString);
     tft.setTextSize(1);
     tft.print("MHz");
@@ -468,7 +483,6 @@ void DisplayStyle_Portrait_ATSAMD () {
     tft.print(gpuShaderClockString);
     tft.setTextSize(1);
     tft.print("MHz");
-
 
     //---------------------------------------------Total GPU Memory-----------------------------------------------------------
 
@@ -622,7 +636,8 @@ void DisplayStyle_Portrait_ATSAMD () {
 
 
     //------------------------------------------ RX indicator Clear-----------------------------------------------
-    delay(TX_LED_Delay); // TX blink delay
+
+    delay(TX_LED_Delay);
     tft.fillCircle(226, 14, 6, ILI9341_BLACK); // Portrait Flash RX top right corner when updating
 
     //-------------------------------------------------------------------------------------------------------------

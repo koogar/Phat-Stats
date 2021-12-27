@@ -1,0 +1,46 @@
+  eBay Special Red PCB pinouots VCC(3.3v), GND, CS, RST, D/C, MOSI, SCK, BL, (MISO, T_CLK, T_CS, T_DIN, T_DO, T_IRQ)
+
+  Wemos ESP32 Lolin32 v1   (Compiles/Tested)
+  Wemos ESP32 Lolin32 Lite (Compiles/Untested)
+  Wemos ESP32 LoLin32 D32  (Compiles/Untested)
+  --------------------------------------------
+  CS     =  17             
+  RST    =  15  // Moved from 19           
+  DC     =  16   
+  SCLK   =  18
+  MOSI   =  23
+
+  Touch
+  --------------------
+
+  B.LIGHT =  4             
+  ---------------------
+
+  Rotary Encoder
+  ---------------------
+
+  EncoderA = 14           
+  EncoderB = 27           
+
+  EncButton= 0            
+  ---------------------
+  i2c
+  ---------------------
+  (Lolin D32)
+  SCL = 22  (*Not Required for Reference only!!!)
+  SDA = 21  (*Not Required for Reference only!!!)
+
+  (Lolin32 Lite)
+  SCL = 23  (*Not Required for Reference only!!!)
+  SDA = 19  (*Not Required for Reference only!!!)
+  ---------------------
+
+  Neopixel / LED's
+  ---------------------
+  Built in LED =  5 (*Not Required for Reference only!!!)
+  Neopixel     =  2       (32)
+
+  Battery Monitor   Voltage divider (GND ---[100K]--- (Pin34 ADC) ----[100k]--- BATT+) 3.2v to 4.2v range
+  --------------------
+  Battery Monitor = 34
+  ==========================================================================================================

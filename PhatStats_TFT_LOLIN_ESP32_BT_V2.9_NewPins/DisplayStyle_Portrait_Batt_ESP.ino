@@ -12,13 +12,28 @@
 
 /* Optimised for ILI9341 320 x 240 in portrait,*/
 
-void DisplayStyle_Portrait_ATSAMD () {
+void DisplayStyle_Portrait_Batt_ESP () {
+
+
+#ifdef enable_DualSerialEvent
+  serialBTEvent();    // Check for Bluetooth Serial Activity
+#endif
+
+#ifdef enable_BT
+  serialBTEvent();    // Check for Bluetooth Serial Activity
+#else //USB
+  serialEvent();     // Check for USB Serial Activity
+#endif
+
+#ifdef  enableActivityChecker
+  activityChecker();      // Turn off screen when no activity
+#endif
 
   /* TFT DRAW STATS, */
   if (stringComplete) {
 
     if (bootMode) {
-      backlightOFF();
+
       //splashScreen2();
 
       tft.fillScreen(ILI9341_BLACK);
@@ -34,9 +49,6 @@ void DisplayStyle_Portrait_ATSAMD () {
 
     backlightON (); //Turn ON display when there is  activity
 
-#ifdef  touchScreen
-    touch.setRotation(0);
-#endif
 
     tft.setRotation(0);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
     tft.setFont(); // set to default Adafruit library font
@@ -182,10 +194,17 @@ void DisplayStyle_Portrait_ATSAMD () {
     }
 
     //------------------------------------------------------RX indicator---------------------------------------------------
+#ifdef enable_BT
+    tft.setCursor(203, 11);
+    tft.println("BT");
+    tft.fillCircle(226, 14, 6, ILI9341_BLUE);// Flash top right corner when updating  //see "serialEvent();" loop
+    tft.drawCircle(226, 14, 7, ILI9341_WHITE);
+#else
     tft.setCursor(203, 11);
     tft.println("RX");
     tft.fillCircle(226, 14, 6, ILI9341_RED);// Flash top right corner when updating  //see "serialEvent();" loop
     tft.drawCircle(226, 14, 7, ILI9341_WHITE);
+#endif
 
     //--------------------------------------------DATA CLEARING BOXES------------------------------------------------------
 
@@ -274,20 +293,13 @@ void DisplayStyle_Portrait_ATSAMD () {
     tft.setTextSize(1);
     tft.print("MHz");
 
-#ifdef  enable_ShowFrequencyGain
-    /* CPU OVERCLOCK Display Freq Gain, */
-    tft.setCursor(200, 93);// (Left/Right, UP/Down)
-    tft.print ("OVER-");
-    tft.setCursor(200, 103);// (Left/Right, UP/Down)
-    tft.print ("CLOCK");
-
-
 #ifdef ShowFrequencyGainMHz
+
     tft.setCursor(109 - 6, 94); // (Left/Right, UP/Down)
     tft.setTextSize(2);
 
     if (cpuOverclockSum > 0)
-      tft.print (" +");
+      tft.print ("+");
     else
       tft.print (" ");
 
@@ -296,19 +308,18 @@ void DisplayStyle_Portrait_ATSAMD () {
     tft.println ("MHz");
 #endif
 #ifdef ShowFrequencyGain%
-
-    tft.setCursor(109, 94);// (Left/Right, UP/Down)
+tft.setCursor(109, 94); // (Left/Right, UP/Down)
     tft.setTextSize(2);
 
     if (cpuOverclockGainPercentSum > 0)
-      tft.print (" +");
+      tft.print ("  +");
     else
       tft.print ("  ");
 
     tft.print(cpuOverclockGainPercentSum, 0); // Show Value in %
     tft.println ("%");
 #endif
-#endif
+
 
     //--------------------------------------- CPU FAN NOT WORKING!!!--------------------------------------------
 
@@ -413,10 +424,12 @@ void DisplayStyle_Portrait_ATSAMD () {
     double gpuOverclockGainPercentSum = gpuOverclockSum / (GPU_BOOST / 100); // % of gain over Stock GPU
 
 #ifdef  enable_ShowFrequencyGain
-    /* GPU OVERCLOCK Display Freq Gain, */
+ /* GPU OVERCLOCK Display Freq Gain, */
 
+    
 #ifdef ShowFrequencyGainMHz
-    tft.setCursor(16 - 6, 237); // (Left/Right, UP/Down)
+
+    tft.setCursor(16-6, 237);// (Left/Right, UP/Down)
     tft.setTextSize(2);
 
     if (gpuOverclockSum > 0)
@@ -432,12 +445,12 @@ void DisplayStyle_Portrait_ATSAMD () {
 #ifdef ShowFrequencyGain%
     tft.setCursor(16, 237);// (Left/Right, UP/Down)
     tft.setTextSize(2);
-    //tft.print ("  +");
+
 
     if (gpuOverclockGainPercentSum > 0)
       tft.print ("  +");
     else
-      tft.print ("   ");
+      tft.print ("  ");
 
     tft.print(gpuOverclockGainPercentSum, 0); // Show Value in %
     tft.println ("%");
@@ -448,7 +461,6 @@ void DisplayStyle_Portrait_ATSAMD () {
     tft.setTextSize(3);
     tft.setCursor(105, 172);
     //tft.print("Core   :");
-
     tft.print(gpuCoreClockString);
     tft.setTextSize(1);
     tft.print("MHz");       // Centigrade Symbol
@@ -457,7 +469,6 @@ void DisplayStyle_Portrait_ATSAMD () {
     tft.setCursor(125, 200);
     tft.setTextSize(1);
     tft.print("VRAM     :");
-
     tft.print(gpuMemClockString);
     tft.setTextSize(1);
     tft.print("MHz");
@@ -468,7 +479,6 @@ void DisplayStyle_Portrait_ATSAMD () {
     tft.print(gpuShaderClockString);
     tft.setTextSize(1);
     tft.print("MHz");
-
 
     //---------------------------------------------Total GPU Memory-----------------------------------------------------------
 
@@ -621,8 +631,28 @@ void DisplayStyle_Portrait_ATSAMD () {
     tft.print(ramString)    ; tft.setTextSize(0); tft.print("GB");
 
 
+    //--------------------------------------  18650 LiPo Battery Level --------------------------------------------
+
+//#ifdef enable_BT
+#ifdef batteryMonitor
+    // Show Battery Level Indicator on DisplayStyle
+    /* Battery Level, */
+      
+    tft.setTextSize(1);
+    tft.setCursor(200, 88);// (Left/Right, UP/Down)
+    tft.print ("Batt:");
+
+    tft.setCursor(200, 98);// (Left/Right, UP/Down)
+    tft.print(""); tft.print(BL.getBatteryChargeLevel()); tft.print("% ");
+    tft.setCursor(200, 108);// (Left/Right, UP/Down)
+    tft.print(BL.getBatteryVolts()); tft.print("v");
+
+//#endif
+#endif
+
     //------------------------------------------ RX indicator Clear-----------------------------------------------
-    delay(TX_LED_Delay); // TX blink delay
+
+    delay(TX_LED_Delay);
     tft.fillCircle(226, 14, 6, ILI9341_BLACK); // Portrait Flash RX top right corner when updating
 
     //-------------------------------------------------------------------------------------------------------------
@@ -633,14 +663,14 @@ void DisplayStyle_Portrait_ATSAMD () {
     //--------------------------Trigger an event when CPU or GPU threshold is met ---------------------------------
 
 #ifdef enable_BoostIndicator
-    CustomTriggerCPU_BOOST( cpuClockString.toInt     ()); // CPU Frequency
-    CustomTriggerGPU_BOOST( gpuCoreClockString.toInt ()); // GPU Frequency
+    CustomTriggerCPU_BOOST_Batt_PortraitNB( cpuClockString.toInt     ()); // CPU Frequency
+    CustomTriggerGPU_BOOST_Batt_PortraitNB( gpuCoreClockString.toInt ()); // GPU Frequency
 #endif
 
 
 #ifdef enable_ThrottleIndicator
-    CustomTriggerCPU_ThrottleIndicator_PortraitNB( cpuString1.toInt() ); //  CPU TJMax/Throttle Incicator BMP
-    CustomTriggerGPU_ThrottleIndicator_PortraitNB( gpuString1.toInt() ); //  GPU TJMax/Throttle Incicator BMP
+    CustomTriggerCPU_ThrottleIndicator_Batt_PortraitNB( cpuString1.toInt() ); //  CPU TJMax/Throttle Incicator BMP
+    CustomTriggerGPU_ThrottleIndicator_Batt_PortraitNB( gpuString1.toInt() ); //  GPU TJMax/Throttle Incicator BMP
 #endif
 
 
@@ -685,7 +715,7 @@ void DisplayStyle_Portrait_ATSAMD () {
 */
 // -------------------  CPU Throttle Indicator Event Portrait --------------------
 
-void CustomTriggerCPU_ThrottleIndicator_PortraitNB(int cpuDegree ) {  // i5-9600k TJMax is 100c
+void CustomTriggerCPU_ThrottleIndicator_Batt_PortraitNB(int cpuDegree ) {  // i5-9600k TJMax is 100c
   float CPUtempfactor = cpuDegree ;
 
   if (CPUtempfactor >= CPU_TJMAX ) {  // TJ Max for the Intel 9900K 100c
@@ -703,7 +733,7 @@ void CustomTriggerCPU_ThrottleIndicator_PortraitNB(int cpuDegree ) {  // i5-9600
 
 // -------------------  GPU Throttle Indicator Event Portrait --------------------
 
-void CustomTriggerGPU_ThrottleIndicator_PortraitNB(int gpuDegree ) {
+void CustomTriggerGPU_ThrottleIndicator_Batt_PortraitNB(int gpuDegree ) {
   float GPUtempfactor = gpuDegree ;
 
   if (GPUtempfactor >= GPU_TJMAX ) {  //GTX 1080 TJMax = 83c
@@ -720,7 +750,7 @@ void CustomTriggerGPU_ThrottleIndicator_PortraitNB(int gpuDegree ) {
 
 // -------------------  CPU Turbo Boost Indicator Event Portrait --------------------
 
-void CustomTriggerCPU_BOOST(int cpuClockString ) {
+void CustomTriggerCPU_BOOST_Batt_PortraitNB(int cpuClockString ) {
   float CPUboostfactor = cpuClockString;
 
   delay(350); // Small delay so Turbo frequency gains stay on screen longer
@@ -752,7 +782,7 @@ void CustomTriggerCPU_BOOST(int cpuClockString ) {
 
 // -------------------  GPU Boost Clock Indicator Event Portrait --------------------
 
-void CustomTriggerGPU_BOOST(int gpuCoreClockString ) {
+void CustomTriggerGPU_BOOST_Batt_PortraitNB(int gpuCoreClockString ) {
   float GPUboostfactor = gpuCoreClockString ;
 
 
