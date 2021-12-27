@@ -34,17 +34,17 @@ void touch_Modes() {
 
       case 0: // 1st SCREEN
 
-        //DisplayStyle_Landscape_Batt_ESP
-        DisplayStyle_Portrait_Batt_ESP ();
+        //DisplayStyle_Landscape_Batt_ESP();
+        DisplayStyle_Portrait_Batt_ESP();
         break;
 
       case 1: // 2nd SCREEN
-        //DisplayStyle_Portrait_Batt_ESP ();
+        //DisplayStyle_Portrait_Batt_ESP();
         DisplayStyle_Landscape_Batt_ESP();
         break;
 
       case 2: // 2nd SCREEN
-        DisplayStyle_CircleGauge_ESP();
+        DisplayStyle_CircleGauge_Batt_ESP();
         break;
     }
 }

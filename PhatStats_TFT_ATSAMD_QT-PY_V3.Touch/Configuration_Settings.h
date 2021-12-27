@@ -111,6 +111,8 @@
         The ILI9341 T_CS and T_IRQ are shared with the Rotary Encoder pins 2 and 3.
           
         Currently the touch function is limited to changing the DisplayStyles when touched.
+
+        Fix: Clock and Shader mHz "zzz" trails
         
   
   
@@ -133,8 +135,8 @@
 //--------------------------- Micro Controller Selection---------------------------------
 
 /* Uncomment your Micro Processor,*/
-#define Adafruit_QTPY
-//define Seeeduino_XIAO
+//#define Adafruit_QTPY
+#define Seeeduino_XIAO
 
 //--------------------------- CPU/GPU Display Settings -----------------------------------
 /* Uncomment your CPU,*/
@@ -207,7 +209,7 @@ String set_GPUram = "xx";
 
 //-------------------------------- NeoPixel Modes -------------------------------------
 
-#define enableNeopixelGauges     // NeoPixel ring bargraph example
+//#define enableNeopixelGauges     // NeoPixel ring bargraph example
 
 /* VERY EXPERIMENTAL!!! SLIGHTLY LAGGY, HAS TO WAIT FOR SCREEN REFRESH*/
 //#define Neo_BrightnessAuto   // Adjust NeoPixel brightness together with screen brightness using the rotary encoder
@@ -220,7 +222,7 @@ int NeoBrightness   = 10;           // Global start up brightness
 //ONLY ENABLE IF YOU HAVE A ILI9341 "TOUCH" SCREEN!!!! Below Rotary Encoder modes must be disabled*/
 /* Use touch screen to change DisplayStyles (Rotary Encoder modes must be disabled)*/
 
-#define touchScreen // Use touch screen to change DisplayStyles
+//#define touchScreen // Use touch screen to change DisplayStyles
 int debounceTouchscreenButton = 100;
 
 //----------------------------- Rotary Encoder Usage ------------------------------------

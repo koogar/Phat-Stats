@@ -560,11 +560,10 @@ void splashScreen() {
   tft.setTextColor(ILI9341_WHITE);
   tft.setFont(); // Set Default Adafruit GRFX Font
 
-  tft.setTextSize(1);
-
-  tft.setCursor(10, 305);
-  tft.setTextColor(ILI9341_WHITE);
-  tft.print("If using USB Serial? Disconnect BT!!!");
+  //tft.setTextSize(1);
+  //tft.setCursor(10, 305);
+  //tft.setTextColor(ILI9341_WHITE);
+  //tft.print("If using USB Serial? Disconnect BT!!!");
 
   backlightON();
 

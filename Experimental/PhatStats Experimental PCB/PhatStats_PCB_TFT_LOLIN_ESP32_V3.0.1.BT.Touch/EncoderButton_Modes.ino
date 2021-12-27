@@ -39,7 +39,7 @@ void encoder_Modes() {
         break;
 
       case 2: // 2nd SCREEN
-        DisplayStyle_CircleGauge_ESP();
+        DisplayStyle_CircleGauge_Batt_ESP();
         break;
 
     }

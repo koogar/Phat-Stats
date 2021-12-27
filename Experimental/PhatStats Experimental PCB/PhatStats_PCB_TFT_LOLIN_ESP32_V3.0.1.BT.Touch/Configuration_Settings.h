@@ -163,7 +163,7 @@ int TX_LED_Delay = 200; // TX blink delay
 
 
 //----------------------------- Battery Monitor ------------------------------------
-/*WARNING!!! Requires voltage divider (GND ---[100K]--- (Pin34 ADC) ----[100k]--- BATT+) (0%)3.2v to (100%)4.2v Range,*/
+/*WARNING!!! Requires voltage divider (GND ---[10K]--- (Pin34 ADC) ----[10k]--- BATT+) (0%)3.2v to (100%)4.2v Range,*/
 
 #define batteryMonitor // (experimental) Read current LiPo battery level if connected.
 

@@ -14,8 +14,9 @@
 /*Optimised for ILI9341 320 x 240 in landscape*/
 
 void DisplayStyle_Landscape_Batt_ESP () {
+#ifdef batteryMonitor
 
-  if (BL.getBatteryVolts() <= 3.1 ) {
+  if (BL.getBatteryVolts() <= 3.2 ) {
     delay(1000);
     tft.fillScreen(ILI9341_BLACK);
     tft.setTextSize(3);
@@ -28,6 +29,7 @@ void DisplayStyle_Landscape_Batt_ESP () {
 
   } else {
 
+#endif
 
 #ifdef enable_DualSerialEvent
     serialBTEvent();    // Check for Bluetooth Serial Activity
@@ -665,7 +667,7 @@ void DisplayStyle_Landscape_Batt_ESP () {
 
       //--------------------------------------  18650 LiPo Battery Level --------------------------------------------
 
-      //#ifdef enable_BT
+
 #ifdef batteryMonitor
       // Show Battery Level Indicator on DisplayStyle
       /* Battery Level, */
@@ -677,40 +679,35 @@ void DisplayStyle_Landscape_Batt_ESP () {
       tft.setCursor(272, 33);// (Left/Right, UP/Down)
       //tft.print(""); tft.print(BL.getBatteryChargeLevel()); tft.print("% ");
 
-      ///*
-      if (BL.getBatteryChargeLevel() <= 25  ) {
-        
-        tft.setTextColor(ILI9341_RED, ILI9341_BLACK); // used to stop flickering when updating digits that do not increase in length. CPU/GPU load still need a clear box on the end digits
+      if (BL.getBatteryChargeLevel() <= 33  ) {
+
+        tft.setTextColor(ILI9341_WHITE, ILI9341_BLACK); // used to stop flickering when updating digits that do not increase in length. CPU/GPU load still need a clear box on the end digits
         tft.print(""); tft.print(BL.getBatteryChargeLevel()); tft.print("% ");
         //tft.print("LOW.% ");
-        
+
       } else {
         tft.setTextColor(ILI9341_WHITE, ILI9341_BLACK); // used to stop flickering when updating digits that do not increase in length. CPU/GPU load still need a clear box on the end digits
         tft.print(""); tft.print(BL.getBatteryChargeLevel()); tft.print("% ");
       }
-
-      //*/
 
       //--------------------------
       tft.setCursor(272, 42);// (Left/Right, UP/Down)
       //tft.print(BL.getBatteryVolts()); tft.print("v");
 
       ///*
-      if (BL.getBatteryVolts() <= 3.2 ) {
-        
-        tft.setTextColor(ILI9341_RED, ILI9341_BLACK); // used to stop flickering when updating digits that do not increase in length. CPU/GPU load still need a clear box on the end digits
+      if (BL.getBatteryVolts() <= 3.4 ) {
+
+        tft.setTextColor(ILI9341_WHITE, ILI9341_BLACK); // used to stop flickering when updating digits that do not increase in length. CPU/GPU load still need a clear box on the end digits
         tft.print(BL.getBatteryVolts()); tft.print("v");
 
       } else {
-        
+
         tft.setTextColor(ILI9341_WHITE, ILI9341_BLACK); // used to stop flickering when updating digits that do not increase in length. CPU/GPU load still need a clear box on the end digits
         tft.print(BL.getBatteryVolts()); tft.print("v");
       }
-      //*/
 
-
-      //#endif
 #endif
+
       //------------------------------------------ RX indicator Clear------------------------------------------------
 
       delay(TX_LED_Delay);
@@ -746,9 +743,16 @@ void DisplayStyle_Landscape_Batt_ESP () {
       stringComplete = false;
       //tft.fillScreen(ILI9341_BLACK);
 
+#ifdef batteryMonitor
     }
+#endif
+
   }
 }
+
+
+
+
 
 /*
     _____          _                    _______   _
@@ -827,6 +831,7 @@ void CustomTriggerCPU_BOOST_LSNB(int cpuClockString ) {
     tft.setCursor(121, 94);
     tft.setTextColor(ILI9341_BLACK);
     tft.println("TURBO");
+
 #endif
 
   }

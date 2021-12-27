@@ -391,6 +391,7 @@ backlightOFF();
     int gpuMemoryStart = inputString.indexOf("GMT") + 3;
     int gpuMemoryEnd = inputString.indexOf("|", gpuMemoryStart);
     String gpuMemoryString = inputString.substring(gpuMemoryStart, gpuMemoryEnd);
+    
     //Char erase and spacing adjust, MaDerer
     while (gpuMemoryString.length() < 4) gpuMemoryString = " " + gpuMemoryString;
 
