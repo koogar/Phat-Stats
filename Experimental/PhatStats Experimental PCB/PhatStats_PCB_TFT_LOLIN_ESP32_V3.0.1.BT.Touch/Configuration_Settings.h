@@ -112,7 +112,8 @@
         Move "RST" pin from 19 to 15 to re-instate the MISO pin for the touch screen.
         Note:  Rotary Encoder Mode function must be disabled to use the touch Screen.
         Currently the touch function is limited to changing the DisplayStyles when touched.
-
+        
+        Fix: Clock and Shader mHz "zzz" trails
 
 
   Note: Gnat-Stats/Phat-Stats is optimised for desktop CPU's with dedicated graphics cards, such as Nvidia/Radeon.
@@ -267,7 +268,7 @@ String set_GPUram = "xx";
 
 /* BT BATTERY SAVER HACK JOB, VERY EXPERIMENTAL!!! SLIGHTLY LAGGY, HAS TO WAIT FOR SCREEN REFRESH*/
 //#define Neo_BrightnessAuto   // Adjust NeoPixel brightness together with screen brightness using the rotary encoder
-int     Neo_DivideBy = 5;   // Divide NeoPixel brightness v's TFT brightness (less is brighter)
+int Neo_DivideBy = 5;   // Divide NeoPixel brightness v's TFT brightness (less is brighter)
 
 /* If  NeoBrightness = 0 Phat-Stats will start with no NeoPixels lit. Turn the Rotary Encoder to turn on the NeoPixels, */
 int NeoBrightness   = 20;           // Global start up brightness
@@ -280,7 +281,7 @@ int NeoBrightness   = 20;           // Global start up brightness
 //#define Encoder_PWM2 // Use rotary encoder for PWM screen brightness control  3.3v
 
 /*TFT Start Up Brightness*/
-volatile int brightness_count = 254; // Start Up Brightness
+volatile int brightness_count = 250; // Start Up Brightness
 
 //-------------------------- Display Activity Shutdown -----------------------------------
 

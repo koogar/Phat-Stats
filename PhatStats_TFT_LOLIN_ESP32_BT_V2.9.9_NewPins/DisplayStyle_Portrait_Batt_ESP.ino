@@ -554,7 +554,6 @@ void DisplayStyle_Portrait_Batt_ESP () {
       int gpuPowerStart = inputString.indexOf("GPWR") + 4;
       int gpuPowerEnd = inputString.indexOf("|", gpuPowerStart);
       String gpuPowerString = inputString.substring(gpuPowerStart, gpuPowerEnd);
-      
       //Char erase and spacing adjust, MaDerer
       while (gpuPowerString.length() < 5) gpuPowerString = " " + gpuPowerString;
 
@@ -678,10 +677,7 @@ void DisplayStyle_Portrait_Batt_ESP () {
       //tft.print(BL.getBatteryVolts()); tft.print("v");
 
       if (BL.getBatteryVolts() <= 3.4 ) {
-        
-      //Char erase and spacing adjust, MaDerer
-      //while (BL.getBatteryVolts.length() < 4) BL.getBatteryVolts = " " + BL.getBatteryVolts;
-      
+
         tft.setTextColor(ILI9341_WHITE, ILI9341_BLACK); // used to stop flickering when updating digits that do not increase in length. CPU/GPU load still need a clear box on the end digits
         tft.print(BL.getBatteryVolts()); tft.print("v");
 

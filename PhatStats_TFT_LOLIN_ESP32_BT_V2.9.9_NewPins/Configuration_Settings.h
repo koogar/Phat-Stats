@@ -109,9 +109,12 @@
       Add ESP32 BT ESP Board ID
       Workaround for Dual Mode
 
-  V2.0.9 (New Pins Layout)
-
-       Change to new Pin Arrangement
+  V2.9.9 (ESP32 experimental) Warning Pin Changes!!!!!
+  
+        Change to new Pin Arrangement
+        Move "RST" pin from 19 to 15 to re-instate the MISO pin       
+        Fix: Clock and Shader mHz "zzz" trails
+        
       
 
   Note: Gnat-Stats/Phat-Stats is optimised for desktop CPU's with dedicated graphics cards, such as Nvidia/Radeon.
@@ -164,7 +167,7 @@ int TX_LED_Delay = 200; // TX blink delay
 //----------------------------- Battery Monitor ------------------------------------
 /*WARNING!!! Requires voltage divider (GND ---[100K]--- (Pin34 ADC) ----[100k]--- BATT+) (0%)3.2v to (100%)4.2v Range,*/
 
-#define batteryMonitor // (experimental) Read current LiPo battery level if connected.
+//#define batteryMonitor // (experimental) Read current LiPo battery level if connected.
 
 //-------------------------------- DISCLAIMER -------------------------------------------
 /*

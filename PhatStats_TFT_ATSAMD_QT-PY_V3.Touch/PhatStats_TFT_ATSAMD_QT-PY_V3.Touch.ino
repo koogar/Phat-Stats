@@ -244,7 +244,9 @@ boolean stringComplete = false;
 
 void setup() {
 
-  Serial.begin(9600);  //  USB Serial Baud Rate
+  
+  //Serial.begin(9600);  //  USB Serial Baud Rate 
+  Serial.begin(115200);  //  USB Serial Baud Rate
   inputString.reserve(200); // String Buffer
 
 #ifdef  touchScreen

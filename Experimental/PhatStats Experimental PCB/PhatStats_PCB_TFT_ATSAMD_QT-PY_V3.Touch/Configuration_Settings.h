@@ -111,7 +111,8 @@
         The ILI9341 T_CS and T_IRQ are shared with the Rotary Encoder pins 2 and 3.
 
         Currently the touch function is limited to changing the DisplayStyles when touched.
-
+        
+        Fix: Clock and Shader mHz "zzz" trails
 
 
   Note: Gnat-Stats/Phat-Stats is optimised for desktop CPU's with dedicated graphics cards, such as Nvidia/Radeon.
@@ -235,7 +236,7 @@ int debounceTouchscreenButton = 100;
 
 /* Use the Rotary Encoder for variable PWM control, connected direct to the MCU PIN*/
 //#define Encoder_PWM2 // Use rotary encoder for PWM screen brightness control  3.3v
-volatile int brightness_count = 254; // Start Up PWM Brightness
+volatile int brightness_count = 200; // Start Up PWM Brightness
 
 
 //-------------------------- Display Activity Shutdown -----------------------------------

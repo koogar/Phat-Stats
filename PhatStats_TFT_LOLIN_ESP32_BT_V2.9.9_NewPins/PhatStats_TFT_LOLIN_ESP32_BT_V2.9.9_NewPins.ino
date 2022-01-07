@@ -49,7 +49,7 @@
   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 */
 
-#define CODE_VERS  "2.9.0.BT"  // Code version number
+#define CODE_VERS  "2.9.9.BT"  // Code version number
 
 #include <Arduino.h>
 #include <Wire.h>

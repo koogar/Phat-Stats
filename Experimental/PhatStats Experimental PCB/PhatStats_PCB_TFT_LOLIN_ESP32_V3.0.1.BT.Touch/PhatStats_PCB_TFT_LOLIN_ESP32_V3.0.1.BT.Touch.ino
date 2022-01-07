@@ -139,8 +139,9 @@ BluetoothSerial SerialBT;    // Bluetooth Classic, not BLE
 /* Battery Monitor Settings*/
 #include <Pangodream_18650_CL.h> // Copyright (c) 2019 Pangodream
 
-#define ADC_PIN 34        //!< ADC pin used, default is GPIO34 - ADC1_6 Voltage divider (2* 100K)
-#define CONV_FACTOR 1.8 //!< Conversion factor to translate analog units to volts
+#define ADC_PIN 34        //!< ADC pin used, default is GPIO34 - ADC1_6 Voltage divider (2* 10K)
+//#define CONV_FACTOR 1.8 //!< Conversion factor to translate analog units to volts
+#define CONV_FACTOR 1.73 //!< Conversion factor to translate analog units to volts
 
 #define READS 20
 Pangodream_18650_CL BL(ADC_PIN, CONV_FACTOR, READS);

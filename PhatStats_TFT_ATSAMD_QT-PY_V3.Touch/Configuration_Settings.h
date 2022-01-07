@@ -103,7 +103,9 @@
             
 
    V3.Touch (QT-PY PIN CHANGES!!!! experimental)
-
+        
+        Warning Pin Changes!!!!!
+        Change to new Pin Arrangement
         
         Move "RST" pin from 9 to 0 to re-instate the MISO pin for the touch screen.
         
