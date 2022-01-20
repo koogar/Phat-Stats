@@ -129,6 +129,19 @@ void DisplayStyle_Portrait_Batt_ESP () {
       tft.drawBitmap(16, 144, Nvidia_Logo_BMP, 82, 82, ILI9341_GREEN); // Nvidia Logo
 #endif
 
+#ifdef NVIDIA_GTX_Ti_GRAPHICS
+      tft.drawBitmap(16, 144, NvidiaGTX_Ti_Logo_BMP, 82, 82, ILI9341_GREEN); // Nvidia Logo
+#endif
+
+#ifdef NVIDIA_RTX_GRAPHICS
+      tft.drawBitmap(16, 144, NvidiaRTX_Logo_BMP, 82, 82, ILI9341_GREEN); // Nvidia Logo
+#endif
+
+#ifdef NVIDIA_RTX_SUPER_GRAPHICS
+      tft.drawBitmap(16, 144, NvidiaRTXSuper_Logo_BMP, 82, 82, ILI9341_GREEN); // Nvidia Logo
+#endif
+
+
 #ifdef AMD_GRAPHICS
       tft.drawBitmap(16, 144, RADEON_Logo_BMP, 82, 82, ILI9341_RED); // Nvidia Logo
 #endif
@@ -554,7 +567,7 @@ void DisplayStyle_Portrait_Batt_ESP () {
       int gpuPowerStart = inputString.indexOf("GPWR") + 4;
       int gpuPowerEnd = inputString.indexOf("|", gpuPowerStart);
       String gpuPowerString = inputString.substring(gpuPowerStart, gpuPowerEnd);
-      
+
       //Char erase and spacing adjust, MaDerer
       while (gpuPowerString.length() < 5) gpuPowerString = " " + gpuPowerString;
 
@@ -678,10 +691,10 @@ void DisplayStyle_Portrait_Batt_ESP () {
       //tft.print(BL.getBatteryVolts()); tft.print("v");
 
       if (BL.getBatteryVolts() <= 3.4 ) {
-        
-      //Char erase and spacing adjust, MaDerer
-      //while (BL.getBatteryVolts.length() < 4) BL.getBatteryVolts = " " + BL.getBatteryVolts;
-      
+
+        //Char erase and spacing adjust, MaDerer
+        //while (BL.getBatteryVolts.length() < 4) BL.getBatteryVolts = " " + BL.getBatteryVolts;
+
         tft.setTextColor(ILI9341_WHITE, ILI9341_BLACK); // used to stop flickering when updating digits that do not increase in length. CPU/GPU load still need a clear box on the end digits
         tft.print(BL.getBatteryVolts()); tft.print("v");
 

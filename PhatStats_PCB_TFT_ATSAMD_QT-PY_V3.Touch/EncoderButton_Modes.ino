@@ -11,9 +11,9 @@ void encoder_Modes() {
   {
     delay(debounceEncButton); // Debounce Button
     enc_Button_counter ++;
-    
+
     /* Clear Screen*/
-    
+
     backlightOFF();
     tft.fillScreen(ILI9341_BLACK);
 
@@ -31,6 +31,7 @@ void encoder_Modes() {
 
       case 0: // 1st SCREEN
         DisplayStyle_Portrait_ATSAMD();
+
         break;
 
       case 1: // 2nd SCREEN
@@ -38,7 +39,7 @@ void encoder_Modes() {
         DisplayStyle_Landscape_ATSAMD();
         break;
 
-      case 2: // 2nd SCREEN
+      case 2: // 3rd SCREEN
         DisplayStyle_CircleGauge_ATSAMD();
         break;
 

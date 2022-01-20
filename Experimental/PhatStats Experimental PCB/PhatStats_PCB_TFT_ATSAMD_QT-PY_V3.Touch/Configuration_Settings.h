@@ -143,7 +143,11 @@
 #define INTEL_CPU
 
 /* Uncomment your GPU,*/
-#define NVIDIA_GRAPHICS
+//#define NVIDIA_GRAPHICS
+//#define NVIDIA_GTX_Ti_GRAPHICS
+//#define NVIDIA_RTX_GRAPHICS
+#define NVIDIA_RTX_SUPER_GRAPHICS
+
 //#define AMD_GRAPHICS
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>

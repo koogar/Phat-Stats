@@ -103,6 +103,18 @@ void DisplayStyle_Portrait_ATSAMD () {
     tft.drawBitmap(16, 144, Nvidia_Logo_BMP, 82, 82, ILI9341_GREEN); // Nvidia Logo
 #endif
 
+#ifdef NVIDIA_GTX_Ti_GRAPHICS
+    tft.drawBitmap(16, 144, NvidiaGTX_Ti_Logo_BMP, 82, 82, ILI9341_GREEN); // Nvidia Logo
+#endif
+
+#ifdef NVIDIA_RTX_GRAPHICS
+    tft.drawBitmap(16, 144, NvidiaRTX_Logo_BMP, 82, 82, ILI9341_GREEN); // Nvidia Logo
+#endif
+
+#ifdef NVIDIA_RTX_SUPER_GRAPHICS
+    tft.drawBitmap(16, 144, NvidiaRTXSuper_Logo_BMP, 82, 82, ILI9341_GREEN); // Nvidia Logo
+#endif
+
 #ifdef AMD_GRAPHICS
     tft.drawBitmap(16, 144, RADEON_Logo_BMP, 82, 82, ILI9341_RED); // Nvidia Logo
 #endif
@@ -393,18 +405,18 @@ void DisplayStyle_Portrait_ATSAMD () {
     int gpuMemClockStart = inputString.indexOf("GMC") + 3;
     int gpuMemClockEnd = inputString.indexOf("|", gpuMemClockStart);
     String gpuMemClockString = inputString.substring(gpuMemClockStart, gpuMemClockEnd);
-    
+
     //Char erase and spacing adjust, MaDerer
     while (gpuMemClockString.length() < 4) gpuMemClockString = " " + gpuMemClockString;
-    
+
     /* GPU SHADER Freq, */
     int gpuShaderClockStart = inputString.indexOf("GSC") + 3;
     int gpuShaderClockEnd = inputString.indexOf("|", gpuShaderClockStart);
     String gpuShaderClockString = inputString.substring(gpuShaderClockStart, gpuShaderClockEnd);
-    
+
     //Char erase and spacing adjust, MaDerer
     while (gpuShaderClockString.length() < 4) gpuShaderClockString = " " + gpuShaderClockString;
-    
+
     /* GPU OVERCLOCK Freq Gain in MHz, */
     double gpuOverclockGain = atof(gpuCoreClockString.c_str());
     double  gpuOverclockSum = gpuOverclockGain - GPU_BOOST; //values in Mhz    tft.print(gpuOverclockSum, 0);

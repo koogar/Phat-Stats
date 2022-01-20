@@ -12,6 +12,10 @@
 
   Touch
   --------------------
+  MISO      = 19   (for XPT2046 touch)
+
+  TFT T_IRQ = 32
+  TFT T_CS  = 33
 
   B.LIGHT =  4             
   ---------------------

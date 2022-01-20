@@ -205,8 +205,13 @@ int debounceTouchscreenButton = 500;
 /* Uncomment your CPU,*/
 //#define AMD_CPU
 #define INTEL_CPU
+
 /* Uncomment your GPU,*/
-#define NVIDIA_GRAPHICS
+//#define NVIDIA_GRAPHICS
+//#define NVIDIA_RTX_GRAPHICS
+#define NVIDIA_RTX_SUPER_GRAPHICS
+//#define NVIDIA_GTX_Ti_GRAPHICS
+
 //#define AMD_GRAPHICS
 
 /* Characters to delete from the start of the CPU/GPU name eg: Remove "Intel" or "Nvidia" to save space*/

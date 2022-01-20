@@ -35,16 +35,16 @@ void touch_Modes() {
 
 
       case 0: // 1st SCREEN
-        DisplayStyle_Landscape_ATSAMD();
+        DisplayStyle_Portrait_ATSAMD() ;
 
         break;
 
       case 1: // 2nd SCREEN
+        DisplayStyle_Landscape_ATSAMD();
 
-        DisplayStyle_Portrait_ATSAMD() ;
         break;
 
-      case 2: // 2nd SCREEN
+      case 2: // 3rd SCREEN
         DisplayStyle_CircleGauge_ATSAMD();
         break;
 

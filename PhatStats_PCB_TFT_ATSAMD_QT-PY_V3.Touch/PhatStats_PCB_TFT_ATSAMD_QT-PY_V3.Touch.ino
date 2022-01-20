@@ -1,4 +1,4 @@
-#define CODE_VERS  "3.0.0.Touch"  // Code version number
+#define CODE_VERS  "3.0.0.T.PCB"  // Code version number
 
 
 /*
@@ -244,7 +244,6 @@ boolean stringComplete = false;
 
 void setup() {
 
-  
   //Serial.begin(9600);  //  USB Serial Baud Rate 
   Serial.begin(115200);  //  USB Serial Baud Rate
   inputString.reserve(200); // String Buffer
@@ -518,15 +517,15 @@ void splashScreen() {
   tft.setFont(); // Set Default Adafruit GRFX Font
   tft.setTextColor(ILI9341_WHITE);
   tft.setTextSize(1);
-  tft.setCursor(130, 290);
+  tft.setCursor(130, 300);
   tft.print("TFT: v");
   tft.print (CODE_VERS);
 
   tft.setTextColor(ILI9341_WHITE);
   tft.setFont(); // Set Default Adafruit GRFX Font
-  tft.setTextSize(1);
-  tft.setCursor(10, 305);
-  tft.print("Use HardwareSerialMonitor v1.3 Upward");
+  //tft.setTextSize(1);
+  //tft.setCursor(10, 305);
+  //tft.print("Use HardwareSerialMonitor v1.3 Upward");
 
   backlightON();
 

@@ -26,6 +26,7 @@ void encoder_Modes() {
 
     /* Change Mode */
     switch (enc_Button_counter) {
+
       case 0: // 1st SCREEN
 
         //DisplayStyle_Landscape_Batt_ESP
