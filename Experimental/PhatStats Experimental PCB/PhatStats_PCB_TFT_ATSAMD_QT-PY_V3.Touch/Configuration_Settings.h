@@ -162,8 +162,8 @@
 String set_CPUname = "xxxxxx";
 
 /* Manually name the GPU,*/
-//#define Manual_gpuName
-String set_GPUname = "xxxxxx";
+#define Manual_gpuName
+String set_GPUname = "GeForce RTX 2080";
 
 /* Manually set GPU ram total,*/
 //#define Manual_gpuRam
