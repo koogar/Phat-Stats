@@ -861,188 +861,6 @@ SparkFun BigTime Watch Kit&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;
 </deviceset>
 </devicesets>
 </library>
-<library name="TML_ili9341-2.8_tft-display_Corrected">
-<packages>
-<package name="2.8_TFT">
-<description>ILI9341 2.8" 2.8 inch TFT SPI Touch Panel 240X320
-http://www.lcdwiki.com/2.8inch_SPI_Module_ILI9341_SKU:MSP2807  http://www.lcdwiki.com/Run_Arduino_Demo_in_spi_model</description>
-<wire x1="0" y1="86" x2="50" y2="86" width="0.127" layer="49"/>
-<wire x1="50" y1="86" x2="50" y2="0" width="0.127" layer="49"/>
-<wire x1="50" y1="0" x2="30.1" y2="0" width="0.127" layer="49"/>
-<wire x1="30.1" y1="0" x2="25" y2="0" width="0.127" layer="49"/>
-<wire x1="25" y1="0" x2="0" y2="0" width="0.127" layer="49"/>
-<wire x1="0" y1="0" x2="0" y2="32" width="0.127" layer="49"/>
-<wire x1="0" y1="32" x2="0" y2="86" width="0.127" layer="49"/>
-<wire x1="0.6" y1="79.5" x2="19.05" y2="79.5" width="0.127" layer="49"/>
-<wire x1="19.05" y1="79.5" x2="19.05" y2="77.36" width="0.127" layer="49"/>
-<wire x1="19.05" y1="77.36" x2="31.75" y2="77.36" width="0.127" layer="49"/>
-<wire x1="31.75" y1="77.36" x2="31.75" y2="79.5" width="0.127" layer="49"/>
-<wire x1="31.75" y1="79.5" x2="49.4" y2="79.5" width="0.127" layer="49"/>
-<wire x1="49.4" y1="79.5" x2="49.4" y2="10.45" width="0.127" layer="49"/>
-<wire x1="49.4" y1="10.45" x2="0.6" y2="10.45" width="0.127" layer="49"/>
-<wire x1="0.6" y1="10.45" x2="0.6" y2="79.5" width="0.127" layer="49"/>
-<wire x1="1.5" y1="17" x2="48.5" y2="17" width="0.127" layer="49"/>
-<wire x1="48.5" y1="17" x2="48.5" y2="77" width="0.127" layer="49"/>
-<wire x1="48.5" y1="77" x2="1.5" y2="77" width="0.127" layer="49"/>
-<wire x1="1.5" y1="77" x2="1.5" y2="17" width="0.127" layer="49"/>
-<pad name="SD_CS" x="21.19" y="83" drill="1" diameter="1.9304" shape="square"/>
-<pad name="SD_MOSI" x="23.73" y="83" drill="1" diameter="1.9304"/>
-<pad name="SD_MISO" x="26.27" y="83" drill="1" diameter="1.9304"/>
-<pad name="SD_SCK" x="28.81" y="83" drill="1" diameter="1.9304"/>
-<pad name="SCK" x="23.73" y="2" drill="1" diameter="1.9304"/>
-<pad name="BL" x="26.27" y="2" drill="1" diameter="1.9304"/>
-<pad name="MISO" x="28.81" y="2" drill="1" diameter="1.9304"/>
-<pad name="T_CLK" x="31.35" y="2" drill="1" diameter="1.9304" rot="R90"/>
-<pad name="T_CS" x="33.89" y="2" drill="1" diameter="1.9304" rot="R180"/>
-<pad name="T_DIN" x="36.43" y="2" drill="1" diameter="1.9304"/>
-<pad name="T_DO" x="38.97" y="2" drill="1" diameter="1.9304"/>
-<pad name="T_IRQ" x="41.51" y="2" drill="1" diameter="1.9304"/>
-<circle x="3" y="7" radius="1.6" width="0.127" layer="49"/>
-<circle x="47" y="7" radius="1.6" width="0.127" layer="49"/>
-<circle x="47" y="83.25" radius="1.6" width="0.127" layer="49"/>
-<circle x="3" y="83.25" radius="1.6" width="0.127" layer="49"/>
-<pad name="MOSI" x="21.19" y="2" drill="1" diameter="1.9304" rot="R90"/>
-<pad name="D/C" x="18.65" y="2" drill="1" diameter="1.9304" rot="R90"/>
-<pad name="RST" x="16.11" y="2" drill="1" diameter="1.9304" rot="R90"/>
-<pad name="CS" x="13.57" y="2" drill="1" diameter="1.9304" rot="R90"/>
-<pad name="GND" x="11.03" y="2" drill="1" diameter="1.9304" rot="R90"/>
-<pad name="VCC" x="8.49" y="2" drill="1" diameter="1.9304" shape="square" rot="R90"/>
-<text x="45.3391125" y="13.254309375" size="1.016" layer="49" font="vector" ratio="14" rot="R180">ILI9341 2.8" TFT SPI Touch Panel 320X240 V1.2</text>
-<text x="41.739309375" y="3.8108875" size="0.8128" layer="49" font="vector" ratio="14" rot="R90">T_IRQ</text>
-<text x="39.199309375" y="3.8108875" size="0.8128" layer="49" font="vector" ratio="14" rot="R90">T_DO</text>
-<text x="36.659309375" y="3.8108875" size="0.8128" layer="49" font="vector" ratio="14" rot="R90">T_DIN</text>
-<text x="34.119309375" y="3.8108875" size="0.8128" layer="49" font="vector" ratio="14" rot="R90">T_CS</text>
-<text x="31.579309375" y="3.8108875" size="0.8128" layer="49" font="vector" ratio="14" rot="R90">T_CLK</text>
-<text x="29.039309375" y="3.8108875" size="0.8128" layer="49" font="vector" ratio="14" rot="R90">MISO</text>
-<text x="26.499309375" y="3.8108875" size="0.8128" layer="49" font="vector" ratio="14" rot="R90">BL</text>
-<text x="23.959309375" y="3.8108875" size="0.8128" layer="49" font="vector" ratio="14" rot="R90">SCK</text>
-<text x="21.419309375" y="3.8108875" size="0.8128" layer="49" font="vector" ratio="14" rot="R90">MOSI</text>
-<text x="18.879309375" y="3.8108875" size="0.8128" layer="49" font="vector" ratio="14" rot="R90">D/C</text>
-<text x="16.339309375" y="3.8108875" size="0.8128" layer="49" font="vector" ratio="14" rot="R90">RST</text>
-<text x="13.799309375" y="3.8108875" size="0.8128" layer="49" font="vector" ratio="14" rot="R90">CS</text>
-<text x="11.259309375" y="3.8108875" size="0.8128" layer="49" font="vector" ratio="14" rot="R90">GND</text>
-<text x="8.719309375" y="3.8108875" size="0.8128" layer="49" font="vector" ratio="14" rot="R90">VCC</text>
-<text x="39.199309375" y="9.2558875" size="0.8128" layer="49" font="vector" ratio="14" rot="R180">TOUCH IC</text>
-<text x="21.149309375" y="9.2558875" size="0.8128" layer="49" font="vector" ratio="14" rot="R180">SPI _TFT</text>
-<text x="3.0508875" y="42.265690625" size="0.8128" layer="49" font="vector" ratio="14" rot="R90">SD_CARD_3.3V!!!</text>
-<wire x1="25" y1="82.8108875" x2="25" y2="85.8108875" width="0.127" layer="49" style="shortdash"/>
-<text x="22.752896875" y="84.847646875" size="0.6096" layer="21" font="vector" ratio="14">MOSI</text>
-<text x="25.307821875" y="84.839084375" size="0.6096" layer="21" font="vector" ratio="14">MISO</text>
-<text x="20.704028125" y="84.833171875" size="0.6096" layer="21" font="vector" ratio="14">CS</text>
-<text x="27.992578125" y="84.833625" size="0.6096" layer="21" font="vector" ratio="14">SCK</text>
-<text x="-0.805690625" y="1.2708875" size="1.27" layer="25" rot="R90">&gt;NAME</text>
-<text x="51.804309375" y="1.2708875" size="1.27" layer="27" rot="R90">&gt;VALUE</text>
-<wire x1="43" y1="0" x2="43" y2="7.9" width="0.127" layer="49"/>
-<wire x1="7" y1="0" x2="7" y2="8" width="0.127" layer="49"/>
-<wire x1="25" y1="49" x2="25" y2="47" width="0.127" layer="49"/>
-<wire x1="24" y1="48" x2="26" y2="48" width="0.127" layer="49"/>
-<wire x1="16" y1="28.5" x2="17.635" y2="28.5" width="0.127" layer="49"/>
-<wire x1="25" y1="31" x2="25" y2="32" width="0.127" layer="49"/>
-<wire x1="25" y1="26" x2="25" y2="25" width="0.127" layer="49"/>
-<wire x1="0" y1="32" x2="20" y2="32" width="0" layer="49"/>
-<wire x1="20" y1="61" x2="20" y2="32" width="0" layer="49"/>
-<wire x1="32.365" y1="28.5" x2="34" y2="28.5" width="0.127" layer="49"/>
-<wire x1="17.75" y1="31" x2="17.75" y2="26.25" width="0.127" layer="49"/>
-<wire x1="17.75" y1="26.25" x2="32.25" y2="26.25" width="0.127" layer="49"/>
-<wire x1="32.25" y1="26.25" x2="32.25" y2="31" width="0.127" layer="49"/>
-<wire x1="32.25" y1="31" x2="17.75" y2="31" width="0.127" layer="49"/>
-<text x="30.4" y="24" size="1.27" layer="49" font="vector" rot="R180">0.8mm 18Pin</text>
-<wire x1="43" y1="8" x2="7" y2="8" width="0.127" layer="49"/>
-<wire x1="25" y1="0" x2="25" y2="3" width="0.127" layer="49"/>
-<wire x1="30.1" y1="0" x2="30.1" y2="8" width="0.127" layer="49"/>
-<wire x1="0" y1="33" x2="19" y2="33" width="0" layer="49"/>
-<wire x1="19" y1="33" x2="19" y2="60" width="0" layer="49"/>
-<wire x1="19" y1="60" x2="11.5" y2="60" width="0" layer="49"/>
-<wire x1="11.5" y1="60" x2="9.5" y2="61" width="0" layer="49"/>
-<wire x1="9.5" y1="61" x2="0" y2="61" width="0" layer="49"/>
-<wire x1="20" y1="61" x2="12" y2="61" width="0" layer="49"/>
-<wire x1="12" y1="61" x2="10" y2="62" width="0" layer="49"/>
-<wire x1="10" y1="62" x2="0" y2="62" width="0" layer="49"/>
-<circle x="0.1" y="11" radius="0.5" width="0.127" layer="49"/>
-<circle x="49.9" y="11" radius="0.5" width="0.127" layer="49"/>
-<circle x="0.1" y="78.9" radius="0.5" width="0.127" layer="49"/>
-<circle x="49.9" y="78.9" radius="0.5" width="0.127" layer="49"/>
-<text x="19.35858125" y="82.54100625" size="0.6096" layer="21" font="vector" ratio="14" rot="R90">SD</text>
-<text x="21.519709375" y="84.8526" size="0.6096" layer="22" font="vector" ratio="14" rot="MR0">CS</text>
-<text x="24.628746875" y="84.818503125" size="0.6096" layer="22" font="vector" ratio="14" rot="MR0">MOSI</text>
-<text x="27.212821875" y="84.839084375" size="0.6096" layer="22" font="vector" ratio="14" rot="MR0">MISO</text>
-<text x="29.462690625" y="84.823909375" size="0.6096" layer="22" font="vector" ratio="14" rot="MR0">SCK</text>
-<text x="18.72358125" y="82.54100625" size="0.6096" layer="22" font="vector" ratio="14" rot="MR90">SD</text>
-</package>
-</packages>
-<symbols>
-<symbol name="2.8_TFT">
-<description>ILI9341 2.8" 2.8 inch TFT SPI Touch Panel 240X320
-http://www.lcdwiki.com/2.8inch_SPI_Module_ILI9341_SKU:MSP2807  http://www.lcdwiki.com/Run_Arduino_Demo_in_spi_model</description>
-<pin name="VCC" x="-35.56" y="17.78" length="middle"/>
-<pin name="GND" x="-35.56" y="15.24" length="middle"/>
-<pin name="CS" x="-35.56" y="12.7" length="middle"/>
-<pin name="RST" x="-35.56" y="10.16" length="middle"/>
-<pin name="D/C" x="-35.56" y="7.62" length="middle"/>
-<pin name="MOSI" x="-35.56" y="5.08" length="middle"/>
-<pin name="SCK" x="-35.56" y="2.54" length="middle"/>
-<pin name="BL" x="-35.56" y="0" length="middle"/>
-<pin name="MISO" x="-35.56" y="-2.54" length="middle"/>
-<pin name="T_CLK" x="-35.56" y="-10.16" length="middle"/>
-<pin name="T_CS" x="-35.56" y="-12.7" length="middle"/>
-<pin name="T_DIN" x="-35.56" y="-15.24" length="middle"/>
-<pin name="T_DO" x="-35.56" y="-17.78" length="middle"/>
-<pin name="T_IRQ" x="-35.56" y="-20.32" length="middle"/>
-<pin name="SD_CS" x="35.56" y="2.54" length="middle" rot="R180"/>
-<pin name="SD_MOSI" x="35.56" y="0" length="middle" rot="R180"/>
-<pin name="SD_MISO" x="35.56" y="-2.54" length="middle" rot="R180"/>
-<pin name="SD_SCK" x="35.56" y="-5.08" length="middle" rot="R180"/>
-<wire x1="-30.48" y1="20.32" x2="30.48" y2="20.32" width="0.254" layer="94"/>
-<wire x1="30.48" y1="20.32" x2="30.48" y2="-22.86" width="0.254" layer="94"/>
-<wire x1="30.48" y1="-22.86" x2="-30.48" y2="-22.86" width="0.254" layer="94"/>
-<wire x1="-30.48" y1="-22.86" x2="-30.48" y2="20.32" width="0.254" layer="94"/>
-<wire x1="25.4" y1="-20.32" x2="-20.32" y2="-20.32" width="0.254" layer="94"/>
-<wire x1="-20.32" y1="-20.32" x2="-20.32" y2="17.78" width="0.254" layer="94"/>
-<wire x1="-20.32" y1="17.78" x2="25.4" y2="17.78" width="0.254" layer="94"/>
-<text x="-30.48" y="25.4" size="1.27" layer="95">&gt;NAME</text>
-<text x="-30.48" y="-25.4" size="1.27" layer="96">&gt;VALUE</text>
-<wire x1="25.4" y1="-20.32" x2="25.4" y2="-7.62" width="0.254" layer="94"/>
-<wire x1="25.4" y1="5.08" x2="25.4" y2="17.78" width="0.254" layer="94"/>
-<text x="28.194" y="14.986" size="1.27" layer="94" rot="R270">ILI9341 eBay Red  2.8" Module</text>
-</symbol>
-</symbols>
-<devicesets>
-<deviceset name="2.8_TFT">
-<description>ILI9341 2.8" 2.8 inch TFT SPI Touch Panel 240X320
-http://www.lcdwiki.com/2.8inch_SPI_Module_ILI9341_SKU:MSP2807  http://www.lcdwiki.com/Run_Arduino_Demo_in_spi_model</description>
-<gates>
-<gate name="G$1" symbol="2.8_TFT" x="2.54" y="5.08"/>
-</gates>
-<devices>
-<device name="" package="2.8_TFT">
-<connects>
-<connect gate="G$1" pin="BL" pad="BL"/>
-<connect gate="G$1" pin="CS" pad="CS"/>
-<connect gate="G$1" pin="D/C" pad="D/C"/>
-<connect gate="G$1" pin="GND" pad="GND"/>
-<connect gate="G$1" pin="MISO" pad="MISO"/>
-<connect gate="G$1" pin="MOSI" pad="MOSI"/>
-<connect gate="G$1" pin="RST" pad="RST"/>
-<connect gate="G$1" pin="SCK" pad="SCK"/>
-<connect gate="G$1" pin="SD_CS" pad="SD_CS"/>
-<connect gate="G$1" pin="SD_MISO" pad="SD_MISO"/>
-<connect gate="G$1" pin="SD_MOSI" pad="SD_MOSI"/>
-<connect gate="G$1" pin="SD_SCK" pad="SD_SCK"/>
-<connect gate="G$1" pin="T_CLK" pad="T_CLK"/>
-<connect gate="G$1" pin="T_CS" pad="T_CS"/>
-<connect gate="G$1" pin="T_DIN" pad="T_DIN"/>
-<connect gate="G$1" pin="T_DO" pad="T_DO"/>
-<connect gate="G$1" pin="T_IRQ" pad="T_IRQ"/>
-<connect gate="G$1" pin="VCC" pad="VCC"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-</devicesets>
-</library>
 <library name="TML_ili9341_0.8Pitch_Header">
 <packages>
 <package name="ILI9341-2.8">
@@ -10493,6 +10311,189 @@ of -40°C to +85°C
 </deviceset>
 </devicesets>
 </library>
+<library name="TML_ili9341-2.8_tft-display_Corrected v2">
+<packages>
+<package name="2.8_TFT">
+<description>ILI9341 2.8" 2.8 inch TFT SPI Touch Panel 240X320
+http://www.lcdwiki.com/2.8inch_SPI_Module_ILI9341_SKU:MSP2807  http://www.lcdwiki.com/Run_Arduino_Demo_in_spi_model</description>
+<wire x1="0" y1="86" x2="50" y2="86" width="0.127" layer="49"/>
+<wire x1="50" y1="86" x2="50" y2="0" width="0.127" layer="49"/>
+<wire x1="50" y1="0" x2="30.1" y2="0" width="0.127" layer="49"/>
+<wire x1="30.1" y1="0" x2="25" y2="0" width="0.127" layer="49"/>
+<wire x1="25" y1="0" x2="0" y2="0" width="0.127" layer="49"/>
+<wire x1="0" y1="0" x2="0" y2="32" width="0.127" layer="49"/>
+<wire x1="0" y1="32" x2="0" y2="86" width="0.127" layer="49"/>
+<wire x1="0.6" y1="79.6" x2="19.05" y2="79.6" width="0.127" layer="49"/>
+<wire x1="19.05" y1="79.6" x2="19.05" y2="77.36" width="0.127" layer="49"/>
+<wire x1="19.05" y1="77.36" x2="31.75" y2="77.36" width="0.127" layer="49"/>
+<wire x1="31.75" y1="77.36" x2="31.75" y2="79.6" width="0.127" layer="49"/>
+<wire x1="31.75" y1="79.6" x2="49.4" y2="79.6" width="0.127" layer="49"/>
+<wire x1="49.4" y1="79.6" x2="49.4" y2="10.4" width="0.127" layer="49"/>
+<wire x1="49.4" y1="10.4" x2="0.6" y2="10.4" width="0.127" layer="49"/>
+<wire x1="0.6" y1="10.4" x2="0.6" y2="79.6" width="0.127" layer="49"/>
+<wire x1="1.5" y1="17" x2="48.5" y2="17" width="0.127" layer="49"/>
+<wire x1="48.5" y1="17" x2="48.5" y2="77" width="0.127" layer="49"/>
+<wire x1="48.5" y1="77" x2="1.5" y2="77" width="0.127" layer="49"/>
+<wire x1="1.5" y1="77" x2="1.5" y2="17" width="0.127" layer="49"/>
+<pad name="SD_CS" x="21.19" y="83" drill="1" diameter="1.9304" shape="square"/>
+<pad name="SD_MOSI" x="23.73" y="83" drill="1" diameter="1.9304"/>
+<pad name="SD_MISO" x="26.27" y="83" drill="1" diameter="1.9304"/>
+<pad name="SD_SCK" x="28.81" y="83" drill="1" diameter="1.9304"/>
+<pad name="SCK" x="23.73" y="2" drill="1" diameter="1.9304"/>
+<pad name="BL" x="26.27" y="2" drill="1" diameter="1.9304"/>
+<pad name="MISO" x="28.81" y="2" drill="1" diameter="1.9304"/>
+<pad name="T_CLK" x="31.35" y="2" drill="1" diameter="1.9304" rot="R90"/>
+<pad name="T_CS" x="33.89" y="2" drill="1" diameter="1.9304" rot="R180"/>
+<pad name="T_DIN" x="36.43" y="2" drill="1" diameter="1.9304"/>
+<pad name="T_DO" x="38.97" y="2" drill="1" diameter="1.9304"/>
+<pad name="T_IRQ" x="41.51" y="2" drill="1" diameter="1.9304"/>
+<circle x="3" y="6.92" radius="1.6" width="0.127" layer="49"/>
+<circle x="47" y="6.92" radius="1.6" width="0.127" layer="49"/>
+<circle x="47" y="83" radius="1.6" width="0.127" layer="49"/>
+<circle x="3" y="83" radius="1.6" width="0.127" layer="49"/>
+<pad name="MOSI" x="21.19" y="2" drill="1" diameter="1.9304" rot="R90"/>
+<pad name="D/C" x="18.65" y="2" drill="1" diameter="1.9304" rot="R90"/>
+<pad name="RST" x="16.11" y="2" drill="1" diameter="1.9304" rot="R90"/>
+<pad name="CS" x="13.57" y="2" drill="1" diameter="1.9304" rot="R90"/>
+<pad name="GND" x="11.03" y="2" drill="1" diameter="1.9304" rot="R90"/>
+<pad name="VCC" x="8.49" y="2" drill="1" diameter="1.9304" shape="square" rot="R90"/>
+<text x="45.3391125" y="13.254309375" size="1.016" layer="49" font="vector" ratio="14" rot="R180">ILI9341 2.8" TFT SPI Touch Panel 320X240 V1.2</text>
+<text x="41.739309375" y="3.8108875" size="0.8128" layer="49" font="vector" ratio="14" rot="R90">T_IRQ</text>
+<text x="39.199309375" y="3.8108875" size="0.8128" layer="49" font="vector" ratio="14" rot="R90">T_DO</text>
+<text x="36.659309375" y="3.8108875" size="0.8128" layer="49" font="vector" ratio="14" rot="R90">T_DIN</text>
+<text x="34.119309375" y="3.8108875" size="0.8128" layer="49" font="vector" ratio="14" rot="R90">T_CS</text>
+<text x="31.579309375" y="3.8108875" size="0.8128" layer="49" font="vector" ratio="14" rot="R90">T_CLK</text>
+<text x="29.039309375" y="3.8108875" size="0.8128" layer="49" font="vector" ratio="14" rot="R90">MISO</text>
+<text x="26.499309375" y="3.8108875" size="0.8128" layer="49" font="vector" ratio="14" rot="R90">BL</text>
+<text x="23.959309375" y="3.8108875" size="0.8128" layer="49" font="vector" ratio="14" rot="R90">SCK</text>
+<text x="21.419309375" y="3.8108875" size="0.8128" layer="49" font="vector" ratio="14" rot="R90">MOSI</text>
+<text x="18.879309375" y="3.8108875" size="0.8128" layer="49" font="vector" ratio="14" rot="R90">D/C</text>
+<text x="16.339309375" y="3.8108875" size="0.8128" layer="49" font="vector" ratio="14" rot="R90">RST</text>
+<text x="13.799309375" y="3.8108875" size="0.8128" layer="49" font="vector" ratio="14" rot="R90">CS</text>
+<text x="11.259309375" y="3.8108875" size="0.8128" layer="49" font="vector" ratio="14" rot="R90">GND</text>
+<text x="8.719309375" y="3.8108875" size="0.8128" layer="49" font="vector" ratio="14" rot="R90">VCC</text>
+<text x="39.199309375" y="9.2558875" size="0.8128" layer="49" font="vector" ratio="14" rot="R180">TOUCH IC</text>
+<text x="21.149309375" y="9.2558875" size="0.8128" layer="49" font="vector" ratio="14" rot="R180">SPI _TFT</text>
+<text x="3.0508875" y="42.265690625" size="0.8128" layer="49" font="vector" ratio="14" rot="R90">SD_CARD_3.3V!!!</text>
+<wire x1="25" y1="83" x2="25" y2="85.8108875" width="0.127" layer="49" style="shortdash"/>
+<text x="22.752896875" y="84.847646875" size="0.6096" layer="21" font="vector" ratio="14">MOSI</text>
+<text x="25.307821875" y="84.839084375" size="0.6096" layer="21" font="vector" ratio="14">MISO</text>
+<text x="20.704028125" y="84.833171875" size="0.6096" layer="21" font="vector" ratio="14">CS</text>
+<text x="27.992578125" y="84.833625" size="0.6096" layer="21" font="vector" ratio="14">SCK</text>
+<text x="-0.805690625" y="1.2708875" size="1.27" layer="25" rot="R90">&gt;NAME</text>
+<text x="51.804309375" y="1.2708875" size="1.27" layer="27" rot="R90">&gt;VALUE</text>
+<wire x1="43" y1="0" x2="43" y2="7.9" width="0.127" layer="49"/>
+<wire x1="7" y1="0" x2="7" y2="8" width="0.127" layer="49"/>
+<wire x1="25" y1="49" x2="25" y2="47" width="0.127" layer="49"/>
+<wire x1="24" y1="48" x2="26" y2="48" width="0.127" layer="49"/>
+<wire x1="16" y1="28.5" x2="17.635" y2="28.5" width="0.127" layer="49"/>
+<wire x1="25" y1="31" x2="25" y2="32" width="0.127" layer="49"/>
+<wire x1="25" y1="26" x2="25" y2="25" width="0.127" layer="49"/>
+<wire x1="0" y1="32" x2="20" y2="32" width="0" layer="49"/>
+<wire x1="20" y1="61" x2="20" y2="32" width="0" layer="49"/>
+<wire x1="32.365" y1="28.5" x2="34" y2="28.5" width="0.127" layer="49"/>
+<wire x1="17.75" y1="31" x2="17.75" y2="26.25" width="0.127" layer="49"/>
+<wire x1="17.75" y1="26.25" x2="32.25" y2="26.25" width="0.127" layer="49"/>
+<wire x1="32.25" y1="26.25" x2="32.25" y2="31" width="0.127" layer="49"/>
+<wire x1="32.25" y1="31" x2="17.75" y2="31" width="0.127" layer="49"/>
+<text x="30.4" y="24" size="1.27" layer="49" font="vector" rot="R180">0.8mm 18Pin</text>
+<wire x1="43" y1="8" x2="7" y2="8" width="0.127" layer="49"/>
+<wire x1="25" y1="0" x2="25" y2="3" width="0.127" layer="49"/>
+<wire x1="30.1" y1="0" x2="30.1" y2="8" width="0.127" layer="49"/>
+<wire x1="0" y1="33" x2="19" y2="33" width="0" layer="49"/>
+<wire x1="19" y1="33" x2="19" y2="60" width="0" layer="49"/>
+<wire x1="19" y1="60" x2="11.5" y2="60" width="0" layer="49"/>
+<wire x1="11.5" y1="60" x2="9.5" y2="61" width="0" layer="49"/>
+<wire x1="9.5" y1="61" x2="0" y2="61" width="0" layer="49"/>
+<wire x1="20" y1="61" x2="12" y2="61" width="0" layer="49"/>
+<wire x1="12" y1="61" x2="10" y2="62" width="0" layer="49"/>
+<wire x1="10" y1="62" x2="0" y2="62" width="0" layer="49"/>
+<circle x="0.1" y="10.45" radius="0.5" width="0.127" layer="49"/>
+<circle x="49.9" y="10.45" radius="0.5" width="0.127" layer="49"/>
+<circle x="0.1" y="79.6" radius="0.5" width="0.127" layer="49"/>
+<circle x="49.9" y="79.6" radius="0.5" width="0.127" layer="49"/>
+<text x="19.35858125" y="82.54100625" size="0.6096" layer="21" font="vector" ratio="14" rot="R90">SD</text>
+<text x="21.519709375" y="84.8526" size="0.6096" layer="22" font="vector" ratio="14" rot="MR0">CS</text>
+<text x="24.628746875" y="84.818503125" size="0.6096" layer="22" font="vector" ratio="14" rot="MR0">MOSI</text>
+<text x="27.212821875" y="84.839084375" size="0.6096" layer="22" font="vector" ratio="14" rot="MR0">MISO</text>
+<text x="29.462690625" y="84.823909375" size="0.6096" layer="22" font="vector" ratio="14" rot="MR0">SCK</text>
+<text x="18.72358125" y="82.54100625" size="0.6096" layer="22" font="vector" ratio="14" rot="MR90">SD</text>
+<text x="18.444" y="28.4495" size="0.6096" layer="21" font="vector" ratio="15" rot="SR0"> QD-TFT2803 SPI 0.8 Pitch</text>
+</package>
+</packages>
+<symbols>
+<symbol name="2.8_TFT">
+<description>ILI9341 2.8" 2.8 inch TFT SPI Touch Panel 240X320
+http://www.lcdwiki.com/2.8inch_SPI_Module_ILI9341_SKU:MSP2807  http://www.lcdwiki.com/Run_Arduino_Demo_in_spi_model</description>
+<pin name="VCC" x="-35.56" y="17.78" length="middle"/>
+<pin name="GND" x="-35.56" y="15.24" length="middle"/>
+<pin name="CS" x="-35.56" y="12.7" length="middle"/>
+<pin name="RST" x="-35.56" y="10.16" length="middle"/>
+<pin name="D/C" x="-35.56" y="7.62" length="middle"/>
+<pin name="MOSI" x="-35.56" y="5.08" length="middle"/>
+<pin name="SCK" x="-35.56" y="2.54" length="middle"/>
+<pin name="BL" x="-35.56" y="0" length="middle"/>
+<pin name="MISO" x="-35.56" y="-2.54" length="middle"/>
+<pin name="T_CLK" x="-35.56" y="-10.16" length="middle"/>
+<pin name="T_CS" x="-35.56" y="-12.7" length="middle"/>
+<pin name="T_DIN" x="-35.56" y="-15.24" length="middle"/>
+<pin name="T_DO" x="-35.56" y="-17.78" length="middle"/>
+<pin name="T_IRQ" x="-35.56" y="-20.32" length="middle"/>
+<pin name="SD_CS" x="35.56" y="2.54" length="middle" rot="R180"/>
+<pin name="SD_MOSI" x="35.56" y="0" length="middle" rot="R180"/>
+<pin name="SD_MISO" x="35.56" y="-2.54" length="middle" rot="R180"/>
+<pin name="SD_SCK" x="35.56" y="-5.08" length="middle" rot="R180"/>
+<wire x1="-30.48" y1="20.32" x2="30.48" y2="20.32" width="0.254" layer="94"/>
+<wire x1="30.48" y1="20.32" x2="30.48" y2="-22.86" width="0.254" layer="94"/>
+<wire x1="30.48" y1="-22.86" x2="-30.48" y2="-22.86" width="0.254" layer="94"/>
+<wire x1="-30.48" y1="-22.86" x2="-30.48" y2="20.32" width="0.254" layer="94"/>
+<wire x1="25.4" y1="-20.32" x2="-20.32" y2="-20.32" width="0.254" layer="94"/>
+<wire x1="-20.32" y1="-20.32" x2="-20.32" y2="17.78" width="0.254" layer="94"/>
+<wire x1="-20.32" y1="17.78" x2="25.4" y2="17.78" width="0.254" layer="94"/>
+<text x="-30.48" y="25.4" size="1.27" layer="95">&gt;NAME</text>
+<text x="-30.48" y="-25.4" size="1.27" layer="96">&gt;VALUE</text>
+<wire x1="25.4" y1="-20.32" x2="25.4" y2="-7.62" width="0.254" layer="94"/>
+<wire x1="25.4" y1="5.08" x2="25.4" y2="17.78" width="0.254" layer="94"/>
+<text x="28.194" y="14.986" size="1.27" layer="94" rot="R270">ILI9341 eBay Red  2.8" Module</text>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="2.8_TFT">
+<description>ILI9341 2.8" 2.8 inch TFT SPI Touch Panel 240X320
+http://www.lcdwiki.com/2.8inch_SPI_Module_ILI9341_SKU:MSP2807  http://www.lcdwiki.com/Run_Arduino_Demo_in_spi_model</description>
+<gates>
+<gate name="G$1" symbol="2.8_TFT" x="2.54" y="5.08"/>
+</gates>
+<devices>
+<device name="" package="2.8_TFT">
+<connects>
+<connect gate="G$1" pin="BL" pad="BL"/>
+<connect gate="G$1" pin="CS" pad="CS"/>
+<connect gate="G$1" pin="D/C" pad="D/C"/>
+<connect gate="G$1" pin="GND" pad="GND"/>
+<connect gate="G$1" pin="MISO" pad="MISO"/>
+<connect gate="G$1" pin="MOSI" pad="MOSI"/>
+<connect gate="G$1" pin="RST" pad="RST"/>
+<connect gate="G$1" pin="SCK" pad="SCK"/>
+<connect gate="G$1" pin="SD_CS" pad="SD_CS"/>
+<connect gate="G$1" pin="SD_MISO" pad="SD_MISO"/>
+<connect gate="G$1" pin="SD_MOSI" pad="SD_MOSI"/>
+<connect gate="G$1" pin="SD_SCK" pad="SD_SCK"/>
+<connect gate="G$1" pin="T_CLK" pad="T_CLK"/>
+<connect gate="G$1" pin="T_CS" pad="T_CS"/>
+<connect gate="G$1" pin="T_DIN" pad="T_DIN"/>
+<connect gate="G$1" pin="T_DO" pad="T_DO"/>
+<connect gate="G$1" pin="T_IRQ" pad="T_IRQ"/>
+<connect gate="G$1" pin="VCC" pad="VCC"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -10504,22 +10505,22 @@ of -40°C to +85°C
 </classes>
 <parts>
 <part name="U1" library="TML_Seeeduino XIAO_QTPY_ThroughHole_ONLY_V1.1" deviceset="MOUDLE-SEEEDUINO-XIAO" device=""/>
-<part name="U$3" library="TML_ili9341-2.8_tft-display_Corrected" deviceset="2.8_TFT" device=""/>
+<part name="U$3" library="TML_ili9341-2.8_tft-display_Corrected v2" deviceset="2.8_TFT" device=""/>
 <part name="0" library="TML_ili9341_0.8Pitch_Header" deviceset="ILI9341-2.8" device="" value="ILI9341-2.8"/>
 <part name="U$5" library="TML_ili9341-2.8_tft-display_PinHeader only" deviceset="2.8_TFT" device=""/>
+<part name="NEO0" library="adafruit" deviceset="WS2812B" device="5050"/>
 <part name="NEO1" library="adafruit" deviceset="WS2812B" device="5050"/>
-<part name="NEO2" library="adafruit" deviceset="WS2812B" device="5050"/>
 <part name="R2" library="resistor" deviceset="R-US_" device="M1206" value="150"/>
 <part name="C1" library="rcl" deviceset="C-EU" device="C1206" value="0.1uf"/>
 <part name="Q1-PWM" library="transistor-npn" deviceset="BC817*" device="SMD" technology="-16LT1"/>
-<part name="R4" library="resistor" deviceset="R-US_" device="M1206" value="1k"/>
+<part name="R4" library="resistor" deviceset="R-US_" device="M1206" value="1 to 10k"/>
 <part name="R5" library="resistor" deviceset="R-US_" device="M1206" value="10k"/>
 <part name="S1" library="SparkFun-Switches" deviceset="MOMENTARY-SWITCH-SPST" device="-SMD-6.2MM-TALL"/>
 <part name="U$4" library="TML_SMD_Headers_2.54_NoDrill" deviceset="SMD_HEADERS_7PIN_2.54_NODRILLS" device=""/>
 <part name="U$7" library="TML_SMD_Headers_2.54_NoDrill" deviceset="SMD_HEADERS_7PIN_2.54_NODRILLS" device=""/>
 <part name="R6" library="resistor" deviceset="R-US_" device="M1206" value="10r"/>
+<part name="NEO2" library="adafruit" deviceset="WS2812B" device="5050"/>
 <part name="NEO3" library="adafruit" deviceset="WS2812B" device="5050"/>
-<part name="NEO4" library="adafruit" deviceset="WS2812B" device="5050"/>
 <part name="C2" library="rcl" deviceset="C-EU" device="C1206" value="0.1uf"/>
 <part name="C3" library="rcl" deviceset="C-EU" device="C1206" value="0.1uf"/>
 <part name="C4" library="rcl" deviceset="C-EU" device="C1206" value="0.1uf"/>
@@ -10539,7 +10540,7 @@ of -40°C to +85°C
 <sheets>
 <sheet>
 <plain>
-<text x="10.16" y="71.12" size="1.778" layer="94">https://forum.arduino.cc/t/ili9341-tft-display-without-exposed-cs-pin/566641/28</text>
+<text x="2.54" y="73.66" size="1.778" layer="94">https://forum.arduino.cc/t/ili9341-tft-display-without-exposed-cs-pin/566641/28</text>
 <rectangle x1="33.401" y1="162.7378" x2="35.8394" y2="162.8902" layer="200"/>
 <rectangle x1="43.307" y1="162.7378" x2="44.831" y2="162.8902" layer="200"/>
 <rectangle x1="32.7914" y1="162.8902" x2="36.449" y2="163.0426" layer="200"/>
@@ -11090,16 +11091,14 @@ of -40°C to +85°C
 <rectangle x1="35.687" y1="181.6354" x2="38.5826" y2="181.7878" layer="200"/>
 <rectangle x1="36.2966" y1="181.7878" x2="37.973" y2="181.9402" layer="200"/>
 <rectangle x1="36.9062" y1="181.9402" x2="37.3634" y2="182.0926" layer="200"/>
-<wire x1="0" y1="215.9" x2="0" y2="68.58" width="0.1524" layer="94"/>
+<wire x1="0" y1="228.6" x2="0" y2="68.58" width="0.1524" layer="94"/>
 <wire x1="0" y1="68.58" x2="114.3" y2="68.58" width="0.1524" layer="94"/>
 <wire x1="114.3" y1="68.58" x2="185.42" y2="68.58" width="0.1524" layer="94"/>
 <wire x1="185.42" y1="68.58" x2="185.42" y2="142.24" width="0.1524" layer="94"/>
-<wire x1="185.42" y1="142.24" x2="185.42" y2="215.9" width="0.1524" layer="94"/>
-<wire x1="185.42" y1="215.9" x2="0" y2="215.9" width="0.1524" layer="94"/>
-<wire x1="114.3" y1="68.58" x2="114.3" y2="127" width="0.1524" layer="94"/>
-<wire x1="114.3" y1="127" x2="157.48" y2="127" width="0.1524" layer="94"/>
-<wire x1="157.48" y1="127" x2="157.48" y2="142.24" width="0.1524" layer="94"/>
-<wire x1="157.48" y1="142.24" x2="185.42" y2="142.24" width="0.1524" layer="94"/>
+<wire x1="185.42" y1="142.24" x2="185.42" y2="228.6" width="0.1524" layer="94"/>
+<wire x1="185.42" y1="228.6" x2="0" y2="228.6" width="0.1524" layer="94"/>
+<wire x1="114.3" y1="68.58" x2="114.3" y2="142.24" width="0.1524" layer="94"/>
+<wire x1="114.3" y1="142.24" x2="185.42" y2="142.24" width="0.1524" layer="94"/>
 <wire x1="187.96" y1="35.56" x2="256.54" y2="35.56" width="0.1524" layer="94"/>
 <wire x1="256.54" y1="35.56" x2="256.54" y2="228.6" width="0.1524" layer="94"/>
 <wire x1="256.54" y1="228.6" x2="187.96" y2="228.6" width="0.1524" layer="94"/>
@@ -11116,19 +11115,25 @@ of -40°C to +85°C
 <wire x1="256.54" y1="33.02" x2="256.54" y2="0" width="0.1524" layer="94"/>
 <wire x1="256.54" y1="0" x2="187.96" y2="0" width="0.1524" layer="94"/>
 <wire x1="187.96" y1="0" x2="187.96" y2="33.02" width="0.1524" layer="94"/>
-<text x="190.5" y="30.48" size="1.778" layer="94">Button (s2) option Jumper</text>
+<text x="218.44" y="30.48" size="1.778" layer="94">Button (s2) option Jumper</text>
 <text x="139.7" y="63.5" size="1.778" layer="94">Rotary Encoder</text>
-<text x="116.84" y="121.92" size="1.778" layer="94">TFT Bare Screen PWM</text>
-<text x="190.5" y="210.82" size="1.778" layer="94">NeoPixels</text>
-<wire x1="137.16" y1="-5.08" x2="256.54" y2="-5.08" width="0.1524" layer="94"/>
-<wire x1="256.54" y1="-5.08" x2="256.54" y2="-81.28" width="0.1524" layer="94"/>
-<wire x1="256.54" y1="-81.28" x2="137.16" y2="-81.28" width="0.1524" layer="94"/>
-<wire x1="137.16" y1="-81.28" x2="137.16" y2="-5.08" width="0.1524" layer="94"/>
-<text x="154.94" y="-63.5" size="1.778" layer="94" rot="R90">ILI9341 </text>
-<text x="231.648" y="-41.402" size="1.778" layer="94">T_CLK</text>
-<text x="243.586" y="-46.482" size="1.778" layer="94">T_DIN</text>
-<text x="228.346" y="-49.022" size="1.778" layer="94">T_DO</text>
-<text x="205.74" y="-27.94" size="1.778" layer="94">Touch IC for Bare Screen</text>
+<text x="119.38" y="137.16" size="1.778" layer="94">TFT Bare Screen PWM</text>
+<text x="243.84" y="226.06" size="1.778" layer="94">NeoPixels</text>
+<wire x1="0" y1="-2.54" x2="256.54" y2="-2.54" width="0.1524" layer="94"/>
+<wire x1="256.54" y1="-2.54" x2="256.54" y2="-81.28" width="0.1524" layer="94"/>
+<wire x1="256.54" y1="-81.28" x2="0" y2="-81.28" width="0.1524" layer="94"/>
+<wire x1="0" y1="-81.28" x2="0" y2="-2.54" width="0.1524" layer="94"/>
+<text x="88.9" y="-60.96" size="1.778" layer="94" rot="R90">ILI9341 </text>
+<text x="165.608" y="-38.862" size="1.778" layer="94">T_CLK</text>
+<text x="177.546" y="-43.942" size="1.778" layer="94">T_DIN</text>
+<text x="162.306" y="-46.482" size="1.778" layer="94">T_DO</text>
+<text x="220.98" y="-10.16" size="1.778" layer="94">Touch IC for Bare Screen</text>
+<text x="157.988" y="71.374" size="1.778" layer="94" rot="R90">Optional</text>
+<wire x1="155.448" y1="98.806" x2="155.448" y2="70.104" width="0.1524" layer="94"/>
+<wire x1="155.448" y1="70.104" x2="166.878" y2="70.104" width="0.1524" layer="94"/>
+<wire x1="166.878" y1="70.104" x2="166.878" y2="98.806" width="0.1524" layer="94"/>
+<wire x1="166.878" y1="98.806" x2="155.448" y2="98.806" width="0.1524" layer="94"/>
+<text x="177.038" y="77.724" size="1.778" layer="94" rot="R90">S8050 J3Y NPN SOT-23 SMD 0.5A 25v</text>
 </plain>
 <instances>
 <instance part="U1" gate="G$1" x="53.34" y="20.32" smashed="yes" rot="R180">
@@ -11144,8 +11149,8 @@ of -40°C to +85°C
 <attribute name="NAME" x="86.36" y="207.01" size="1.27" layer="95" rot="R180"/>
 <attribute name="VALUE" x="91.44" y="207.01" size="1.27" layer="96"/>
 </instance>
-<instance part="NEO1" gate="G$1" x="228.6" y="78.74" smashed="yes" rot="R90"/>
-<instance part="NEO2" gate="G$1" x="228.6" y="109.22" smashed="yes" rot="R90"/>
+<instance part="NEO0" gate="G$1" x="228.6" y="78.74" smashed="yes" rot="R90"/>
+<instance part="NEO1" gate="G$1" x="228.6" y="109.22" smashed="yes" rot="R90"/>
 <instance part="R2" gate="G$1" x="231.14" y="58.42" smashed="yes" rot="R270">
 <attribute name="NAME" x="232.6386" y="62.23" size="1.778" layer="95" rot="R270"/>
 <attribute name="VALUE" x="227.838" y="62.23" size="1.778" layer="96" rot="R270"/>
@@ -11155,16 +11160,16 @@ of -40°C to +85°C
 <attribute name="VALUE" x="199.644" y="94.361" size="1.778" layer="96"/>
 </instance>
 <instance part="Q1-PWM" gate="G$1" x="167.64" y="104.14" smashed="yes">
-<attribute name="NAME" x="157.48" y="111.76" size="1.778" layer="95"/>
-<attribute name="VALUE" x="157.48" y="109.22" size="1.778" layer="96"/>
+<attribute name="NAME" x="172.72" y="104.14" size="1.778" layer="95" rot="R270"/>
+<attribute name="VALUE" x="180.34" y="91.44" size="1.778" layer="96" rot="R90"/>
 </instance>
 <instance part="R4" gate="G$1" x="154.94" y="104.14" smashed="yes" rot="R180">
-<attribute name="NAME" x="158.75" y="102.6414" size="1.778" layer="95" rot="R180"/>
-<attribute name="VALUE" x="158.75" y="107.442" size="1.778" layer="96" rot="R180"/>
+<attribute name="NAME" x="156.21" y="102.6414" size="1.778" layer="95" rot="R180"/>
+<attribute name="VALUE" x="158.75" y="109.982" size="1.778" layer="96" rot="R180"/>
 </instance>
-<instance part="R5" gate="G$1" x="162.56" y="93.98" smashed="yes" rot="R270">
-<attribute name="NAME" x="164.0586" y="97.79" size="1.778" layer="95" rot="R270"/>
-<attribute name="VALUE" x="159.258" y="97.79" size="1.778" layer="96" rot="R270"/>
+<instance part="R5" gate="G$1" x="162.56" y="86.36" smashed="yes" rot="R270">
+<attribute name="NAME" x="164.3126" y="87.884" size="1.778" layer="95" rot="R270"/>
+<attribute name="VALUE" x="158.75" y="88.392" size="1.778" layer="96" rot="R270"/>
 </instance>
 <instance part="S1" gate="G$1" x="147.32" y="33.02" smashed="yes" rot="R270">
 <attribute name="NAME" x="148.844" y="33.02" size="1.778" layer="95" font="vector" rot="R270" align="bottom-center"/>
@@ -11176,11 +11181,11 @@ of -40°C to +85°C
 <attribute name="NAME" x="39.624" y="35.56" size="1.778" layer="95" font="vector" rot="MR0"/>
 </instance>
 <instance part="R6" gate="G$1" x="170.18" y="119.38" smashed="yes" rot="R90">
-<attribute name="NAME" x="168.6814" y="115.57" size="1.778" layer="95" rot="R90"/>
-<attribute name="VALUE" x="173.482" y="115.57" size="1.778" layer="96" rot="R90"/>
+<attribute name="NAME" x="168.6814" y="118.11" size="1.778" layer="95" rot="R90"/>
+<attribute name="VALUE" x="173.482" y="118.11" size="1.778" layer="96" rot="R90"/>
 </instance>
-<instance part="NEO3" gate="G$1" x="228.6" y="142.24" smashed="yes" rot="R90"/>
-<instance part="NEO4" gate="G$1" x="228.6" y="175.26" smashed="yes" rot="R90"/>
+<instance part="NEO2" gate="G$1" x="228.6" y="142.24" smashed="yes" rot="R90"/>
+<instance part="NEO3" gate="G$1" x="228.6" y="175.26" smashed="yes" rot="R90"/>
 <instance part="C2" gate="G$1" x="208.28" y="119.38" smashed="yes" rot="R180">
 <attribute name="NAME" x="206.756" y="118.999" size="1.778" layer="95" rot="R180"/>
 <attribute name="VALUE" x="206.756" y="124.079" size="1.778" layer="96" rot="R180"/>
@@ -11193,20 +11198,19 @@ of -40°C to +85°C
 <attribute name="NAME" x="206.756" y="187.579" size="1.778" layer="95" rot="R180"/>
 <attribute name="VALUE" x="206.756" y="192.659" size="1.778" layer="96" rot="R180"/>
 </instance>
-<instance part="S2" gate="G$1" x="223.52" y="12.7" smashed="yes" rot="R90">
-<attribute name="NAME" x="221.996" y="12.7" size="1.778" layer="95" font="vector" rot="R90" align="bottom-center"/>
+<instance part="S2" gate="G$1" x="215.9" y="12.7" smashed="yes" rot="R90">
+<attribute name="NAME" x="214.376" y="12.7" size="1.778" layer="95" font="vector" rot="R90" align="bottom-center"/>
 </instance>
 <instance part="J2" gate="G$1" x="172.72" y="55.88" smashed="yes" rot="R270">
 <attribute name="VALUE" x="162.814" y="58.42" size="1.778" layer="96" font="vector" rot="R270"/>
 <attribute name="NAME" x="180.848" y="58.42" size="1.778" layer="95" font="vector" rot="R270"/>
 </instance>
 <instance part="J3" gate="J$1" x="228.6" y="223.52" smashed="yes" rot="R270">
-<attribute name="VALUE" x="220.98" y="231.394" size="1.778" layer="96" font="vector"/>
 <attribute name="NAME" x="234.188" y="226.06" size="1.778" layer="95" font="vector" rot="R270"/>
 </instance>
-<instance part="SJ1" gate="G$1" x="223.52" y="25.4" smashed="yes" rot="R90">
-<attribute name="NAME" x="223.139" y="27.94" size="1.778" layer="95" rot="R90"/>
-<attribute name="VALUE" x="225.425" y="27.94" size="1.778" layer="96" rot="R90"/>
+<instance part="SJ1" gate="G$1" x="215.9" y="25.4" smashed="yes" rot="R90">
+<attribute name="NAME" x="215.519" y="27.94" size="1.778" layer="95" rot="R90"/>
+<attribute name="VALUE" x="217.805" y="27.94" size="1.778" layer="96" rot="R90"/>
 </instance>
 <instance part="SJ2" gate="1" x="50.8" y="127" smashed="yes" rot="R90">
 <attribute name="NAME" x="49.276" y="124.714" size="1.778" layer="95" rot="R90"/>
@@ -11216,24 +11220,24 @@ of -40°C to +85°C
 <attribute name="NAME" x="61.722" y="124.968" size="1.778" layer="95" rot="R90"/>
 <attribute name="VALUE" x="62.23" y="124.46" size="1.778" layer="96" rot="R90"/>
 </instance>
-<instance part="U3" gate="G$1" x="193.04" y="-50.8" smashed="yes">
-<attribute name="NAME" x="189.865" y="-57.785" size="1" layer="95"/>
-<attribute name="VALUE" x="189.865" y="-60.96" size="1" layer="96"/>
+<instance part="U3" gate="G$1" x="127" y="-48.26" smashed="yes">
+<attribute name="NAME" x="123.825" y="-55.245" size="1" layer="95"/>
+<attribute name="VALUE" x="123.825" y="-58.42" size="1" layer="96"/>
 </instance>
-<instance part="RT1" gate="G$1" x="236.22" y="-58.42" smashed="yes" rot="R270">
-<attribute name="NAME" x="237.7186" y="-54.61" size="1.778" layer="95" rot="R270"/>
-<attribute name="VALUE" x="232.918" y="-54.61" size="1.778" layer="96" rot="R270"/>
+<instance part="RT1" gate="G$1" x="162.56" y="-55.88" smashed="yes" rot="R270">
+<attribute name="NAME" x="164.0586" y="-52.07" size="1.778" layer="95" rot="R270"/>
+<attribute name="VALUE" x="159.258" y="-52.07" size="1.778" layer="96" rot="R270"/>
 </instance>
-<instance part="CT1" gate="G$1" x="172.72" y="-30.48" smashed="yes">
-<attribute name="NAME" x="174.244" y="-30.099" size="1.778" layer="95"/>
-<attribute name="VALUE" x="174.244" y="-35.179" size="1.778" layer="96"/>
+<instance part="CT1" gate="G$1" x="106.68" y="-27.94" smashed="yes">
+<attribute name="NAME" x="108.204" y="-27.559" size="1.778" layer="95"/>
+<attribute name="VALUE" x="108.204" y="-32.639" size="1.778" layer="96"/>
 </instance>
-<instance part="CT2" gate="G$1" x="154.94" y="-30.48" smashed="yes">
-<attribute name="NAME" x="153.416" y="-28.321" size="1.778" layer="95" rot="R180"/>
-<attribute name="VALUE" x="156.464" y="-35.179" size="1.778" layer="96"/>
+<instance part="CT2" gate="G$1" x="88.9" y="-27.94" smashed="yes">
+<attribute name="NAME" x="87.376" y="-25.781" size="1.778" layer="95" rot="R180"/>
+<attribute name="VALUE" x="90.424" y="-32.639" size="1.778" layer="96"/>
 </instance>
 <instance part="U$2" gate="G$1" x="175.26" y="38.1" smashed="yes" rot="R270">
-<attribute name="VALUE" x="160.02" y="28.194" size="1.778" layer="96" font="vector"/>
+<attribute name="VALUE" x="157.226" y="10.16" size="1.778" layer="96" font="vector" rot="R90"/>
 <attribute name="NAME" x="160.528" y="45.72" size="1.778" layer="95" font="vector" rot="R270"/>
 </instance>
 <instance part="U$9" gate="G$1" x="233.68" y="205.74" smashed="yes" rot="R270">
@@ -11354,12 +11358,12 @@ of -40°C to +85°C
 <segment>
 <label x="241.3" y="78.74" size="1.778" layer="95" xref="yes"/>
 <wire x1="241.3" y1="78.74" x2="238.76" y2="78.74" width="0.1524" layer="91"/>
-<pinref part="NEO1" gate="G$1" pin="GND"/>
+<pinref part="NEO0" gate="G$1" pin="GND"/>
 </segment>
 <segment>
 <label x="241.3" y="109.22" size="1.778" layer="95" xref="yes"/>
 <wire x1="241.3" y1="109.22" x2="238.76" y2="109.22" width="0.1524" layer="91"/>
-<pinref part="NEO2" gate="G$1" pin="GND"/>
+<pinref part="NEO1" gate="G$1" pin="GND"/>
 </segment>
 <segment>
 <wire x1="167.64" y1="48.26" x2="167.64" y2="35.56" width="0.1524" layer="91"/>
@@ -11376,8 +11380,8 @@ of -40°C to +85°C
 </segment>
 <segment>
 <pinref part="Q1-PWM" gate="G$1" pin="E"/>
-<wire x1="170.18" y1="99.06" x2="170.18" y2="83.82" width="0.1524" layer="91"/>
-<label x="170.18" y="83.82" size="1.778" layer="95" rot="R270" xref="yes"/>
+<wire x1="170.18" y1="99.06" x2="170.18" y2="78.74" width="0.1524" layer="91"/>
+<label x="170.18" y="78.74" size="1.778" layer="95" rot="R270" xref="yes"/>
 </segment>
 <segment>
 <wire x1="147.32" y1="43.18" x2="147.32" y2="38.1" width="0.1524" layer="91"/>
@@ -11387,12 +11391,12 @@ of -40°C to +85°C
 <segment>
 <label x="241.3" y="142.24" size="1.778" layer="95" xref="yes"/>
 <wire x1="241.3" y1="142.24" x2="238.76" y2="142.24" width="0.1524" layer="91"/>
-<pinref part="NEO3" gate="G$1" pin="GND"/>
+<pinref part="NEO2" gate="G$1" pin="GND"/>
 </segment>
 <segment>
 <label x="241.3" y="175.26" size="1.778" layer="95" xref="yes"/>
 <wire x1="241.3" y1="175.26" x2="238.76" y2="175.26" width="0.1524" layer="91"/>
-<pinref part="NEO4" gate="G$1" pin="GND"/>
+<pinref part="NEO3" gate="G$1" pin="GND"/>
 </segment>
 <segment>
 <wire x1="208.28" y1="129.54" x2="208.28" y2="124.46" width="0.1524" layer="91"/>
@@ -11418,9 +11422,9 @@ of -40°C to +85°C
 <junction x="228.6" y="203.2"/>
 </segment>
 <segment>
-<wire x1="223.52" y1="5.08" x2="223.52" y2="7.62" width="0.1524" layer="91"/>
+<wire x1="215.9" y1="5.08" x2="215.9" y2="7.62" width="0.1524" layer="91"/>
 <pinref part="S2" gate="G$1" pin="1"/>
-<label x="223.52" y="5.08" size="1.778" layer="95" rot="R180" xref="yes"/>
+<label x="215.9" y="5.08" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
 <wire x1="29.464" y1="42.672" x2="24.638" y2="42.672" width="0.1524" layer="91"/>
@@ -11429,26 +11433,26 @@ of -40°C to +85°C
 </segment>
 <segment>
 <pinref part="U3" gate="G$1" pin="GND"/>
-<label x="213.36" y="-60.96" size="1.778" layer="95" xref="yes"/>
-<wire x1="208.28" y1="-60.96" x2="213.36" y2="-60.96" width="0.1524" layer="91"/>
+<label x="147.32" y="-58.42" size="1.778" layer="95" xref="yes"/>
+<wire x1="142.24" y1="-58.42" x2="147.32" y2="-58.42" width="0.1524" layer="91"/>
 <pinref part="U3" gate="G$1" pin="AUX"/>
-<wire x1="208.28" y1="-55.88" x2="213.36" y2="-55.88" width="0.1524" layer="91"/>
-<wire x1="213.36" y1="-55.88" x2="213.36" y2="-60.96" width="0.1524" layer="91"/>
+<wire x1="142.24" y1="-53.34" x2="147.32" y2="-53.34" width="0.1524" layer="91"/>
+<wire x1="147.32" y1="-53.34" x2="147.32" y2="-58.42" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<wire x1="172.72" y1="-25.4" x2="172.72" y2="-27.94" width="0.1524" layer="91"/>
-<label x="172.72" y="-25.4" size="1.778" layer="95" rot="R90" xref="yes"/>
+<wire x1="106.68" y1="-22.86" x2="106.68" y2="-25.4" width="0.1524" layer="91"/>
+<label x="106.68" y="-22.86" size="1.778" layer="95" rot="R90" xref="yes"/>
 <pinref part="CT1" gate="G$1" pin="1"/>
 </segment>
 <segment>
 <pinref part="U3" gate="G$1" pin="VBAT"/>
-<wire x1="177.8" y1="-43.18" x2="175.26" y2="-43.18" width="0.1524" layer="91"/>
-<label x="175.26" y="-43.18" size="1.778" layer="95" rot="R180" xref="yes"/>
+<wire x1="111.76" y1="-40.64" x2="109.22" y2="-40.64" width="0.1524" layer="91"/>
+<label x="109.22" y="-40.64" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<wire x1="154.94" y1="-25.4" x2="154.94" y2="-27.94" width="0.1524" layer="91"/>
+<wire x1="88.9" y1="-22.86" x2="88.9" y2="-25.4" width="0.1524" layer="91"/>
 <pinref part="CT2" gate="G$1" pin="1"/>
-<label x="154.94" y="-25.4" size="1.778" layer="95" rot="R90" xref="yes"/>
+<label x="88.9" y="-22.86" size="1.778" layer="95" rot="R90" xref="yes"/>
 </segment>
 </net>
 <net name="MOSI" class="0">
@@ -11488,14 +11492,14 @@ of -40°C to +85°C
 <label x="109.22" y="180.34" size="1.778" layer="95" rot="R270" xref="yes"/>
 </segment>
 <segment>
-<wire x1="228.6" y1="25.4" x2="231.14" y2="25.4" width="0.1524" layer="91"/>
-<label x="231.14" y="25.4" size="1.778" layer="95" xref="yes"/>
+<wire x1="220.98" y1="25.4" x2="226.06" y2="25.4" width="0.1524" layer="91"/>
+<label x="226.06" y="25.4" size="1.778" layer="95" xref="yes"/>
 <pinref part="SJ1" gate="G$1" pin="3"/>
 </segment>
 <segment>
 <pinref part="U3" gate="G$1" pin="DIN"/>
-<wire x1="208.28" y1="-45.72" x2="233.68" y2="-45.72" width="0.1524" layer="91"/>
-<label x="233.68" y="-45.72" size="1.778" layer="95" xref="yes"/>
+<wire x1="142.24" y1="-43.18" x2="167.64" y2="-43.18" width="0.1524" layer="91"/>
+<label x="167.64" y="-43.18" size="1.778" layer="95" xref="yes"/>
 </segment>
 </net>
 <net name="SCK" class="0">
@@ -11536,8 +11540,8 @@ of -40°C to +85°C
 </segment>
 <segment>
 <pinref part="U3" gate="G$1" pin="DCLK"/>
-<wire x1="208.28" y1="-40.64" x2="223.52" y2="-40.64" width="0.1524" layer="91"/>
-<label x="223.52" y="-40.64" size="1.778" layer="95" xref="yes"/>
+<wire x1="142.24" y1="-38.1" x2="157.48" y2="-38.1" width="0.1524" layer="91"/>
+<label x="157.48" y="-38.1" size="1.778" layer="95" xref="yes"/>
 </segment>
 </net>
 <net name="ENC_BUTTON" class="0">
@@ -11565,8 +11569,8 @@ of -40°C to +85°C
 <pinref part="U$4" gate="G$1" pin="2"/>
 </segment>
 <segment>
-<wire x1="218.44" y1="25.4" x2="215.9" y2="25.4" width="0.1524" layer="91"/>
-<label x="215.9" y="25.4" size="1.778" layer="95" rot="R180" xref="yes"/>
+<wire x1="210.82" y1="25.4" x2="208.28" y2="25.4" width="0.1524" layer="91"/>
+<label x="208.28" y="25.4" size="1.778" layer="95" rot="R180" xref="yes"/>
 <pinref part="SJ1" gate="G$1" pin="1"/>
 </segment>
 </net>
@@ -11661,7 +11665,7 @@ of -40°C to +85°C
 <segment>
 <label x="200.66" y="114.3" size="1.778" layer="95" rot="R180" xref="yes"/>
 <wire x1="200.66" y1="114.3" x2="208.28" y2="114.3" width="0.1524" layer="91"/>
-<pinref part="NEO2" gate="G$1" pin="VDD"/>
+<pinref part="NEO1" gate="G$1" pin="VDD"/>
 <pinref part="C2" gate="G$1" pin="1"/>
 <wire x1="208.28" y1="114.3" x2="213.36" y2="114.3" width="0.1524" layer="91"/>
 <wire x1="208.28" y1="116.84" x2="208.28" y2="114.3" width="0.1524" layer="91"/>
@@ -11679,20 +11683,20 @@ of -40°C to +85°C
 <pinref part="C1" gate="G$1" pin="2"/>
 <label x="200.66" y="83.82" size="1.778" layer="95" rot="R180" xref="yes"/>
 <wire x1="200.66" y1="83.82" x2="208.28" y2="83.82" width="0.1524" layer="91"/>
-<pinref part="NEO1" gate="G$1" pin="VDD"/>
+<pinref part="NEO0" gate="G$1" pin="VDD"/>
 <junction x="208.28" y="83.82"/>
 <wire x1="208.28" y1="83.82" x2="213.36" y2="83.82" width="0.1524" layer="91"/>
 <wire x1="208.28" y1="88.9" x2="208.28" y2="83.82" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="R5" gate="G$1" pin="2"/>
-<wire x1="162.56" y1="88.9" x2="162.56" y2="83.82" width="0.1524" layer="91"/>
-<label x="162.56" y="83.82" size="1.778" layer="95" rot="R270" xref="yes"/>
+<wire x1="162.56" y1="81.28" x2="162.56" y2="78.74" width="0.1524" layer="91"/>
+<label x="162.56" y="78.74" size="1.778" layer="95" rot="R270" xref="yes"/>
 </segment>
 <segment>
 <label x="200.66" y="147.32" size="1.778" layer="95" rot="R180" xref="yes"/>
 <wire x1="200.66" y1="147.32" x2="208.28" y2="147.32" width="0.1524" layer="91"/>
-<pinref part="NEO3" gate="G$1" pin="VDD"/>
+<pinref part="NEO2" gate="G$1" pin="VDD"/>
 <pinref part="C3" gate="G$1" pin="1"/>
 <wire x1="208.28" y1="147.32" x2="213.36" y2="147.32" width="0.1524" layer="91"/>
 <wire x1="208.28" y1="149.86" x2="208.28" y2="147.32" width="0.1524" layer="91"/>
@@ -11701,7 +11705,7 @@ of -40°C to +85°C
 <segment>
 <label x="200.66" y="180.34" size="1.778" layer="95" rot="R180" xref="yes"/>
 <wire x1="200.66" y1="180.34" x2="208.28" y2="180.34" width="0.1524" layer="91"/>
-<pinref part="NEO4" gate="G$1" pin="VDD"/>
+<pinref part="NEO3" gate="G$1" pin="VDD"/>
 <pinref part="C4" gate="G$1" pin="1"/>
 <wire x1="208.28" y1="180.34" x2="213.36" y2="180.34" width="0.1524" layer="91"/>
 <wire x1="208.28" y1="185.42" x2="208.28" y2="180.34" width="0.1524" layer="91"/>
@@ -11722,32 +11726,32 @@ of -40°C to +85°C
 </segment>
 <segment>
 <pinref part="RT1" gate="G$1" pin="2"/>
-<wire x1="236.22" y1="-63.5" x2="236.22" y2="-68.58" width="0.1524" layer="91"/>
-<label x="236.22" y="-68.58" size="1.778" layer="95" rot="R270" xref="yes"/>
+<wire x1="162.56" y1="-60.96" x2="162.56" y2="-66.04" width="0.1524" layer="91"/>
+<label x="162.56" y="-66.04" size="1.778" layer="95" rot="R270" xref="yes"/>
 </segment>
 <segment>
 <pinref part="CT1" gate="G$1" pin="2"/>
 <pinref part="U3" gate="G$1" pin="VCC"/>
-<junction x="172.72" y="-40.64"/>
-<wire x1="172.72" y1="-40.64" x2="172.72" y2="-35.56" width="0.1524" layer="91"/>
-<junction x="172.72" y="-40.64"/>
-<wire x1="172.72" y1="-40.64" x2="167.64" y2="-40.64" width="0.1524" layer="91"/>
-<label x="167.64" y="-40.64" size="1.778" layer="95" rot="R180" xref="yes"/>
-<wire x1="172.72" y1="-40.64" x2="177.8" y2="-40.64" width="0.1524" layer="91"/>
+<junction x="106.68" y="-38.1"/>
+<wire x1="106.68" y1="-38.1" x2="106.68" y2="-33.02" width="0.1524" layer="91"/>
+<junction x="106.68" y="-38.1"/>
+<wire x1="106.68" y1="-38.1" x2="101.6" y2="-38.1" width="0.1524" layer="91"/>
+<label x="101.6" y="-38.1" size="1.778" layer="95" rot="R180" xref="yes"/>
+<wire x1="106.68" y1="-38.1" x2="111.76" y2="-38.1" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<wire x1="177.8" y1="-45.72" x2="154.94" y2="-45.72" width="0.1524" layer="91"/>
-<label x="152.4" y="-45.72" size="1.778" layer="95" rot="R180" xref="yes"/>
+<wire x1="111.76" y1="-43.18" x2="88.9" y2="-43.18" width="0.1524" layer="91"/>
+<label x="86.36" y="-43.18" size="1.778" layer="95" rot="R180" xref="yes"/>
 <pinref part="U3" gate="G$1" pin="VREF"/>
-<wire x1="154.94" y1="-45.72" x2="152.4" y2="-45.72" width="0.1524" layer="91"/>
-<wire x1="154.94" y1="-45.72" x2="154.94" y2="-35.56" width="0.1524" layer="91"/>
-<junction x="154.94" y="-45.72"/>
+<wire x1="88.9" y1="-43.18" x2="86.36" y2="-43.18" width="0.1524" layer="91"/>
+<wire x1="88.9" y1="-43.18" x2="88.9" y2="-33.02" width="0.1524" layer="91"/>
+<junction x="88.9" y="-43.18"/>
 <pinref part="CT2" gate="G$1" pin="2"/>
 </segment>
 <segment>
-<label x="175.26" y="-48.26" size="1.778" layer="95" rot="R180" xref="yes"/>
+<label x="109.22" y="-45.72" size="1.778" layer="95" rot="R180" xref="yes"/>
 <pinref part="U3" gate="G$1" pin="IOVDD"/>
-<wire x1="175.26" y1="-48.26" x2="177.8" y2="-48.26" width="0.1524" layer="91"/>
+<wire x1="109.22" y1="-45.72" x2="111.76" y2="-45.72" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="MISO" class="0">
@@ -11788,8 +11792,8 @@ of -40°C to +85°C
 </segment>
 <segment>
 <pinref part="U3" gate="G$1" pin="DOUT"/>
-<wire x1="208.28" y1="-48.26" x2="218.44" y2="-48.26" width="0.1524" layer="91"/>
-<label x="218.44" y="-48.26" size="1.778" layer="95" xref="yes"/>
+<wire x1="142.24" y1="-45.72" x2="152.4" y2="-45.72" width="0.1524" layer="91"/>
+<label x="152.4" y="-45.72" size="1.778" layer="95" xref="yes"/>
 </segment>
 </net>
 <net name="T_XL" class="0">
@@ -11800,8 +11804,8 @@ of -40°C to +85°C
 </segment>
 <segment>
 <pinref part="U3" gate="G$1" pin="XP"/>
-<wire x1="177.8" y1="-53.34" x2="175.26" y2="-53.34" width="0.1524" layer="91"/>
-<label x="175.26" y="-53.34" size="1.778" layer="95" rot="R180" xref="yes"/>
+<wire x1="111.76" y1="-50.8" x2="109.22" y2="-50.8" width="0.1524" layer="91"/>
+<label x="109.22" y="-50.8" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 </net>
 <net name="T_YU" class="0">
@@ -11812,8 +11816,8 @@ of -40°C to +85°C
 </segment>
 <segment>
 <pinref part="U3" gate="G$1" pin="YN"/>
-<wire x1="177.8" y1="-60.96" x2="165.1" y2="-60.96" width="0.1524" layer="91"/>
-<label x="165.1" y="-60.96" size="1.778" layer="95" rot="R180" xref="yes"/>
+<wire x1="111.76" y1="-58.42" x2="99.06" y2="-58.42" width="0.1524" layer="91"/>
+<label x="99.06" y="-58.42" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 </net>
 <net name="T_XR" class="0">
@@ -11824,8 +11828,8 @@ of -40°C to +85°C
 </segment>
 <segment>
 <pinref part="U3" gate="G$1" pin="XN"/>
-<wire x1="177.8" y1="-58.42" x2="175.26" y2="-58.42" width="0.1524" layer="91"/>
-<label x="175.26" y="-58.42" size="1.778" layer="95" rot="R180" xref="yes"/>
+<wire x1="111.76" y1="-55.88" x2="109.22" y2="-55.88" width="0.1524" layer="91"/>
+<label x="109.22" y="-55.88" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 </net>
 <net name="T_YD" class="0">
@@ -11836,20 +11840,20 @@ of -40°C to +85°C
 </segment>
 <segment>
 <pinref part="U3" gate="G$1" pin="YP"/>
-<wire x1="177.8" y1="-55.88" x2="165.1" y2="-55.88" width="0.1524" layer="91"/>
-<label x="165.1" y="-55.88" size="1.778" layer="95" rot="R180" xref="yes"/>
+<wire x1="111.76" y1="-53.34" x2="99.06" y2="-53.34" width="0.1524" layer="91"/>
+<label x="99.06" y="-53.34" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 </net>
 <net name="NEODATA" class="0">
 <segment>
-<pinref part="NEO1" gate="G$1" pin="DO"/>
-<pinref part="NEO2" gate="G$1" pin="DI"/>
+<pinref part="NEO0" gate="G$1" pin="DO"/>
+<pinref part="NEO1" gate="G$1" pin="DI"/>
 <wire x1="231.14" y1="91.44" x2="231.14" y2="96.52" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$4" class="0">
 <segment>
-<pinref part="NEO1" gate="G$1" pin="DI"/>
+<pinref part="NEO0" gate="G$1" pin="DI"/>
 <pinref part="R2" gate="G$1" pin="1"/>
 <wire x1="231.14" y1="63.5" x2="231.14" y2="66.04" width="0.1524" layer="91"/>
 </segment>
@@ -11893,7 +11897,7 @@ of -40°C to +85°C
 <wire x1="160.02" y1="104.14" x2="162.56" y2="104.14" width="0.1524" layer="91"/>
 <pinref part="R5" gate="G$1" pin="1"/>
 <wire x1="162.56" y1="104.14" x2="165.1" y2="104.14" width="0.1524" layer="91"/>
-<wire x1="162.56" y1="99.06" x2="162.56" y2="104.14" width="0.1524" layer="91"/>
+<wire x1="162.56" y1="91.44" x2="162.56" y2="104.14" width="0.1524" layer="91"/>
 <junction x="162.56" y="104.14"/>
 </segment>
 </net>
@@ -11923,15 +11927,15 @@ of -40°C to +85°C
 </net>
 <net name="N$3" class="0">
 <segment>
-<pinref part="NEO2" gate="G$1" pin="DO"/>
-<pinref part="NEO3" gate="G$1" pin="DI"/>
+<pinref part="NEO1" gate="G$1" pin="DO"/>
+<pinref part="NEO2" gate="G$1" pin="DI"/>
 <wire x1="231.14" y1="121.92" x2="231.14" y2="129.54" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$5" class="0">
 <segment>
-<pinref part="NEO3" gate="G$1" pin="DO"/>
-<pinref part="NEO4" gate="G$1" pin="DI"/>
+<pinref part="NEO2" gate="G$1" pin="DO"/>
+<pinref part="NEO3" gate="G$1" pin="DI"/>
 <wire x1="231.14" y1="154.94" x2="231.14" y2="162.56" width="0.1524" layer="91"/>
 </segment>
 </net>
@@ -11944,7 +11948,7 @@ of -40°C to +85°C
 </net>
 <net name="NEO_OUT" class="0">
 <segment>
-<pinref part="NEO4" gate="G$1" pin="DO"/>
+<pinref part="NEO3" gate="G$1" pin="DO"/>
 <wire x1="231.14" y1="187.96" x2="231.14" y2="203.2" width="0.1524" layer="91"/>
 <label x="231.14" y="200.66" size="1.778" layer="95" rot="R270"/>
 <pinref part="J3" gate="J$1" pin="3"/>
@@ -11966,8 +11970,8 @@ of -40°C to +85°C
 </segment>
 <segment>
 <pinref part="U3" gate="G$1" pin="/CS"/>
-<wire x1="208.28" y1="-43.18" x2="213.36" y2="-43.18" width="0.1524" layer="91"/>
-<label x="213.36" y="-43.18" size="1.778" layer="95" xref="yes"/>
+<wire x1="142.24" y1="-40.64" x2="147.32" y2="-40.64" width="0.1524" layer="91"/>
+<label x="147.32" y="-40.64" size="1.778" layer="95" xref="yes"/>
 </segment>
 </net>
 <net name="T_IRQ" class="0">
@@ -11983,17 +11987,17 @@ of -40°C to +85°C
 </segment>
 <segment>
 <pinref part="U3" gate="G$1" pin="/PENIRQ"/>
-<wire x1="208.28" y1="-53.34" x2="236.22" y2="-53.34" width="0.1524" layer="91"/>
+<wire x1="142.24" y1="-50.8" x2="162.56" y2="-50.8" width="0.1524" layer="91"/>
 <pinref part="RT1" gate="G$1" pin="1"/>
-<wire x1="236.22" y1="-53.34" x2="241.046" y2="-53.34" width="0.1524" layer="91"/>
-<label x="241.046" y="-53.34" size="1.778" layer="95" xref="yes"/>
-<junction x="236.22" y="-53.34"/>
+<wire x1="162.56" y1="-50.8" x2="167.386" y2="-50.8" width="0.1524" layer="91"/>
+<label x="167.386" y="-50.8" size="1.778" layer="95" xref="yes"/>
+<junction x="162.56" y="-50.8"/>
 </segment>
 </net>
 <net name="N$1" class="0">
 <segment>
-<wire x1="223.52" y1="20.32" x2="223.52" y2="17.78" width="0.1524" layer="91"/>
-<label x="223.52" y="17.78" size="1.778" layer="95" rot="R270"/>
+<wire x1="215.9" y1="20.32" x2="215.9" y2="17.78" width="0.1524" layer="91"/>
+<label x="210.82" y="17.78" size="1.778" layer="95" rot="R270"/>
 <pinref part="S2" gate="G$1" pin="2"/>
 <pinref part="SJ1" gate="G$1" pin="2"/>
 </segment>
