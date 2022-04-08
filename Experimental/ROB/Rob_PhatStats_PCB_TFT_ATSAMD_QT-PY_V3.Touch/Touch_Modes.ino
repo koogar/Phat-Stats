@@ -22,7 +22,7 @@ void touch_Modes() {
     tft.fillScreen(ILI9341_BLACK);
 
     /* Reset count if over max mode number, */
-    if (touch_Button_counter == 3) // Number of screens available when button pressed
+    if (touch_Button_counter == 2) // Number of screens available when button pressed
     {
       touch_Button_counter = 0;
     }
@@ -44,9 +44,9 @@ void touch_Modes() {
 
         break;
 
-      case 2: // 3rd SCREEN
-        DisplayStyle_CircleGauge_ATSAMD();
-        break;
+      //case 2: // 3rd SCREEN
+      //  DisplayStyle_CircleGauge_ATSAMD();
+      //  break;
 
     }
 }

@@ -212,15 +212,15 @@ String set_GPUram = "xx";
 
 //-------------------------------- NeoPixel Modes -------------------------------------
 
-//#define enableNeopixelGauges     // NeoPixel Phat-Stats PCB 
-//#define NeoPixel_Landscape       // If commented out, use portrait
+#define enableNeopixelGauges     // NeoPixel Phat-Stats PCB 
+#define NeoPixel_Landscape       // If commented out, use portrait
 
 /* VERY EXPERIMENTAL!!! SLIGHTLY LAGGY, HAS TO WAIT FOR SCREEN REFRESH*/
 //#define Neo_BrightnessAuto   // Adjust NeoPixel brightness together with screen brightness using the rotary encoder
 int Neo_DivideBy    = 5;    // Divide NeoPixel brightness v's TFT brightness (less is brighter)
 
 /* If  NeoBrightness = 0 Phat-Stats will start with no NeoPixels lit. Turn the Rotary Encoder to turn on the NeoPixels, */
-int NeoBrightness   = 50;           // Global start up brightness
+int NeoBrightness   = 20;           // Global start up brightness
 
 //----------------------------- Touch Screen Button---------------------------------------
 
