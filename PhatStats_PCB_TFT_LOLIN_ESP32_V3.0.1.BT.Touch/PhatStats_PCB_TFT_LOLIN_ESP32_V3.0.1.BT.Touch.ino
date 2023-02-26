@@ -16,29 +16,31 @@
 
   Board Manager ESP32
   -------------------
-  Click on File > Preference, and fill Additional Boards Manager URLs with the url below:
+  Click on File > Preference, and fill Additional Boards Manager URLs with the url below
+  : last successful compile v2.0.7
+  
   https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
 
-
+  last successful compile Arduino IDE v1.8.19
 
   Libraries
   ---------
-  Adafruit Neopixel
+  Adafruit Neopixel:            last successful compile v1.10.5
   https://github.com/adafruit/Adafruit_NeoPixel
 
-  Adafruit GFX Library
+  Adafruit GFX Library:         last successful compile v1.11.3
   https://github.com/adafruit/Adafruit-GFX-Library
 
-  Adafruit ILI9341
+  Adafruit ILI9341:             last successful compile v1.5.12
   https://github.com/adafruit/Adafruit_ILI9341
 
-  Rotary encoder
+  Rotary encoder:               last successful compile v1.1.0
   https://github.com/koogar/ErriezRotaryEncoderFullStep
 
-  ESP32 analogueWrite Function
+  ESP32 analogueWrite Function: last successful compile v1.0.1
   https://github.com/ERROPiX/ESP32_AnalogWrite
 
-  Battery Monitor by Alberto Iriberri Andrés
+  Battery Monitor by Alberto Iriberri Andrés: last successful compile v0.2
   https://github.com/pangodream/18650CL
 
   Hookup Guide
