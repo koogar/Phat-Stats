@@ -146,17 +146,17 @@
 //--------------------------- ESP32 BT Board Windows ID -----------------------------------
 
 //#define  LOLIN_32v1
-//#define  LOLIN_D32
-#define  LOLIN32_LITE
+#define  LOLIN_D32
+//#define  LOLIN32_LITE
 
 //--------------------------- Bluetooth or USB serial -----------------------------------
 /*ESP32 Communication type, Uncomment only one option!!!*/
 
 /*Uncomment to enable BT, else default to USB serial only,*/
-//#define enable_BT              // enable only Bluetooth serial connection
+#define enable_BT              // enable only Bluetooth serial connection
 
 /*Uncomment to enable BT and USB serial. (Not Currently working),*/
-#define enable_DualSerialEvent // enable Bluetooth and USB serial connection
+//#define enable_DualSerialEvent // enable Bluetooth and USB serial connection
 
 /* Enable the built in LED blinking when transmitting, saves power when using battery if disabled,*/
 #define enableTX_LED //
