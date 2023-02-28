@@ -29,13 +29,12 @@ void button_Modes() {
     /* Change Mode */
     switch (display_Button_counter) {
 
-      case 0: // 1st SCREEN
-        DisplayStyle_Portrait_ATSAMD();
-
+      case 0: // 1st SCREEN 
+        DisplayStyle_Landscape_ATSAMD();
         break;
 
       case 1: // 2nd SCREEN
-        DisplayStyle_Landscape_ATSAMD();
+        DisplayStyle_Portrait_ATSAMD();
         break;
 
 
