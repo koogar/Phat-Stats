@@ -1,4 +1,4 @@
-#define CODE_VERS  "3.0.0.T.PCB"  // Code version number
+#define CODE_VERS  "3.Neo.KiSS.Net"  // Code version number
 
 
 /*
@@ -40,11 +40,7 @@
   Adafruit ILI9341
   https://github.com/adafruit/Adafruit_ILI9341
 
-  HID-Project
-  https://github.com/NicoHood/HID/wiki/Consumer-API
 
-  Rotary encoder
-  https://github.com/koogar/ErriezRotaryEncoderFullStep
 
   Hookup Guide
   https://runawaybrainz.blogspot.com/2021/03/phat-stats-ili9341-tft-display-hook-up.html
@@ -60,17 +56,13 @@
 #include <Adafruit_GFX.h>
 #include <Fonts/Org_01.h>
 
-#include <TML_ErriezRotaryFullStep.h>
-#include "HID-Project.h"  //https://github.com/NicoHood/HID/wiki/Consumer-API
-
-
 
 #include "Configuration_Settings.h" // load settings
 #include "Bitmaps.h"
 
 
 /*
-  eBay Special Red PCB pinouots VCC(3.3v), GND, CS, RST, D/C, MOSI, SCK, BL, (MISO, T_CLK, T_CS, T_DIN, T_DO, T_IRQ)
+  eBay Special Red PCB pinouts VCC(3.3v), GND, CS, RST, D/C, MOSI, SCK, BL, (MISO, T_CLK, T_CS, T_DIN, T_DO, T_IRQ)
 
   Adafruit QT-PY / XIAO
   ---------------------
@@ -83,22 +75,13 @@
   DC     =  7
   SCLK   =  8
   MOSI   =  10
-  MISO   =  9 (Touch Screen)
+
 
   B.LIGHT =  4
   ---------------------
-  Rotary Encoder or Touchscreen
-  ---------------------
-  TFT T_IRQ or EncoderA = 3
-  TFT T_CS  or EncoderB = 2
-  EncButton         = 1
 
-  ---------------------
-  i2c
-  ---------------------
-  SCL = 5  (*Not Required for Reference only!!!)
-  SDA = 4  (*Not Required for Reference only!!!)
-  ---------------------
+  Screen Mode Button      = 1
+
 
   Neopixel / LED's
   ---------------------
@@ -154,45 +137,23 @@ Adafruit_NeoPixel TX_pixel(1, TX_NeoPin, NEO_GRB + NEO_KHZ800);
 /* These pins do not have to be defined as they are hardware pins */
 //Connect TFT_SCLK to pin   8
 //Connect TFT_MOSI to pin   10
-//Connect TFT_MISO to pin   9 (for XPT2046 touch)
+
 
 
 Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC, TFT_RST); // Use hardware SPI
 
 //-----------------------------------------------------------------------------
 
-#ifdef  touchScreen
-/* XPT2046 touch_Button modes*/
-#include <XPT2046_Touchscreen.h> /* https://github.com/PaulStoffregen/XPT2046_Touchscreen */
-
-#define TOUCH_IRQ_PIN  3 // T_IRQ Touch Screen Interupt pin)
-#define TOUCH_CS_PIN   2 // T_CS  Touch Screen select
-
-//XPT2046_Touchscreen touch(TOUCH_CS_PIN);  // Param 2 - NULL - No interrupts
-//XPT2046_Touchscreen touch(TOUCH_CS_PIN, 255);  // Param 2 - 255 - No interrupts
-XPT2046_Touchscreen touch( TOUCH_CS_PIN, TOUCH_IRQ_PIN ); // Param 2 - Touch IRQ Pin - interrupt enabled polling
-
-int touch_Button_counter = 0;
-
-#else
-
-/* Rotary Encoder*/
-#define encoderOutA 2 // CLK
-#define encoderOutB 3 // DT
-RotaryFullStep rotary(encoderOutA, encoderOutB);
-
-#endif
-
 
 /* Encoder Button pin*/
-int encoder_Button     = 1;
-int enc_Button_counter = 0;
+int mode_Button     = 1;
+int display_Button_counter = 0;
 
 /* Screen TFT backlight Pin */
 int TFT_backlight_PIN =  4;
 
-/* Encoder TFT Brightness*/
-//volatile int brightness_count = 150; // Start Up PWM Brightness, moved to CFG!!!
+/*TFT Brightness*/
+
 int brightness_countLast      = 0;   // Store Last PWM Value
 
 //-----------------------------------------------------------------------------
@@ -248,32 +209,12 @@ void setup() {
   Serial.begin(115200);  //  USB Serial Baud Rate
   inputString.reserve(200); // String Buffer
 
-#ifdef  touchScreen
-  touch.begin();
-#endif
-
-  /* Setup HID*/
-  // Sends a clean report to the host. This is important on any Arduino type.
-  Consumer.begin();
-
-
-
-#ifdef Encoder_HID
-  // Initialize pin change interrupt on both rotary encoder pins
-  attachInterrupt(digitalPinToInterrupt(encoderOutA), rotaryInterrupt, CHANGE);
-  attachInterrupt(digitalPinToInterrupt(encoderOutB), rotaryInterrupt, CHANGE);
-#endif
-
-#ifdef Encoder_PWM2
-  // Initialize pin change interrupt on both rotary encoder pins
-  attachInterrupt(digitalPinToInterrupt(encoderOutA), rotaryInterrupt_PWM2, CHANGE);
-  attachInterrupt(digitalPinToInterrupt(encoderOutB), rotaryInterrupt_PWM2, CHANGE);
-#endif
 
   /* Set up the NeoPixel*/
   pixels.begin();    // This initializes the NeoPixel library.
 
 #ifdef enableTX_LED
+
 #ifdef Adafruit_QTPY
   TX_pixel.begin();  // This initializes the library for the Built in NeoPixel.
 #endif
@@ -283,7 +224,7 @@ void setup() {
   pixels.show(); // Turn off all Pixels
 
   /* Set up PINs*/
-  pinMode(encoder_Button, INPUT_PULLUP);
+  pinMode(mode_Button, INPUT_PULLUP);
   pinMode(TFT_backlight_PIN, OUTPUT); // declare backlight pin to be an output:
 
 #ifdef Seeeduino_XIAO
@@ -299,9 +240,6 @@ void setup() {
   delay(1000); // Give the micro time to initiate the SPi bus
   tft.begin(); //ILI9341
 
-#ifdef  touchScreen
-  touch.setRotation(ASPECT);
-#endif
 
   tft.setRotation(ASPECT);// Rotate the display :  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
 
@@ -313,7 +251,7 @@ void setup() {
   tft.setTextColor(ILI9341_WHITE);
 
   splashScreen();
-  //splashScreenSumo();
+
 
 }
 
@@ -327,13 +265,6 @@ void loop() {
   activityChecker();      // Turn off screen when no activity
 #endif
 
-#ifdef Encoder_PWM2
-  void rotaryInterrupt_PWM();
-#endif
-
-#ifdef Encoder_HID
-  void rotaryInterrupt(); // HID Volume Control Function, runs all the time regardless of Phat-Stats being Active.
-#endif
 
 #ifdef enableTX_LED
   /*Serial Activity LED */
@@ -351,12 +282,10 @@ void loop() {
 #endif
 
   //-----------------------------
-#ifdef  touchScreen
-  touch_Modes();
-#else
-  /*Encoder Mode Button, moved to its own tab*/
-  encoder_Modes();
-#endif
+
+  /* Mode Button, moved to its own tab*/
+  button_Modes();
+
 }
 
 /* END of Main Loop */
@@ -440,9 +369,6 @@ void activityChecker() {
 
     tft.fillScreen(ILI9341_BLACK);
 
-#ifdef  touchScreen
-    touch.setRotation(0);
-#endif
 
     tft.setRotation(0);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
     tft.drawRoundRect  (0, 0  , 240, 320, 8,    ILI9341_RED);
@@ -479,9 +405,7 @@ void splashScreen() {
   /* Initial Boot Screen, */
 
   allNeoPixelsOff();
-#ifdef  touchScreen
-  touch.setRotation(0);
-#endif
+
   tft.setRotation(0);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
 
   tft.setFont(&Org_01);
@@ -512,12 +436,21 @@ void splashScreen() {
   tft.setCursor(22, 219);
   tft.setTextColor(ILI9341_RED);
   tft.print("tallmanlabs.com");
-
+  
+    /*  Baud Rate */
+  tft.setFont(); // Set Default Adafruit GRFX Font
+  tft.setTextColor(ILI9341_WHITE);
+  tft.setTextSize(1);
+  tft.setCursor(110, 280);
+  tft.print("Baud: ");
+  tft.print (baudRate);
+  tft.print(" bps ");
+  
   /* Set version */
   tft.setFont(); // Set Default Adafruit GRFX Font
   tft.setTextColor(ILI9341_WHITE);
   tft.setTextSize(1);
-  tft.setCursor(130, 300);
+  tft.setCursor(110, 300);
   tft.print("TFT: v");
   tft.print (CODE_VERS);
 
@@ -535,24 +468,11 @@ void splashScreen() {
 
 #ifdef enableNeopixelGauges
 
-#ifdef enable_BT
-  allNeoPixelsBLUE();
-#else
   allNeoPixelsRED();
-#endif
 
 #endif
 
   tft.fillScreen(ILI9341_BLACK);
-
-#ifdef Serial_BT
-  tft.drawRoundRect  (0, 0  , 240, 320, 8,    ILI9341_RED);
-  tft.drawBitmap(82, 62, WaitingDataBMP_BT, 76, 190, ILI9341_BLUE);
-
-#else // USB
-  tft.drawRoundRect  (0, 0  , 240, 320, 8,    ILI9341_RED);
-  tft.drawBitmap(82, 62, WaitingDataBMP_USB, 76, 190, ILI9341_RED);
-#endif
 
   delay(3000);
 

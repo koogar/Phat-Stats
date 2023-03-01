@@ -12,36 +12,39 @@
 
   This Sketch Requires HardwareSerialMonitor v1.3 or higher
 
+  WARNING!!!last successful compile espressif v2.0.5
+  if your compile fails (analogWriteResolution) uninstall in the IDE boards manager down to the above version
   https://github.com/espressif/arduino-esp32/blob/master/docs/arduino-ide/boards_manager.md
 
   Board Manager ESP32
   -------------------
-  Click on File > Preference, and fill Additional Boards Manager URLs with the url below
-  : last successful compile espressif v2.0.5 
-  if your compile fails (analogWriteResolution) uninstall in the IDE boards manager down to the above version
-  
+  Click on File > Preference, and fill Additional Boards Manager URLs with the url below:
   https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
 
-  last successful compile Arduino IDE v1.8.19
+
 
   Libraries
   ---------
-  Adafruit Neopixel:            last successful compile v1.10.5
+  Adafruit Neopixel
   https://github.com/adafruit/Adafruit_NeoPixel
 
-  Adafruit GFX Library:         last successful compile v1.11.3
+  Adafruit GFX Library
   https://github.com/adafruit/Adafruit-GFX-Library
 
-  Adafruit ILI9341:             last successful compile v1.5.12
+  Adafruit ILI9341
   https://github.com/adafruit/Adafruit_ILI9341
 
-  Rotary encoder:               last successful compile v1.1.0
+  Rotary encoder
   https://github.com/koogar/ErriezRotaryEncoderFullStep
 
-  ESP32 analogueWrite Function: last successful compile v1.0.1
+
+  WARNING!!!last successful compile espressif v2.0.5
+  if your compile fails (analogWriteResolution) uninstall in the IDE boards manager down to the above version
+  
+  ESP32 analogueWrite Function
   https://github.com/ERROPiX/ESP32_AnalogWrite
 
-  Battery Monitor by Alberto Iriberri Andrés: last successful compile v0.2
+  Battery Monitor by Alberto Iriberri Andrés
   https://github.com/pangodream/18650CL
 
   Hookup Guide
@@ -52,18 +55,15 @@
   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 */
 
-#define CODE_VERS  "v3.0.1.BT.Touch"  // Code version number
+#define CODE_VERS  "3.0.0.Neo.BT.KiSS"  // Code version number
 
 #include <Arduino.h>
 #include <Wire.h>
 #include <SPI.h>
-#include <analogWrite.h>
-
 #include <Adafruit_GFX.h>
 #include <Fonts/Org_01.h>
-
+#include <analogWrite.h>
 #include <TML_ErriezRotaryFullStep.h>
-
 
 #include "Configuration_Settings.h" // load settings
 #include "Bitmaps.h"
@@ -88,31 +88,30 @@ BluetoothSerial SerialBT;    // Bluetooth Classic, not BLE
 
   --------------------------------------------
   CS     =  17             (15)
-  RST    =  15             (-1)(15)(19)
+  RST    =  15             (-1)
   DC     =  16             (2)
 
   SCLK   =  18
   MOSI   =  23
 
-  Touch
-  --------------------
-  MISO      = 19   (for XPT2046 touch)
-
-  TFT T_IRQ = 32
-  TFT T_CS  = 33
+  MISO   =  19   (*Not Required for Reference only!!!)
 
   B.LIGHT =  4             (0, 13)
   ---------------------
 
-  Rotary Encoder
+
+  Mode Button= 0            (0,17)
   ---------------------
-
-  EncoderA = 14           (14,2,4)
-  EncoderB = 27           (27,15,16)
-
-  EncButton= 0            (0,17)
+  i2c
   ---------------------
+  SCL = 22  (*Not Required for Reference only!!!)
+  SDA = 21  (*Not Required for Reference only!!!)
 
+  (Lolin32 Lite)
+  SCL = 23  (*Not Required for Reference only!!!)
+  SDA = 19  (*Not Required for Reference only!!!)
+  ---------------------
+  ---------------------
 
   Neopixel / LED's
   ---------------------
@@ -122,18 +121,6 @@ BluetoothSerial SerialBT;    // Bluetooth Classic, not BLE
   Battery Monitor   Voltage divider (GND ---[100K]--- (Pin34 ADC) ----[100k]--- BATT+) 3.2v to 4.2v Range
   --------------------
   Battery Monitor = 34
-
-
-    i2c
-  ---------------------
-  (Lolin D32)
-  SCL = 22  (*Not Required for Reference only!!!)
-  SDA = 21  (*Not Required for Reference only!!!)
-
-  (Lolin32 Lite)
-  SCL = 23  (*Not Required for Reference only!!!)
-  SDA = 19  (*Not Required for Reference only!!!)
-  ---------------------
   ==========================================================================================================
 */
 
@@ -142,10 +129,8 @@ BluetoothSerial SerialBT;    // Bluetooth Classic, not BLE
 /* Battery Monitor Settings*/
 #include <Pangodream_18650_CL.h> // Copyright (c) 2019 Pangodream
 
-#define ADC_PIN 34        //!< ADC pin used, default is GPIO34 - ADC1_6 Voltage divider (2* 10K)
-//#define CONV_FACTOR 1.8 //!< Conversion factor to translate analog units to volts
-#define CONV_FACTOR 1.73 //!< Conversion factor to translate analog units to volts
-
+#define ADC_PIN 34        //!< ADC pin used, default is GPIO34 - ADC1_6 Voltage divider (2* 100K)
+#define CONV_FACTOR 1.8 //!< Convertion factor to translate analog units to volts
 #define READS 20
 Pangodream_18650_CL BL(ADC_PIN, CONV_FACTOR, READS);
 
@@ -175,43 +160,23 @@ Adafruit_NeoPixel pixels(NUM_PIXELS, NEOPIN, NEO_GRB + NEO_KHZ800);
 /* ILI9321 TFT setup */
 #include <Adafruit_ILI9341.h>  // v1.5.6 Adafruit Standard
 
-/*  SPi Hardware only for speed*/
+/* ESP32 SPi Hardware only for speed*/
 #define TFT_CS     17
 #define TFT_DC     16
-#define TFT_RST    15  // Moved from 19
+#define TFT_RST    15
 
 /* These pins do not have to be defined as they are hardware pins */
-// Connect TFT_SCLK to pin   18
-// Connect TFT_MOSI to pin   23
-// Connect TFT_MISO to pin   19
+//Connect TFT_SCLK to pin   18
+//Connect TFT_MOSI to pin   23
+
 Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC, TFT_RST); // Use hardware SPI
 
-#ifdef  touchScreen
-
-/* XPT2046 touch_Modes*/
-
-#include <XPT2046_Touchscreen.h> /* https://github.com/PaulStoffregen/XPT2046_Touchscreen */
-
-// Connect TFT_MISO to pin 19
-#define TOUCH_IRQ_PIN  32 // 32 T_IRQ Touch Screen Interupt pin)
-#define TOUCH_CS_PIN   33 // 33 T_CS  Touch Screen select
-
-//XPT2046_Touchscreen touch(TOUCH_CS_PIN);  // Param 2 - NULL - No interrupts
-//XPT2046_Touchscreen touch(TOUCH_CS_PIN, 255);  // Param 2 - 255 - No interrupts
-XPT2046_Touchscreen touch( TOUCH_CS_PIN, TOUCH_IRQ_PIN ); // Param 2 - Touch IRQ Pin - interrupt enabled polling
-int touch_Button_counter = 0;
-#endif
 //-----------------------------------------------------------------------------
 
-/* Rotary Encoder*/
-#define encoderOutA 27 // CLK
-#define encoderOutB 14 // DT
-
-RotaryFullStep rotary(encoderOutA, encoderOutB);
 
 /* Encoder Button pin*/
-int encoder_Button     = 0;
-int enc_Button_counter = 0;
+int mode_Button     = 0;
+int display_Button_counter = 0;
 
 /* Screen TFT backlight Pin */
 int TFT_backlight_PIN = 4;
@@ -270,39 +235,28 @@ boolean stringComplete = false;
 
 void setup() {
 
-#ifdef  touchScreen
-  touch.begin();
-#endif
 
-#ifdef enable_DualSerialEvent
-  SerialBT.begin(device_BT); //Bluetooth device name
-#endif
 
 
 #ifdef enable_BT
   //btStart();
   SerialBT.begin(device_BT); //Bluetooth device name
 #else //USB
-  //btStop();      // Turn off BT Radio
-  //SerialBT.end(); // Turn off BT Radio
+
   Serial.begin(baud);  //  USB Serial Baud Rate
 #endif
 
   inputString.reserve(200); // String Buffer
 
-#ifdef Encoder_PWM2
-  // Initialize pin change interrupt on both rotary encoder pins
-  attachInterrupt(digitalPinToInterrupt(encoderOutA), rotaryInterrupt_PWM2, CHANGE);
-  attachInterrupt(digitalPinToInterrupt(encoderOutB), rotaryInterrupt_PWM2, CHANGE);
-#endif
+
 
   /* Set up the NeoPixel*/
   pixels.begin();    // This initializes the NeoPixel library.
-  pixels.setBrightness(NeoBrightness); // Atmel Global Brightness (does not work for STM32!!!!)
+  pixels.setBrightness(NeoBrightness); // Atmel Global Brightness
   pixels.show(); // Turn off all Pixels
 
   /* Set up PINs*/
-  pinMode(encoder_Button, INPUT_PULLUP);
+  pinMode(mode_Button, INPUT_PULLUP);
 
 
   // Set resolution for a specific pin
@@ -336,9 +290,7 @@ void setup() {
 void loop() {
 
 
-#ifdef Encoder_PWM2
-  void rotaryInterrupt_PWM();
-#endif
+
 
 #ifdef enableTX_LED
   /*ESP Activity LED */
@@ -346,13 +298,8 @@ void loop() {
 #endif
   //-----------------------------
 
-// disable encoder_Modes(button) if touchScreen is enabled
-#ifdef  touchScreen
-  touch_Modes();
-#else
-  /*Encoder Mode Button, moved to its own tab*/
-  encoder_Modes();
-#endif
+  /*Mode Button, moved to its own tab*/
+  button_Modes();
 
 }
 
@@ -529,9 +476,9 @@ void splashScreen() {
   tft.print(BL.getBatteryVolts()); tft.print("v");
 #endif
 
-  tft.setCursor(20, 20);
+  tft.setCursor(10, 10);
   tft.setTextColor(ILI9341_WHITE);
-  tft.print(baud);//tft.println(" bits/s");
+  tft.print("Baud Rate: "); tft.print(baud); tft.println(" bps");
 
   tft.setTextSize(3);
   tft.setCursor(86, 140);
@@ -557,17 +504,18 @@ void splashScreen() {
   tft.setFont(); // Set Default Adafruit GRFX Font
   tft.setTextColor(ILI9341_WHITE);
   tft.setTextSize(1);
-  tft.setCursor(110, 290);
+  tft.setCursor(95, 290);
   tft.print("TFT: v");
   tft.print (CODE_VERS);
 
   tft.setTextColor(ILI9341_WHITE);
   tft.setFont(); // Set Default Adafruit GRFX Font
 
-  //tft.setTextSize(1);
-  //tft.setCursor(10, 305);
-  //tft.setTextColor(ILI9341_WHITE);
-  //tft.print("If using USB Serial? Disconnect BT!!!");
+  tft.setTextSize(1);
+
+  tft.setCursor(10, 305);
+  tft.setTextColor(ILI9341_WHITE);
+  tft.print("If using USB Serial? Disconnect BT!!!");
 
   backlightON();
 

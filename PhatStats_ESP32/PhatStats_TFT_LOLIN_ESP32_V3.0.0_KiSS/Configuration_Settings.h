@@ -8,112 +8,12 @@
   /*
 
 
-  V1.58:  ILI9431 TFT (320 x 240) only preview version for the new features in HardwareSerialmonitor v1.3.
 
-          Button to change between portrait and landscape mode.
+  V3. ESP32 KiSS [K]eep [i]t [S]toopid [S]imple edition
 
-          Additional GPU Features:
-          Fan Speed Load%, Fan Speed RPM, Total Memory, Used Memory, Current Power Consumption in Watts (Nvidia).
+        Change to new Pin Arrangement
+        Stripped Down Version
 
-          Additional system RAM features:
-          Total Memory, Available Memory, Memory Load.
-
-          Config Options:
-          Intel/AMD  CPU and GPU Bitmaps.
-          Specify CPG/GPU TJMax Warnings.
-
-
-  V1.58b:
-        Config Options:
-        Debug Screen CFG Setting.
-        PWM Backlight Direct Pin Connection for 3.3v.
-        PWM Backlight PNP Transitor Pin Connection for 5v.
-
-  V1.59:
-        Rotary Encoder Brightness Control.
-
-  v1.59.6:
-        ADD: CPU Turbo & GPU Boost Clock Indicator with Overclock Frequency Gain Display
-
-        Minimise Screen Refresh Blinking using "tft.setTextColor(Text, Background);"
-        and "Magic Digit Eraser" Function for digits that gain in length.
-        (the above only works for the default font!!! (This is a limitation of the GRFX library)
-
-  v1.6.1 :
-
-        ADD: ATSAMD21 Support
-        ADD: Show Overclock/Turbo/Boost values as a percentage over stock CPU/GPU values
-
-  v1.6.2 :
-        Optimised (Non Blinking) and character erase. Thanks to contributor "(MaD)erer"
-
-  v1.6.3 :
-        Optimised (Non Blinking) and character erase for CPU/GPU Frequency if Speedstep is enabled
-
-  v1.6.4 :
-        QT-PY Only: Optimise Pins (changes from previous)
-        Remove PWM_Encoder_PNP option
-        Move ActivityChecker and Serialevent back to main loop,
-        Add option to disable ActivityChecker to retain last info before PC crash ETC
-
-  v1.6.5 :
-        Move encoder modes in its own function tab
-        Rename switchpin to encoder_Button
-        Clean up old stuff
-
-  v1.6.6 :
-        STM32 BluePill is no longer supported!!!
-        ----------------------------------------
-        Add HID Volume control using the rotary encoder (runs all the time and is non-blocking)
-        Remove Static_PWM define.
-
-                 If "//Encoder_PWM" is commented(disabled) it will default to a fixed PWM value,
-                 and the encoder will act as a volume control.
-
-                 If "Encoder_PWM" is uncommeted(active) the rotary encoder
-                 will adjust the backlight PWM
-
-  v1.6.8 :
-       Volume and PWM Brightness now use a non blocking interrupt
-
-  v1.6.9:
-       Add Feature indicator to display enables features on splash screen
-
-  v2.0.0:
-       Reduce the amount of header files.
-       Change Boot Logo.
-       Reduce the Size of the MHz font in the frequency gains display to allow for an extra digit.
-
-  v2.0.1.BT:
-       ESP32 Bluetooth Communication (BT Classic not BLE)
-
-  v2.0.2.BT:
-      Adjust NeoPixel brightness together with screen brightness using the rotary encoder (battery saver)
-
-  v2.0.2.2.BT:
-      Use either BT or USB Serial "enable_DualSerialEvent"
-      ADD enableTX_LED  option to enable/disable built in LED when transmitting data
-
-  v2.0.5
-      ADD CircleGuage DisplayStyle
-
-  V2.0.6.BT (ESP32 only)
-      Add Battery Monitor when using BT
-
-  V2.0.7
-      Fix CPU & GPU Overclock gains "-+" bug
-
-  V2.0.8 (ESP32 only)
-      Add Support for LolinD32      (Tested)
-      Add Support for Lolin32 LITE  (Tested)
-      Add ESP32 BT ESP Board ID
-
-  V3.BT.Touch (ESP32 experimental) Warning Pin Changes!!!!!
-        Move "RST" pin from 19 to 15 to re-instate the MISO pin for the touch screen.
-        Note:  Rotary Encoder Mode function must be disabled to use the touch Screen.
-        Currently the touch function is limited to changing the DisplayStyles when touched.
-        
-        Fix: Clock and Shader mHz "zzz" trails
 
 
   Note: Gnat-Stats/Phat-Stats is optimised for desktop CPU's with dedicated graphics cards, such as Nvidia/Radeon.
@@ -134,29 +34,31 @@
 /*If BT is enabled you can not use HardwareSerialMonitor with USB serial, even though it is visible.
   You can still upload new code through the Arduino IDE as normal.
 
-  Currently when using BT you only have to connect the device to Windows, no pairing is needed.
+  Currently when using BT you only have to connect the device to Windows, no BT pairing is needed.
   When disconnected, you will need to manualy reconnect in HardwareSerialMonitor by clicking
   on the correct COM port “Standard Serial over Bluetooth link”.
 
-  Note: Once connected, two “Standard Serial over Bluetooth link” will be visible
+  Note: Once connected, two “Standard Serial over Bluetooth Classic link” will be visible
   one is Send, the other is Receive.
   When you know the correct port for Send you can disable the other in Device Manager
   so it does not to show up in HardwareSerialMonitor.*/
 
 //--------------------------- ESP32 BT Board Windows ID -----------------------------------
 
-//#define  LOLIN_32v1
-#define  LOLIN_D32
-//#define  LOLIN32_LITE
 
-//--------------------------- Bluetooth or USB serial -----------------------------------
+//#define  LOLIN_D32
+#define  LOLIN32_LITE
+
+//--------------------------- Bluetooth Classic -----------------------------------
 /*ESP32 Communication type, Uncomment only one option!!!*/
 
-/*Uncomment to enable BT, else default to USB serial only,*/
-#define enable_BT              // enable only Bluetooth serial connection
+/*Uncomment to enable BT, else default to USB serial only,
+  Baud Rate of PhatStats and HardwareSerialMonitor must match*/
 
-/*Uncomment to enable BT and USB serial. (Not Currently working),*/
-//#define enable_DualSerialEvent // enable Bluetooth and USB serial connection
+//#define enable_BT              // Use baud of 9600, enable only Bluetooth Classic serial connection
+
+int baud = 9600;   //do not adjust Baud Rate
+
 
 /* Enable the built in LED blinking when transmitting, saves power when using battery if disabled,*/
 #define enableTX_LED //
@@ -164,9 +66,9 @@ int TX_LED_Delay = 200; // TX blink delay
 
 
 //----------------------------- Battery Monitor ------------------------------------
-/*WARNING!!! Requires voltage divider (GND ---[10K]--- (Pin34 ADC) ----[10k]--- BATT+) (0%)3.2v to (100%)4.2v Range,*/
+/*WARNING!!! Requires voltage divider (GND ---[100K]--- (Pin34 ADC) ----[100k]--- BATT+) (0%)3.2v to (100%)4.2v Range,*/
 
-#define batteryMonitor // (experimental) Read current LiPo battery level if connected.
+//#define batteryMonitor // (experimental) Read current LiPo battery level if connected.
 
 //-------------------------------- DISCLAIMER -------------------------------------------
 /*
@@ -192,26 +94,13 @@ int TX_LED_Delay = 200; // TX blink delay
   Use the battery/type in accordance with the manufacturer's recommendations.*/
 
 
-
-//-------------------- Enable Touchscreen Button Experimental -----------------------------
-
-//ONLY ENABLE IF YOU HAVE A ILI9341 TOUCH SCREEN!!!!
-
-#define touchScreen // If enabled EncoderButton_Modes are disabled
-int debounceTouchscreenButton = 500;
-
 //--------------------------- CPU/GPU Display Settings -----------------------------------
 
 /* Uncomment your CPU,*/
 //#define AMD_CPU
 #define INTEL_CPU
-
 /* Uncomment your GPU,*/
-//#define NVIDIA_GRAPHICS
-//#define NVIDIA_RTX_GRAPHICS
-#define NVIDIA_RTX_SUPER_GRAPHICS
-//#define NVIDIA_GTX_Ti_GRAPHICS
-
+#define NVIDIA_GRAPHICS
 //#define AMD_GRAPHICS
 
 /* Characters to delete from the start of the CPU/GPU name eg: Remove "Intel" or "Nvidia" to save space*/
@@ -268,22 +157,14 @@ String set_GPUram = "xx";
 
 //-------------------------------- NeoPixel Modes -------------------------------------
 
-//#define enableNeopixelGauges     // NeoPixel ring bargraph example
+#define enableNeopixelGauges     // NeoPixel ring bargraph example
 
 
-/* BT BATTERY SAVER HACK JOB, VERY EXPERIMENTAL!!! SLIGHTLY LAGGY, HAS TO WAIT FOR SCREEN REFRESH*/
-//#define Neo_BrightnessAuto   // Adjust NeoPixel brightness together with screen brightness using the rotary encoder
-int Neo_DivideBy = 5;   // Divide NeoPixel brightness v's TFT brightness (less is brighter)
 
 /* If  NeoBrightness = 0 Phat-Stats will start with no NeoPixels lit. Turn the Rotary Encoder to turn on the NeoPixels, */
 int NeoBrightness   = 20;           // Global start up brightness
 
-//----------------------------- Rotary Encoder Usage ------------------------------------
-
-/* Use the Rotary Encoder for variable PWM control, connected direct to the MCU PIN,*/
-/* If commented the screen brightness will default to the fixed level below,*/
-
-//#define Encoder_PWM2 // Use rotary encoder for PWM screen brightness control  3.3v
+//----------------------------- TFT Start Up Brightness ------------------------------------
 
 /*TFT Start Up Brightness*/
 volatile int brightness_count = 250; // Start Up Brightness
@@ -298,13 +179,14 @@ volatile int brightness_count = 250; // Start Up Brightness
 
 //-------------------------------- Misco Setting -----------------------------------------
 
-/* Debounce Rotary Encoder Button,Sometimes it gets caught during a screen refresh and doesnt change*/
-int debounceEncButton = 200; //  Use a 0.1uf/100nf/(104) ceramic capacitor from button Pin to GND and set at "0"
+/* Debounce Mode Button,Sometimes it gets caught during a screen refresh and doesnt change*/
+int debounceButton = 100; //  Use a 0.1uf/100nf/(104) ceramic capacitor from button Pin to GND if poss
 
 /* Delay screen event, to stop screen data corruption ESP8622 / ESP32 use 25, most others 5 or 0 will do*/
 int Serial_eventDelay = 15;  // 15 is the minimum setting for an ESP32 with a Silicon Labs CP210x serial chip
 
-int baud = 9600; //do not adjust
+
+
 //----------------------------- Debug Screen Erasers ---------------------------------------
 
 /* Debug Screen, Update Erasers, */
@@ -313,9 +195,6 @@ int baud = 9600; //do not adjust
 
 
 // BT Board ID
-#ifdef LOLIN_32v1
-#define device_BT "TMLabs_BT_32v1"
-#endif
 
 #ifdef LOLIN_D32
 #define device_BT "TMLabs_BT_D32"
