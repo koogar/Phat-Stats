@@ -17,7 +17,7 @@
   Board Manager ESP32
   -------------------
   Click on File > Preference, and fill Additional Boards Manager URLs with the url below
-  : last successful compile v2.0.5 
+  : last successful compile espressif v2.0.5 
   if your compile fails (analogWriteResolution) uninstall in the IDE boards manager down to the above version
   
   https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
