@@ -15,6 +15,8 @@ The Baud rate of HardwareSerialMonitor(get the 9600 Version) and PhatStats must 
   so it does not to show up in HardwareSerialMonitor. 
   If you select the wrong BT Serial port (downlink) HardwareSerialMontor will be laggy
 
+  When using Bluetooth you will have to manually connect on windows startup
+
 
 
 
