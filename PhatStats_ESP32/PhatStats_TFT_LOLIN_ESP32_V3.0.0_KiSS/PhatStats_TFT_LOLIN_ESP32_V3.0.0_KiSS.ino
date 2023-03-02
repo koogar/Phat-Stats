@@ -40,7 +40,7 @@
 
   WARNING!!!last successful compile espressif v2.0.5
   if your compile fails (analogWriteResolution) uninstall in the IDE boards manager down to the above version
-  
+
   ESP32 analogueWrite Function
   https://github.com/ERROPiX/ESP32_AnalogWrite
 
@@ -469,16 +469,32 @@ void splashScreen() {
 
 #ifdef batteryMonitor
   // Battery Level Indicator on Boot Screen
-  tft.drawBitmap(170, 10, BATTERY_BMP, 60, 20, ILI9341_WHITE);
-  tft.setTextSize(2);
-  tft.setCursor(178, 23);
-  tft.setTextColor(ILI9341_BLACK);
-  tft.print(BL.getBatteryVolts()); tft.print("v");
+  //-------------------------------------------------------------
+  if (BL.getBatteryVolts() <= 3.4 ) {
+
+    tft.drawBitmap(170, 10, BATTERY_BMP, 60, 20, ILI9341_RED);
+    tft.setTextSize(2);
+    tft.setCursor(178, 23);
+    tft.setTextColor(ILI9341_BLACK);
+    tft.print(BL.getBatteryVolts()); tft.print("v");
+
+  } else {
+
+    //-------------------------------------------------------------
+
+    tft.drawBitmap(170, 10, BATTERY_BMP, 60, 20, ILI9341_GREEN);
+    tft.setTextSize(2);
+    tft.setCursor(178, 23);
+    tft.setTextColor(ILI9341_BLACK);
+    tft.print(BL.getBatteryVolts()); tft.print("v");
+  }
+
 #endif
 
-  tft.setCursor(10, 10);
+  tft.setTextSize(1);
+  tft.setCursor(14, 14);
   tft.setTextColor(ILI9341_WHITE);
-  tft.print("Baud Rate: "); tft.print(baud); tft.println(" bps");
+  tft.print("Baud: "); tft.print(baud); tft.println("");
 
   tft.setTextSize(3);
   tft.setCursor(86, 140);
@@ -541,17 +557,34 @@ void splashScreen() {
 
 #ifdef batteryMonitor
   // Show Battery Level Indicator on waiting for data screen
-  tft.drawBitmap(33 + 40, 280, BATTERY_BMP, 60, 20, ILI9341_GREEN);
 
-  tft.setCursor(46 + 40, 286 ); // (Left/Right, UP/Down)
-  tft.setTextSize(1);
-  tft.setTextColor(ILI9341_BLACK);
-  tft.print(BL.getBatteryVolts()); tft.print("v");
-  tft.setTextColor(ILI9341_WHITE);
-  tft.setTextSize(2);
-  tft.setCursor(100 + 40, 283 ); // (Left/Right, UP/Down)
-  tft.print(BL.getBatteryChargeLevel());
-  tft.print("% ");
+  if (BL.getBatteryVolts() <= 3.4 ) {
+    tft.drawBitmap(33 + 40, 280, BATTERY_BMP, 60, 20, ILI9341_RED);
+
+    tft.setCursor(46 + 40, 286 ); // (Left/Right, UP/Down)
+    tft.setTextSize(1);
+    tft.setTextColor(ILI9341_BLACK);
+    tft.print(BL.getBatteryVolts()); tft.print("v");
+    tft.setTextColor(ILI9341_WHITE);
+    tft.setTextSize(2);
+    tft.setCursor(100 + 40, 283 ); // (Left/Right, UP/Down)
+    tft.print(BL.getBatteryChargeLevel());
+    tft.print("% ");
+
+  } else {
+
+    tft.drawBitmap(33 + 40, 280, BATTERY_BMP, 60, 20, ILI9341_GREEN);
+
+    tft.setCursor(46 + 40, 286 ); // (Left/Right, UP/Down)
+    tft.setTextSize(1);
+    tft.setTextColor(ILI9341_BLACK);
+    tft.print(BL.getBatteryVolts()); tft.print("v");
+    tft.setTextColor(ILI9341_WHITE);
+    tft.setTextSize(2);
+    tft.setCursor(100 + 40, 283 ); // (Left/Right, UP/Down)
+    tft.print(BL.getBatteryChargeLevel());
+    tft.print("% ");
+  }
 #endif
 
 #else // USB

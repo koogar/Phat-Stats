@@ -60,6 +60,7 @@
 int baud = 9600;   //do not adjust Baud Rate
 
 
+
 /* Enable the built in LED blinking when transmitting, saves power when using battery if disabled,*/
 #define enableTX_LED //
 int TX_LED_Delay = 200; // TX blink delay
@@ -157,7 +158,7 @@ String set_GPUram = "xx";
 
 //-------------------------------- NeoPixel Modes -------------------------------------
 
-#define enableNeopixelGauges     // NeoPixel ring bargraph example
+//#define enableNeopixelGauges     // NeoPixel ring bargraph example
 
 
 
