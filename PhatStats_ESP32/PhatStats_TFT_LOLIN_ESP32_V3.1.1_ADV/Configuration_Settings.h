@@ -73,7 +73,6 @@
 int baud = 9600;   //do not adjust Baud Rate
 
 
-
 /* Enable the built in LED blinking when transmitting, saves power when using battery if disabled,*/
 #define enableTX_LED //
 int TX_LED_Delay = 200; // TX blink delay
@@ -222,3 +221,7 @@ int Serial_eventDelay = 15;  // 15 is the minimum setting for an ESP32 with a Si
 #ifdef LOLIN32_LITE
 #define device_BT "TMLabs_BT_32Lite"
 #endif
+
+//------------------- Show Networks Stats when using WeeStatServer -----------------------
+
+//#define enable_LibreNet

@@ -55,7 +55,7 @@
   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 */
 
-#define CODE_VERS  "3.1.0.BT.ADV"  // Code version number
+#define CODE_VERS  "3.1.1.BT.ADV"  // Code version number
 
 #include <Arduino.h>
 #include <Wire.h>

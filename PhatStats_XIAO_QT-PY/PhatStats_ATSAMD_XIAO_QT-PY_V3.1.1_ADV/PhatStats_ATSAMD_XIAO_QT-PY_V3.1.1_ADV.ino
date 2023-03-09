@@ -1,4 +1,4 @@
-#define CODE_VERS  "3.1.0.ADV"  // Code version number
+#define CODE_VERS  "3.1.1.ADV"  // Code version number
 
 
 /*

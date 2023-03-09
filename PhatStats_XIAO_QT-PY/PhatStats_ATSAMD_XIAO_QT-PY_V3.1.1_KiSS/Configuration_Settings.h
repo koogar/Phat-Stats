@@ -148,6 +148,8 @@ volatile int brightness_count = 200; // Start Up PWM Brightness
 
 //-------------------------------- Misco Setting -----------------------------------------
 
+#define splashScreenLS // quick splash screen landscape hack job, also in FeatureSet
+
 /* Debounce Rotary Encoder Button,Sometimes it gets caught during a screen refresh and does not change*/
 int debounceButton = 1000; //  Use a 0.1uf/100nf/(104) ceramic capacitor from button Pin to GND
 
@@ -165,4 +167,7 @@ int Serial_eventDelay = 0; //
 /* Debug Screen, Update Erasers, */
 //#define Debug
 
-#define splashScreenLS // quick splash screen landscape hack job, also in FeatureSet
+
+//------------------- Show Networks Stats when using WeeStatServer -----------------------
+
+//#define enable_LibreNet

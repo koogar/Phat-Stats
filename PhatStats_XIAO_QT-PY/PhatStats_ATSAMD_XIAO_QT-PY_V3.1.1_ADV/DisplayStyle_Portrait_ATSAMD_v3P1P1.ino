@@ -10,7 +10,7 @@
               |_|            |___/
 */
 
-/* Version 3.1 Optimised for ILI9341 320 x 240 in portrait,*/
+/* Version 3.1.1 Optimised for ILI9341 320 x 240 in portrait,*/
 
 void DisplayStyle_Portrait_ATSAMD () {
 
@@ -626,6 +626,40 @@ void DisplayStyle_Portrait_ATSAMD () {
     tft.setTextSize(2); //set background txt font size
     tft.print(ramString)    ; tft.setTextSize(0); tft.print("GB");
 
+ //-------------------------------------- ETHERNET USAGE Libre ----------------------------------------------
+
+    /* Reserved,*/
+
+#ifdef enable_LibreNet
+    /* Network Outline, */
+
+    //                 ( X  , Y ,  W , H , Radius ,    Color
+    tft.drawRoundRect  (102, 233, 136, 22, 2, ILI9341_RED); //
+
+    /* ETHERNET UP String,*/
+    int EthUpStringStart = inputString.indexOf("ETU") + 3;
+    int EthUpStringLimit = inputString.indexOf("|", EthUpStringStart);
+    String EthUpString   = inputString.substring(EthUpStringStart, EthUpStringLimit);
+    while (EthUpString.length() < 9) EthUpString = " " + EthUpString;
+
+    /* UP USAGE DISPLAY,*/
+    tft.setTextSize(1);
+    tft.setCursor(105, 235);
+    tft.print("Network UP  :");
+    tft.println(EthUpString);
+
+    /* ETHERNET Down String,*/
+    int EthDownStringStart = inputString.indexOf("ETD") + 3;
+    int EthDownStringLimit = inputString.indexOf("|", EthDownStringStart);
+    String EthDownString   = inputString.substring(EthDownStringStart, EthDownStringLimit);
+    while (EthDownString.length() < 9) EthDownString = " " + EthDownString;
+
+    /* DOWN USAGE DISPLAY,*/
+    tft.setTextSize(1);
+    tft.setCursor(105, 245);
+    tft.print("Network DOWN:");
+    tft.println(EthDownString);
+#endif
 
     //------------------------------------------ RX indicator Clear-----------------------------------------------
     delay(TX_LED_Delay); // TX blink delay

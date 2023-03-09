@@ -172,7 +172,14 @@ int baudRate = 9600; // set serial baud rate to match that of HardwareSerialMoni
 /* Delay screen event, to stop screen data corruption ESP8622 use 25, most others 5 will do*/
 int Serial_eventDelay = 0; //
 
+
+
+
 //----------------------------- Debug Screen Erasers ---------------------------------------
 
 /* Debug Screen, Update Erasers, */
 //#define Debug
+
+//------------------- Show Networks Stats when using WeeStatServer -----------------------
+
+//#define enable_LibreNet

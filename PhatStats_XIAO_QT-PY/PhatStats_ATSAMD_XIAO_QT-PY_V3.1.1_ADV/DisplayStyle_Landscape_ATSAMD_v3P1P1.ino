@@ -10,7 +10,7 @@
               |_|            |___/                                        |_|
 */
 
-/* Version 3.1 Optimised for ILI9341 320 x 240 in landscape*/
+/* Version 3.1.1 Optimised for ILI9341 320 x 240 in landscape*/
 
 void DisplayStyle_Landscape_ATSAMD () {
 
@@ -647,6 +647,41 @@ void DisplayStyle_Landscape_ATSAMD () {
     tft.print(intRamSum, 0) ; tft.setTextSize(0); tft.print("GB"); tft.print(" ");
     tft.setTextSize(2);
     tft.print(ramString)    ; tft.setTextSize(0); tft.print("GB");
+
+
+    //-------------------------------------- ETHERNET USAGE Libre ----------------------------------------------
+
+    /* Reserved,*/
+
+#ifdef enable_LibreNet
+    /* Network Outline, */
+    //                 ( X  , Y ,  W , H , Radius ,    Color
+    tft.drawRoundRect  (196, 209, 120, 22, 2, ILI9341_RED); //
+
+    /* ETHERNET UP String,*/
+    int EthUpStringStart = inputString.indexOf("ETU") + 3;
+    int EthUpStringLimit = inputString.indexOf("|", EthUpStringStart);
+    String EthUpString   = inputString.substring(EthUpStringStart, EthUpStringLimit);
+    while (EthUpString.length() < 9) EthUpString = " " + EthUpString;
+
+    /* UP USAGE DISPLAY,*/
+    tft.setTextSize(1);
+    tft.setCursor(198, 212);
+    tft.print("Net UP  : ");
+    tft.println(EthUpString);
+
+    /* ETHERNET Down String,*/
+    int EthDownStringStart = inputString.indexOf("ETD") + 3;
+    int EthDownStringLimit = inputString.indexOf("|", EthDownStringStart);
+    String EthDownString   = inputString.substring(EthDownStringStart, EthDownStringLimit);
+    while (EthDownString.length() < 9) EthDownString = " " + EthDownString;
+
+    /* DOWN USAGE DISPLAY,*/
+    tft.setTextSize(1);
+    tft.setCursor(198, 221);
+    tft.print("Net DOWN: ");
+    tft.println(EthDownString);
+#endif
 
     //------------------------------------------ RX indicator Clear------------------------------------------------
 
