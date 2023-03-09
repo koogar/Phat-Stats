@@ -8,21 +8,24 @@
   /*
 
    
-   V3.1.0.ADV    Advanced
+   V3.1.0.KiSS     [K]eep [i]t [S]toopid [S]imple
+
+        Bare bones version
+        Button to change aspect
 
         Add enable_gpuVram, enable_gpuShader, enable_gpuCore
         Remove specific GPU stats in landscape mode, this helps to make room if your GPU memory is over 9999MB
         Fix set_GPUram
 
-    V3.1.0.KiSS     [K]eep [i]t [S]toopid [S]imple
-
-        Bare bones version
+     V3.1.0.ADV    Advanced
+   
         Button to change aspect
         NeoPixels
         
         Add enable_gpuVram, enable_gpuShader, enable_gpuCore
         Remove specific GPU stats in landscape mode, this helps to make room if your GPU memory is over 9999MB
         Fix set_GPUram
+        NeoPixels
 
 
   Note: Gnat-Stats/Phat-Stats is optimised for desktop CPU's with dedicated graphics cards, such as Nvidia/Radeon.
