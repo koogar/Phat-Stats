@@ -94,7 +94,7 @@ BluetoothSerial SerialBT;    // Bluetooth Classic, not BLE
   SCLK   =  18
   MOSI   =  23
 
-  MISO   =  19   (*Not Required for Reference only!!!)
+  MISO   =  19   (*Touch, Not Required for Reference only!!!)
 
   B.LIGHT =  4             (0, 13)
   ---------------------
@@ -462,164 +462,164 @@ void backlightOFF () {
 }
 
 #endif
-  //----------------------------- Splash Screens --------------------------------
+//----------------------------- Splash Screens --------------------------------
 
-  void splashScreen() {
+void splashScreen() {
 
-    /* Initial Boot Screen, */
+  /* Initial Boot Screen, */
 
-    allNeoPixelsOff();
-    tft.setRotation(0);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
+  allNeoPixelsOff();
+  tft.setRotation(0);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
 
-    tft.setFont(&Org_01);
-    tft.fillScreen(ILI9341_BLACK);
-    tft.drawRoundRect  (0, 0  , 240, 320, 8,    ILI9341_RED);
+  tft.setFont(&Org_01);
+  tft.fillScreen(ILI9341_BLACK);
+  tft.drawRoundRect  (0, 0  , 240, 320, 8,    ILI9341_RED);
 
 #ifdef splashScreenLS // Quick landscape hack job, also in FeatureSet
-    tft.setRotation(1);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
+  tft.setRotation(1);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
 #endif
 
-    //tft.drawBitmap(84, 56, JustGnatBMP, 64, 64, ILI9341_YELLOW);
+  //tft.drawBitmap(84, 56, JustGnatBMP, 64, 64, ILI9341_YELLOW);
 
-    tft.drawBitmap(44, 20, HSM_BG_BMP,  142, 128, ILI9341_WHITE);
-    tft.drawBitmap(44, 20, HSM_BG2_BMP, 142, 128, ILI9341_RED);
-    tft.drawBitmap(44, 20, HSM_BMP,     142, 128, ILI9341_GREY);
+  tft.drawBitmap(44, 20, HSM_BG_BMP,  142, 128, ILI9341_WHITE);
+  tft.drawBitmap(44, 20, HSM_BG2_BMP, 142, 128, ILI9341_RED);
+  tft.drawBitmap(44, 20, HSM_BMP,     142, 128, ILI9341_GREY);
 
 #ifdef batteryMonitor
-    // Battery Level Indicator on Boot Screen
+  // Battery Level Indicator on Boot Screen
+  //-------------------------------------------------------------
+  if (BL.getBatteryVolts() <= 3.4 ) {
+
+    tft.drawBitmap(170, 10, BATTERY_BMP, 60, 20, ILI9341_RED);
+    tft.setTextSize(2);
+    tft.setCursor(178, 23);
+    tft.setTextColor(ILI9341_BLACK);
+    tft.print(BL.getBatteryVolts()); tft.print("v");
+
+  } else {
+
     //-------------------------------------------------------------
-    if (BL.getBatteryVolts() <= 3.4 ) {
 
-      tft.drawBitmap(170, 10, BATTERY_BMP, 60, 20, ILI9341_RED);
-      tft.setTextSize(2);
-      tft.setCursor(178, 23);
-      tft.setTextColor(ILI9341_BLACK);
-      tft.print(BL.getBatteryVolts()); tft.print("v");
-
-    } else {
-
-      //-------------------------------------------------------------
-
-      tft.drawBitmap(170, 10, BATTERY_BMP, 60, 20, ILI9341_GREEN);
-      tft.setTextSize(2);
-      tft.setCursor(178, 23);
-      tft.setTextColor(ILI9341_BLACK);
-      tft.print(BL.getBatteryVolts()); tft.print("v");
-    }
+    tft.drawBitmap(170, 10, BATTERY_BMP, 60, 20, ILI9341_GREEN);
+    tft.setTextSize(2);
+    tft.setCursor(178, 23);
+    tft.setTextColor(ILI9341_BLACK);
+    tft.print(BL.getBatteryVolts()); tft.print("v");
+  }
 
 #endif
 
-    tft.setTextSize(1);
-    tft.setCursor(14, 14);
-    tft.setTextColor(ILI9341_WHITE);
-    tft.print("Baud: "); tft.print(baud); tft.println("");
+  tft.setTextSize(1);
+  tft.setCursor(14, 14);
+  tft.setTextColor(ILI9341_WHITE);
+  tft.print("Baud: "); tft.print(baud); tft.println("");
 
-    tft.setTextSize(3);
-    tft.setCursor(86, 140);
-    tft.setTextColor(ILI9341_WHITE);
-    tft.println("PHAT ");
-    tft.setTextSize(3);
-    tft.setCursor(78, 160);
-    tft.println("STATS");
+  tft.setTextSize(3);
+  tft.setCursor(86, 140);
+  tft.setTextColor(ILI9341_WHITE);
+  tft.println("PHAT ");
+  tft.setTextSize(3);
+  tft.setCursor(78, 160);
+  tft.println("STATS");
 
-    tft.setTextSize(2);
-    tft.setCursor(22, 190);
-    tft.setTextColor(ILI9341_SILVER);
-    tft.print("PC Hardware Monitor");
+  tft.setTextSize(2);
+  tft.setCursor(22, 190);
+  tft.setTextColor(ILI9341_SILVER);
+  tft.print("PC Hardware Monitor");
 
-    tft.setTextSize(3);
-    tft.setCursor(22, 219);
-    tft.setTextColor(ILI9341_RED);
-    tft.print("tallmanlabs.com");
+  tft.setTextSize(3);
+  tft.setCursor(22, 219);
+  tft.setTextColor(ILI9341_RED);
+  tft.print("tallmanlabs.com");
 
 
 
-    /* Set version */
-    tft.setFont(); // Set Default Adafruit GRFX Font
-    tft.setTextColor(ILI9341_WHITE);
-    tft.setTextSize(1);
-    tft.setCursor(95, 290);
-    tft.print("TFT: v");
-    tft.print (CODE_VERS);
+  /* Set version */
+  tft.setFont(); // Set Default Adafruit GRFX Font
+  tft.setTextColor(ILI9341_WHITE);
+  tft.setTextSize(1);
+  tft.setCursor(95, 290);
+  tft.print("TFT: v");
+  tft.print (CODE_VERS);
 
-    tft.setTextColor(ILI9341_WHITE);
-    tft.setFont(); // Set Default Adafruit GRFX Font
+  tft.setTextColor(ILI9341_WHITE);
+  tft.setFont(); // Set Default Adafruit GRFX Font
 
-    tft.setTextSize(1);
+  tft.setTextSize(1);
 
-    tft.setCursor(10, 305);
-    tft.setTextColor(ILI9341_WHITE);
-    tft.print("If using USB Serial? Disconnect BT!!!");
+  tft.setCursor(10, 305);
+  tft.setTextColor(ILI9341_WHITE);
+  tft.print("If using USB Serial? Disconnect BT!!!");
 
-    backlightON();
+  backlightON();
 
-    FeatureSet_Indicator2(); // Display Icons for enabled features
+  FeatureSet_Indicator2(); // Display Icons for enabled features
 
-    delay(4000);
+  delay(4000);
 
 #ifdef enableNeopixelGauges
 
 #ifdef enable_BT
-    allNeoPixelsBLUE();
+  allNeoPixelsBLUE();
 #else
-    allNeoPixelsRED();
+  allNeoPixelsRED();
 #endif
 
 #endif
 
-    tft.fillScreen(ILI9341_BLACK);
+  tft.fillScreen(ILI9341_BLACK);
 
 #ifdef enable_BT
-    tft.drawRoundRect  (0, 0  , 240, 320, 8,    ILI9341_RED);
-    tft.drawBitmap(82, 62, WaitingDataBMP_BT, 76, 190, ILI9341_BLUE);
+  tft.drawRoundRect  (0, 0  , 240, 320, 8,    ILI9341_RED);
+  tft.drawBitmap(82, 62, WaitingDataBMP_BT, 76, 190, ILI9341_BLUE);
 
 #ifdef batteryMonitor
-    // Show Battery Level Indicator on waiting for data screen
+  // Show Battery Level Indicator on waiting for data screen
 
-    if (BL.getBatteryVolts() <= 3.4 ) {
-      tft.drawBitmap(33 + 40, 280, BATTERY_BMP, 60, 20, ILI9341_RED);
+  if (BL.getBatteryVolts() <= 3.4 ) {
+    tft.drawBitmap(33 + 40, 280, BATTERY_BMP, 60, 20, ILI9341_RED);
 
-      tft.setCursor(46 + 40, 286 ); // (Left/Right, UP/Down)
-      tft.setTextSize(1);
-      tft.setTextColor(ILI9341_BLACK);
-      tft.print(BL.getBatteryVolts()); tft.print("v");
-      tft.setTextColor(ILI9341_WHITE);
-      tft.setTextSize(2);
-      tft.setCursor(100 + 40, 283 ); // (Left/Right, UP/Down)
-      tft.print(BL.getBatteryChargeLevel());
-      tft.print("% ");
+    tft.setCursor(46 + 40, 286 ); // (Left/Right, UP/Down)
+    tft.setTextSize(1);
+    tft.setTextColor(ILI9341_BLACK);
+    tft.print(BL.getBatteryVolts()); tft.print("v");
+    tft.setTextColor(ILI9341_WHITE);
+    tft.setTextSize(2);
+    tft.setCursor(100 + 40, 283 ); // (Left/Right, UP/Down)
+    tft.print(BL.getBatteryChargeLevel());
+    tft.print("% ");
 
-    } else {
+  } else {
 
-      tft.drawBitmap(33 + 40, 280, BATTERY_BMP, 60, 20, ILI9341_GREEN);
+    tft.drawBitmap(33 + 40, 280, BATTERY_BMP, 60, 20, ILI9341_GREEN);
 
-      tft.setCursor(46 + 40, 286 ); // (Left/Right, UP/Down)
-      tft.setTextSize(1);
-      tft.setTextColor(ILI9341_BLACK);
-      tft.print(BL.getBatteryVolts()); tft.print("v");
-      tft.setTextColor(ILI9341_WHITE);
-      tft.setTextSize(2);
-      tft.setCursor(100 + 40, 283 ); // (Left/Right, UP/Down)
-      tft.print(BL.getBatteryChargeLevel());
-      tft.print("% ");
-    }
+    tft.setCursor(46 + 40, 286 ); // (Left/Right, UP/Down)
+    tft.setTextSize(1);
+    tft.setTextColor(ILI9341_BLACK);
+    tft.print(BL.getBatteryVolts()); tft.print("v");
+    tft.setTextColor(ILI9341_WHITE);
+    tft.setTextSize(2);
+    tft.setCursor(100 + 40, 283 ); // (Left/Right, UP/Down)
+    tft.print(BL.getBatteryChargeLevel());
+    tft.print("% ");
+  }
 #endif
 
 #ifdef splashScreenLS // Quick landscape hack job, also in FeatureSet
-    tft.setRotation(2);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
+  tft.setRotation(0);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
 #endif
 
 #else // USB
-    tft.drawRoundRect  (0, 0  , 240, 320, 8,    ILI9341_RED);
-    tft.drawBitmap(82, 62, WaitingDataBMP_USB, 76, 190, ILI9341_RED);
+  tft.drawRoundRect  (0, 0  , 240, 320, 8,    ILI9341_RED);
+  tft.drawBitmap(82, 62, WaitingDataBMP_USB, 76, 190, ILI9341_RED);
 #endif
 
-#ifdef enable_DualSerialEvent
-    tft.drawRoundRect  (0, 0  , 240, 320, 8,    ILI9341_RED);
-    tft.drawBitmap(82, 62, WaitingDataBMP_USB, 76, 190, ILI9341_BLUE);
+#ifdef enable_BT
+  tft.drawRoundRect  (0, 0  , 240, 320, 8,    ILI9341_RED);
+  tft.drawBitmap(82, 62, WaitingDataBMP_BT,  76, 190, ILI9341_BLUE); 
 #endif
 
 
-    delay(3000);
+  delay(3000);
 
-  }
+}

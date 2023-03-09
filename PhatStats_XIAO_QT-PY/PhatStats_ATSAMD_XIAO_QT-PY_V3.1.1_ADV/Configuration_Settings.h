@@ -10,7 +10,7 @@
 
 
 
-    V3.1.0.KiSS     [K]eep [i]t [S]toopid [S]imple
+    V3.1.1.KiSS     [K]eep [i]t [S]toopid [S]imple
 
         Bare bones version
         Button to change aspect
@@ -19,7 +19,7 @@
         Remove specific GPU stats in landscape mode, this helps to make room if your GPU memory is over 9999MB
         Fix set_GPUram
 
-     V3.1.0.ADV    Advanced
+     V3.1.1.ADV    Advanced
    
         Button to change aspect
         NeoPixels
@@ -158,7 +158,7 @@ int NeoBrightness   = 50;           // Global start up brightness
 
 //-------------------------------- Misco Setting -----------------------------------------
 
-//#define splashScreenLS // quick splash screen landscape hack job, also in FeatureSet
+#define splashScreenLS // quick splash screen landscape hack job, also in FeatureSet
 
 /* Debounce  Button,Sometimes it gets caught during a screen refresh and does not change*/
 int debounceButton = 1000; //  Use a 0.1uf/100nf/(104) ceramic capacitor from button Pin to GND

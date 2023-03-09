@@ -8,7 +8,7 @@
   /*
 
    
-   V3.1.0.KiSS     [K]eep [i]t [S]toopid [S]imple
+   V3.1.1.KiSS     [K]eep [i]t [S]toopid [S]imple
 
         Bare bones version
         Button to change aspect
@@ -17,7 +17,7 @@
         Remove specific GPU stats in landscape mode, this helps to make room if your GPU memory is over 9999MB
         Fix set_GPUram
 
-     V3.1.0.ADV    Advanced
+     V3.1.1.ADV    Advanced
    
         Button to change aspect
         NeoPixels
