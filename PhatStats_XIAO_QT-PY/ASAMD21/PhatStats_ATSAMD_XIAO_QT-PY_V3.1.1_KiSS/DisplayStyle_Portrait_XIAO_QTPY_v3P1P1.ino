@@ -12,7 +12,7 @@
 
 /* Version 3.1.1 Optimised for ILI9341 320 x 240 in portrait,*/
 
-void DisplayStyle_Portrait_ATSAMD () {
+void DisplayStyle_Portrait_XIAO_QTPY () {
 
   /* TFT DRAW STATS, */
   if (stringComplete) {
