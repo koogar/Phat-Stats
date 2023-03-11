@@ -49,8 +49,7 @@
 /* Uncomment your Micro Processor,*/
 //#define Adafruit_QTPY
 //#define Seeeduino_XIAO
-#define Seeeduino_XIAO_RP2040
-
+#define Seeeduino_XIAO_NRF52// https://wiki.seeedstudio.com/XIAO_BLE
 
 //--------------------------- CPU/GPU Display Settings -----------------------------------
 /* Uncomment your CPU,*/
@@ -157,7 +156,6 @@ int debounceButton = 1000; //  Use a 0.1uf/100nf/(104) ceramic capacitor from bu
 
 /* Enable the built in LED blinking when transmitting data,*/
 #define enableTX_LED
-
 int TX_LED_Delay = 100; // TX blink delay
 
 int baudRate = 9600; // set serial baud rate to match that of HardwareSerialMonitor 115200 will use more resources

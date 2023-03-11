@@ -7,10 +7,8 @@
 
   /*
 
-
-
-
-    V3.1.1.KiSS     [K]eep [i]t [S]toopid [S]imple
+   
+   V3.1.1.KiSS     [K]eep [i]t [S]toopid [S]imple
 
         Bare bones version
         Button to change aspect
@@ -20,14 +18,15 @@
         Fix set_GPUram
 
      V3.1.1.ADV    Advanced
-
+   
         Button to change aspect
         NeoPixels
-
+        
         Add enable_gpuVram, enable_gpuShader, enable_gpuCore
         Remove specific GPU stats in landscape mode, this helps to make room if your GPU memory is over 9999MB
         Fix set_GPUram
         NeoPixels
+
 
   Note: Gnat-Stats/Phat-Stats is optimised for desktop CPU's with dedicated graphics cards, such as Nvidia/Radeon.
       You may get wierd results on mobile CPUs and integrated GPU's (iGPU's) on laptops.
@@ -50,7 +49,9 @@
 /* Uncomment your Micro Processor,*/
 //#define Adafruit_QTPY
 //#define Seeeduino_XIAO
-#define Seeeduino_XIAO_RP2040
+//#define Seeeduino_XIAO_RP2040
+#define Seeeduino_XIAO_NRF52
+
 
 //--------------------------- CPU/GPU Display Settings -----------------------------------
 /* Uncomment your CPU,*/
@@ -134,7 +135,7 @@ String set_GPUram = "xxxxxx"; //in GB
 
 //-------------------------------- TFT Fixed or PWM Brightness -------------------------------------
 
-//#define fixedBacklight // enable a fixed backlight (no PWM) powered from VCC
+#define fixedBacklight // enable a fixed backlight (no PWM) powered from VCC
 
 /*Start Up PWM Brightness if using MCU Pin*/
 volatile int brightness_count = 200; // Start Up PWM Brightness
@@ -148,39 +149,28 @@ volatile int brightness_count = 200; // Start Up PWM Brightness
 /* How long the display takes to timeout due to inactive serial data from the windows application */
 #define lastActiveDelay 8000
 
-//-------------------------------- NeoPixel Modes -------------------------------------
-
-#define enableNeopixelGauges     // NeoPixel Phat-Stats PCB 
-#define NeoPixel_Landscape       // If commented out, use portrait
-
-
-/* If  NeoBrightness = 0 Phat-Stats will start with no NeoPixels lit. Turn the Rotary Encoder to turn on the NeoPixels, */
-int NeoBrightness   = 50;           // Global start up brightness
-
 //-------------------------------- Misco Setting -----------------------------------------
 
 #define splashScreenLS // quick splash screen landscape hack job, also in FeatureSet
 
-/* Debounce  Button,Sometimes it gets caught during a screen refresh and does not change*/
+/* Debounce Rotary Encoder Button,Sometimes it gets caught during a screen refresh and does not change*/
 int debounceButton = 1000; //  Use a 0.1uf/100nf/(104) ceramic capacitor from button Pin to GND
 
 /* Enable the built in LED blinking when transmitting data,*/
-//#define enableTX_LED
+#define enableTX_LED
 
 int TX_LED_Delay = 100; // TX blink delay
 
-int baudRate     = 9600; // set serial baud rate to match that of HardwareSerialMonitor 115200 will use more resources
+int baudRate = 9600; // set serial baud rate to match that of HardwareSerialMonitor 115200 will use more resources
 
 /* Delay screen event, to stop screen data corruption ESP8622 use 25, most others 5 will do*/
 int Serial_eventDelay = 0; //
-
-
-
 
 //----------------------------- Debug Screen Erasers ---------------------------------------
 
 /* Debug Screen, Update Erasers, */
 //#define Debug
+
 
 //------------------- Show Networks Stats when using WeeStatServer -----------------------
 
