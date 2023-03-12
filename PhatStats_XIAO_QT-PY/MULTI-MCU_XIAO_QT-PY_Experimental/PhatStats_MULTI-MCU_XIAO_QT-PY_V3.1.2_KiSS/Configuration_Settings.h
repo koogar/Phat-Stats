@@ -7,7 +7,7 @@
 
   /*
 
-   
+
    V3.1.1.KiSS     [K]eep [i]t [S]toopid [S]imple
 
         Bare bones version
@@ -18,15 +18,20 @@
         Fix set_GPUram
 
      V3.1.1.ADV    Advanced
-   
+
         Button to change aspect
         NeoPixels
-        
+
         Add enable_gpuVram, enable_gpuShader, enable_gpuCore
         Remove specific GPU stats in landscape mode, this helps to make room if your GPU memory is over 9999MB
         Fix set_GPUram
         NeoPixels
 
+     V3.1.2
+
+     Add support for:
+                      XIAO NRF52840
+                      XIAO RP2040
 
   Note: Gnat-Stats/Phat-Stats is optimised for desktop CPU's with dedicated graphics cards, such as Nvidia/Radeon.
       You may get wierd results on mobile CPUs and integrated GPU's (iGPU's) on laptops.
@@ -47,10 +52,10 @@
 //--------------------------- Micro Controller Selection---------------------------------
 
 /* Uncomment your Micro Processor,*/
-//#define Adafruit_QTPY
-//#define Seeeduino_XIAO
-//#define Seeeduino_XIAO_RP2040
-#define Seeeduino_XIAO_NRF52
+//#define Adafruit_QTPY_ATSAMD
+//#define Seeeduino_XIAO_ATSAMD
+#define Seeeduino_XIAO_RP2040
+//#define Seeeduino_XIAO_NRF52
 
 
 //--------------------------- CPU/GPU Display Settings -----------------------------------

@@ -1,4 +1,4 @@
-#define CODE_VERS  "3.1.0.KiSS"  // Code version number
+#define CODE_VERS  "3.1.1.KiSS"  // Code version number
 
 
 /*

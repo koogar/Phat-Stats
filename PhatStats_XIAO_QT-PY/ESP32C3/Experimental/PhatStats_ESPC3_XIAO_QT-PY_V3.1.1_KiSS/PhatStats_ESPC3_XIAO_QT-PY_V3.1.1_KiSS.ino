@@ -25,22 +25,11 @@
 
   Board Manager XIAO
   -------------------
+
   https://wiki.seeedstudio.com/Seeeduino-XIAO/
-  
   Click on File > Preference, and fill Additional Boards Manager URLs with the url below:
 
-  XIAO ATSAMD21
-  -------------
-  https://files.seeedstudio.com/arduino/package_seeeduino_boards_index.json
 
-  XIAO NRF52840
-  -------------
-  https://files.seeedstudio.com/arduino/package_seeeduino_boards_index.json
-
-  XIAO RP2040
-  -----------
-  https://github.com/earlephilhower/arduino-pico/releases/download/global/package_rp2040_index.json
-  
   XIAO ESPC3
   -----------
   https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_dev_index.json
@@ -70,7 +59,7 @@
 #include <SPI.h>
 #include <Adafruit_GFX.h>
 #include <Fonts/Org_01.h>
-#include <Adafruit_ILI9341.h>  // v1.5.6 Adafruit Standard
+
 
 #include "Configuration_Settings.h" // load settings
 #include "Z_Bitmaps.h"
@@ -81,29 +70,26 @@
 
   Adafruit QT-PY / XIAO
   ---------------------
-  ATSAMD21G18 @ 48MHz with 3.3V logic/power
-  256KB of FLASH + 32KB of RAM
-  ---------------------
   (TFT)
-  CS     =  5
-  RST    =  0
-  DC     =  7
-  SCLK   =  8
-  MOSI   =  10
+  CS     =  D5
+  RST    =  D0
+  DC     =  D7
+  SCLK   =  D8
+  MOSI   =  D10
 
 
-  B.LIGHT =  4
+  B.LIGHT = D4
   ---------------------
 
-  Screen Mode Button      = 1
+  Screen Mode Button =D1
 
 
   Neopixel / LED's
   ---------------------
-  XIAO Built in LED       =  13  None on the QT-PY     (*Not Required for Reference only!!!)
-  QT-PY Built in Neopixel =  11 or (12 to turn it off) (*Not Required for Reference only!!!)
+  XIAO  ATSAMD21 Built in LED      =  13  None on the QT-PY ATSAMD21 (*Not Required for Reference only!!!)
+  QT-PY ATSAMD21 Built in Neopixel =  11 or (12 to turn it off)      (*Not Required for Reference only!!!)
 
-  NeoPixel         =  6
+  NeoPixel         =  D6
   ==========================================================================================================
 */
 
@@ -116,69 +102,61 @@
 #define TX_LEDPin 13
 #endif
 
+
+//----------------------------------------------------------------------------
+
 /* ILI9321 TFT setup */
+#include <Adafruit_ILI9341.h>  // v1.5.6 Adafruit Standard
 
-//----------------------------------------------------------------------------
+/* ATSAMD21 SPi Hardware only for speed
+  #define TFT_CS     D5
+  #define TFT_DC     D7
+  #define TFT_RST    D0 // changed from previous(9) to allow for MISO connection for Touch
+*/
 
-#ifdef Seeeduino_XIAO_RP2040
-//----------------------------------------------------------------------------
-/* RP2040 SPi Hardware only for speed*/
-#define TFT_CS     D5
-#define TFT_DC     D7
-#define TFT_RST    D0 // changed from previous(9) to allow for MISO connection for Touch
+/* ESP32C3 SPi Hardware only for speed
+#define TFT_CS     D5 // ORIGINAL
+
+#define TFT_DC     D2 // D2 Works / D3 Works / D0 Works / D9 works(miso) D6 NEOPIXEL / D4 BL / D1 Button
+//#define TFT_DC     D7 // Interferes with Serial RX
+
+#define TFT_RST    D0 // ORIGINAL changed from previous(9) to allow for MISO connection for Touch
+//#define TFT_RST  D9
+*/
+
+/* ESP32C3 SPi Hardware only for speed*/
+#define TFT_CS     D5 // ORIGINAL
+
+#define TFT_DC     D0 // Original D7 / D2 Works / D3 Works / D0 Works / D9 works(miso)/ D6 is NEOPIXEL / D4 is  BL / D1 is Button
+//#define TFT_DC   D7 //  DC on D7 Interferes with Serial RX 
+
+#define TFT_RST    D7 // ORIGINAL D0/ changed from previous(9) to allow for MISO connection for Touch
+//#define TFT_RST  D9
+
 
 /* These pins do not have to be defined as they are hardware pins
   Connect TFT_SCLK to pin   D8
   Connect TFT_MOSI to pin   D10
 */
-#endif
 
-//--------------------------------------------------
-#if defined(Seeeduino_XIAO) ^ defined(Adafruit_QTPY)
-/* ATSAMD21 SPi Hardware only for speed*/
-#define TFT_CS     5
-#define TFT_DC     7
-#define TFT_RST    0 // changed from previous(9) to allow for MISO connection for Touch
-
-/* These pins do not have to be defined as they are hardware pins
-  Connect TFT_SCLK to pin   8
-  Connect TFT_MOSI to pin   10
-*/
-#endif
-
-//-----------------------------------------------------------------------------
 
 Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC, TFT_RST); // Use hardware SPI
 
 //-----------------------------------------------------------------------------
 
 
-#if defined(Seeeduino_XIAO) ^ defined(Adafruit_QTPY)
-
-/* Mode Button pin*/
-int mode_Button       = 1;
-
-/* Screen TFT backlight Pin */
-int TFT_backlight_PIN = 4;
-#endif
-
-//----------------------------
-
-#ifdef Seeeduino_XIAO_RP2040
-
-/* Mode Button pin*/
+/* Encoder Button pin*/
 int mode_Button       = D1;
+int display_Button_counter = 0;
+
 /* Screen TFT backlight Pin */
 int TFT_backlight_PIN = D4;
 
-#endif
-
-int display_Button_counter = 0;
-//-----------------------------------------------------------------------------
-
 /*TFT Brightness*/
 
-int brightness_countLast    = 0;   // Store Last PWM Value
+int brightness_countLast = 0;   // Store Last PWM Value
+
+//-----------------------------------------------------------------------------
 
 /* Display screen rotation  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)*/
 int ASPECT = 0; //Do not adjust,
@@ -227,10 +205,8 @@ boolean stringComplete = false;
 
 void setup() {
 
-  Serial.begin(baudRate);  //  USB Serial Baud Rate
   //Serial.begin(9600);  //  USB Serial Baud Rate
-  //Serial.begin(115200);  //  USB Serial Baud Rate
-  
+  Serial.begin(115200);  //  USB Serial Baud Rate
   inputString.reserve(200); // String Buffer
 
 

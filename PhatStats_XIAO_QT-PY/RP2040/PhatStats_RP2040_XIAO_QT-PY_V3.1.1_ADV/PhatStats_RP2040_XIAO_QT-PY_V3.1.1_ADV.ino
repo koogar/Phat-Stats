@@ -29,8 +29,7 @@
   https://wiki.seeedstudio.com/Seeeduino-XIAO/
   Click on File > Preference, and fill Additional Boards Manager URLs with the url below:
   
-  ATSAMD21:  https://files.seeedstudio.com/arduino/package_seeeduino_boards_index.json
-  
+ 
   RP2040  :  https://github.com/earlephilhower/arduino-pico/releases/download/global/package_rp2040_index.json
 
 

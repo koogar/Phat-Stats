@@ -48,8 +48,7 @@
 //--------------------------- Micro Controller Selection---------------------------------
 
 /* Uncomment your Micro Processor,*/
-//#define Adafruit_QTPY
-//#define Seeeduino_XIAO //Original ATSAMD21
+
 #define Seeeduino_XIAO_RP2040
 
 

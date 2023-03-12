@@ -29,6 +29,12 @@
         Fix set_GPUram
         NeoPixels
 
+    V3.1.2
+
+        Add support for: 
+                        XIAO NRF52840
+                        XIAO RP2040
+
   Note: Gnat-Stats/Phat-Stats is optimised for desktop CPU's with dedicated graphics cards, such as Nvidia/Radeon.
       You may get wierd results on mobile CPUs and integrated GPU's (iGPU's) on laptops.
 
@@ -48,8 +54,8 @@
 //--------------------------- Micro Controller Selection---------------------------------
 
 /* Uncomment your Micro Processor,*/
-//#define Adafruit_QTPY
-//#define Seeeduino_XIAO
+//#define Adafruit_QTPY_ATSAMD
+//#define Seeeduino_XIAO_ATSAMD
 //#define Seeeduino_XIAO_RP2040
 #define Seeeduino_XIAO_NRF52
 
@@ -125,7 +131,7 @@ String set_GPUram = "xxxxxx"; //in GB
 
 /* Uncomment only one of the below,*/
 //#define ShowFrequencyGainMHz    // Show Overlock/Turbo & Boost Clock Frequency Gains in MHZ  eg: "+24MHz"
-#define ShowFrequencyGain%       // Show Overlock/Turbo & Boost Clock Frequency Gains in Percent  eg: "+24%"
+#define ShowFrequencyGainPerc       // Show Overlock/Turbo & Boost Clock Frequency Gains in Percent  eg: "+24%"
 
 //----------------------------- Throttle/Boost Indicator --------------------------------
 
@@ -138,7 +144,7 @@ String set_GPUram = "xxxxxx"; //in GB
 //#define fixedBacklight // enable a fixed backlight (no PWM) powered from VCC
 
 /*Start Up PWM Brightness if using MCU Pin*/
-volatile int brightness_count = 200; // Start Up PWM Brightness
+volatile int brightness_count = 150; // Start Up PWM Brightness
 
 
 //-------------------------- Display Activity Shutdown -----------------------------------
@@ -166,7 +172,7 @@ int NeoBrightness   = 50;           // Global start up brightness
 int debounceButton = 1000; //  Use a 0.1uf/100nf/(104) ceramic capacitor from button Pin to GND
 
 /* Enable the built in LED blinking when transmitting data,*/
-//#define enableTX_LED
+#define enableTX_LED
 
 int TX_LED_Delay = 100; // TX blink delay
 

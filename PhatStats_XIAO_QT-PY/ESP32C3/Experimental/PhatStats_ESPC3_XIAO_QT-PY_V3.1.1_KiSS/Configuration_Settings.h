@@ -48,7 +48,7 @@
 
 /* Uncomment your Micro Processor,*/
 
-#define Seeeduino_XIAO_RP2040
+#define Seeeduino_XIAO_ESPC3
 
 //--------------------------- CPU/GPU Display Settings -----------------------------------
 /* Uncomment your CPU,*/
@@ -109,7 +109,7 @@ String set_GPUram = "xxxxxx"; //in GB
 
 //#define enable_gpuVram
 //#define enable_gpuShader
-#define enable_gpuCore
+//#define enable_gpuCore
 #define enable_gpuPowerStats // Nvidia Specific???
 #define enable_gpuFanStats%  // this is only displayed in Portrait!!!
 #define enable_gpuFanStatsRPM

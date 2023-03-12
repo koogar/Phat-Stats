@@ -1,4 +1,4 @@
-#define CODE_VERS  "3.1.1.ADV"  // Code version number
+#define CODE_VERS  "3.1.2.ADV"  // Code version number
 
 
 /*
@@ -23,29 +23,16 @@
   ------------
   https://github.com/adafruit/Adafruit_Windows_Drivers/releases/tag/2.5.0.0
 
-
   Board Manager XIAO
   -------------------
   https://wiki.seeedstudio.com/Seeeduino-XIAO/
-  
+
   Click on File > Preference, and fill Additional Boards Manager URLs with the url below:
 
-  XIAO ATSAMD21
-  -------------
-  https://files.seeedstudio.com/arduino/package_seeeduino_boards_index.json
 
   XIAO NRF52840
   -------------
   https://files.seeedstudio.com/arduino/package_seeeduino_boards_index.json
-
-  XIAO RP2040
-  -----------
-  https://github.com/earlephilhower/arduino-pico/releases/download/global/package_rp2040_index.json
-  
-  XIAO ESPC3
-  -----------
-  https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_dev_index.json
-
 
   Libraries
   ---------
@@ -73,7 +60,7 @@
 #include <SPI.h>
 #include <Adafruit_GFX.h>
 #include <Fonts/Org_01.h>
-#include <Adafruit_ILI9341.h>  // v1.5.6 Adafruit Standard
+
 
 #include "Configuration_Settings.h" // load settings
 #include "Z_Bitmaps.h"
@@ -103,9 +90,8 @@
 
   Neopixel / LED's
   ---------------------
-  XIAO Built in LED             =  13  None on the QT-PY     (*Not Required for Reference only!!!)
-  XIAO RP2040 Built in Neopixel =  12                        (*Not Required for Reference only!!!)
-  QT-PY Built in Neopixel       =  11 or (12 to turn it off) (*Not Required for Reference only!!!)
+  XIAO Built in LED       =  13  None on the QT-PY     (*Not Required for Reference only!!!)
+  QT-PY Built in Neopixel =  11 or (12 to turn it off) (*Not Required for Reference only!!!)
 
   NeoPixel         =  6
   ==========================================================================================================
@@ -113,35 +99,22 @@
 
 
 //---------------------------------------------------------------------------------------
-
-
 #include <Adafruit_NeoPixel.h>
-
-#if defined(Seeeduino_XIAO) ^ defined(Adafruit_QTPY)
 #define NEOPIN      6
-#endif
-
-#ifdef Seeeduino_XIAO_RP2040
-#define NEOPIN      D6
-#endif
-
-#define NUM_PIXELS  16
+#define NUM_PIXELS 16
 
 /*onboard XIAO BUILD in LED for TX*/
 #ifdef Seeeduino_XIAO
-#define TX_LEDPin   13
+#define TX_LEDPin 13
 #endif
 
 
 /*onboard QT-PY NeoPixel for TX*/
 #ifdef Adafruit_QTPY
 #define TX_NeoPin 11  //Built in NeoPixel, on the QT-PY
+#else
+#define TX_NeoPin 12  // Disable QT-PY built in Neopixel if you have a XIAO
 #endif
-
-#ifdef Seeeduino_XIAO_RP2040
-#define TX_NeoPin 12  //Built in NeoPixel, on the RP2040
-#endif
-
 
 /* Pre-define Hex NeoPixel colours,  eg. pixels.setPixelColor(0, BLUE); https://htmlcolorcodes.com/color-names/ */
 #define BLUE       0x0000FF
@@ -158,72 +131,37 @@ Adafruit_NeoPixel TX_pixel(1, TX_NeoPin, NEO_GRB + NEO_KHZ800);
 //----------------------------------------------------------------------------
 
 /* ILI9321 TFT setup */
+#include <Adafruit_ILI9341.h>  // v1.5.6 Adafruit Standard
 
-//----------------------------------------------------------------------------
-
-
-#ifdef Seeeduino_XIAO_RP2040
-//----------------------------------------------------------------------------
-/* RP2040 SPi Hardware only for speed*/
-#define TFT_CS     D5
-#define TFT_DC     D7
-#define TFT_RST    D0 // changed from previous(9) to allow for MISO connection for Touch
-
-/* These pins do not have to be defined as they are hardware pins
-  Connect TFT_SCLK to pin   D8
-  Connect TFT_MOSI to pin   D10
-*/
-#endif
-
-
-//--------------------------------------------------
-#if defined(Seeeduino_XIAO) ^ defined(Adafruit_QTPY)
 /* ATSAMD21 SPi Hardware only for speed*/
 #define TFT_CS     5
 #define TFT_DC     7
 #define TFT_RST    0 // changed from previous(9) to allow for MISO connection for Touch
 
-/* These pins do not have to be defined as they are hardware pins
-  Connect TFT_SCLK to pin   8
-  Connect TFT_MOSI to pin   10
-*/
-#endif
 
-//-----------------------------------------------------------------------------
+/* These pins do not have to be defined as they are hardware pins */
+//Connect TFT_SCLK to pin   8
+//Connect TFT_MOSI to pin   10
+
+
 
 Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC, TFT_RST); // Use hardware SPI
 
 //-----------------------------------------------------------------------------
 
-#if defined(Seeeduino_XIAO) ^ defined(Adafruit_QTPY)
 
-/* Mode Button pin*/
-int mode_Button       = 1;
-
-/* Screen TFT backlight Pin */
-int TFT_backlight_PIN = 4;
-
-#endif
-//----------------------------
-
-
-#ifdef Seeeduino_XIAO_RP2040
-
-/* Mode Button pin*/
-int mode_Button       = D1;
-/* Screen TFT backlight Pin */
-int TFT_backlight_PIN = D4;
-
-#endif
-
+/* Encoder Button pin*/
+int mode_Button     = 1;
 int display_Button_counter = 0;
 
-
-//-----------------------------------------------------------------------------
+/* Screen TFT backlight Pin */
+int TFT_backlight_PIN =  4;
 
 /*TFT Brightness*/
 
-int brightness_countLast    = 0;   // Store Last PWM Value
+int brightness_countLast      = 0;   // Store Last PWM Value
+
+//-----------------------------------------------------------------------------
 
 /* Display screen rotation  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)*/
 int ASPECT = 0; //Do not adjust,
@@ -272,10 +210,8 @@ boolean stringComplete = false;
 
 void setup() {
 
-  Serial.begin(baudRate);  //  USB Serial Baud Rate
-  //Serial.begin(9600);  //  USB Serial Baud Rate
-  //Serial.begin(115200);  //  USB Serial Baud Rate
-
+  //Serial.begin(9600);  //  USB Serial Baud Rate 
+  Serial.begin(115200);  //  USB Serial Baud Rate
   inputString.reserve(200); // String Buffer
 
 
@@ -283,16 +219,8 @@ void setup() {
   pixels.begin();    // This initializes the NeoPixel library.
 
 #ifdef enableTX_LED
-  //#if defined(Seeeduino_XIAO_RP2040) ^ defined(Adafruit_QTPY)
-  //#ifdef Adafruit_QTPY
-#ifdef Seeeduino_XIAO_RP2040
-  TX_pixel.begin();  // This initializes the library for the Built in NeoPixel.
-#endif
-#endif
 
-#ifdef enableTX_LED
-  //#if defined(Seeeduino_XIAO_RP2040) ^ defined(Adafruit_QTPY)
-#ifdef Seeeduino_XIAO_RP2040
+#ifdef Adafruit_QTPY
   TX_pixel.begin();  // This initializes the library for the Built in NeoPixel.
 #endif
 #endif
@@ -412,23 +340,13 @@ void serialEvent() {
 #endif
 #endif
 
-
 #ifdef enableTX_LED
       /* Serial Activity NeoPixel */
-#ifdef Seeeduino_XIAO_RP2040
-
-      TX_pixel.setPixelColor(0, 10, 0, 0 ); // turn built in NeoPixel on
-      TX_pixel.show();
-#endif
-
 #ifdef Adafruit_QTPY
-
       TX_pixel.setPixelColor(0, 10, 0, 0 ); // turn built in NeoPixel on
       TX_pixel.show();
 #endif
 #endif
-
-
     }
   }
 }
@@ -536,8 +454,8 @@ void splashScreen() {
   tft.setCursor(22, 219);
   tft.setTextColor(ILI9341_RED);
   tft.print("tallmanlabs.com");
-
-  /*  Baud Rate */
+  
+    /*  Baud Rate */
   tft.setFont(); // Set Default Adafruit GRFX Font
   tft.setTextColor(ILI9341_WHITE);
   tft.setTextSize(1);
@@ -545,7 +463,7 @@ void splashScreen() {
   tft.print("Baud: ");
   tft.print (baudRate);
   tft.print(" bps ");
-
+  
   /* Set version */
   tft.setFont(); // Set Default Adafruit GRFX Font
   tft.setTextColor(ILI9341_WHITE);
@@ -558,7 +476,7 @@ void splashScreen() {
   tft.setFont(); // Set Default Adafruit GRFX Font
 
   backlightON();
-
+  
   FeatureSet_Indicator2(); // Display Icons for enabled features
 
   delay(6000);
