@@ -1,4 +1,4 @@
-#define CODE_VERS  "3.1.0.KiSS"  // Code version number
+#define CODE_VERS  "3.1.1.ADV"  // Code version number
 
 
 /*
@@ -37,6 +37,8 @@
 
   Libraries
   ---------
+  Adafruit Neopixel
+  https://github.com/adafruit/Adafruit_NeoPixel
 
   Adafruit GFX Library
   https://github.com/adafruit/Adafruit-GFX-Library
@@ -70,6 +72,9 @@
 
   Adafruit QT-PY / XIAO
   ---------------------
+  ATSAMD21G18 @ 48MHz with 3.3V logic/power
+  256KB of FLASH + 32KB of RAM
+  ---------------------
   (TFT)
   CS     =  D5
   RST    =  D0
@@ -78,16 +83,16 @@
   MOSI   =  D10
 
 
-  B.LIGHT = D4
+  B.LIGHT =  D4
   ---------------------
 
-  Screen Mode Button =D1
+  Screen Mode Button  = D1
 
 
   Neopixel / LED's
   ---------------------
-  XIAO  ATSAMD21 Built in LED      =  13  None on the QT-PY ATSAMD21 (*Not Required for Reference only!!!)
-  QT-PY ATSAMD21 Built in Neopixel =  11 or (12 to turn it off)      (*Not Required for Reference only!!!)
+  XIAO Built in LED       =  13  None on the QT-PY     (*Not Required for Reference only!!!)
+  QT-PY Built in Neopixel =  11 or (12 to turn it off) (*Not Required for Reference only!!!)
 
   NeoPixel         =  D6
   ==========================================================================================================
@@ -95,7 +100,9 @@
 
 
 //---------------------------------------------------------------------------------------
-
+#include <Adafruit_NeoPixel.h>
+#define NEOPIN      D6
+#define NUM_PIXELS 16
 
 /*onboard XIAO BUILD in LED for TX*/
 #ifdef Seeeduino_XIAO
@@ -103,6 +110,25 @@
 #endif
 
 
+/*onboard QT-PY NeoPixel for TX*/
+#ifdef Adafruit_QTPY
+#define TX_NeoPin 11  //Built in NeoPixel, on the QT-PY
+#else
+#define TX_NeoPin 12  // Disable QT-PY built in Neopixel if you have a XIAO
+#endif
+
+/* Pre-define Hex NeoPixel colours,  eg. pixels.setPixelColor(0, BLUE); https://htmlcolorcodes.com/color-names/ */
+#define BLUE       0x0000FF
+#define GREEN      0x008000
+#define RED        0xFF0000
+#define ORANGE     0xFFA500
+#define DARKORANGE 0xFF8C00
+#define YELLOW     0xFFFF00
+#define WHITE      0xFFFFFF
+#define BLACK      0x000000 // OFF
+
+Adafruit_NeoPixel pixels(NUM_PIXELS, NEOPIN, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel TX_pixel(1, TX_NeoPin, NEO_GRB + NEO_KHZ800);
 //----------------------------------------------------------------------------
 
 /* ILI9321 TFT setup */
@@ -110,7 +136,7 @@
 
 /* ATSAMD21 SPi Hardware only for speed
   #define TFT_CS     D5
-  #define TFT_DC     D7
+  #define TFT_DC     D7 // rx
   #define TFT_RST    D0 // changed from previous(9) to allow for MISO connection for Touch
 */
 
@@ -124,7 +150,7 @@
 //#define TFT_RST  D9
 */
 
-/* ESP32C3 SPi Hardware only for speed*/
+/* ESP32C3 SPi Hardware only for speed
 #define TFT_CS     D5 // ORIGINAL
 
 #define TFT_DC     D0 // Original D7 / D2 Works / D3 Works / D0 Works / D9 works(miso)/ D6 is NEOPIXEL / D4 is  BL / D1 is Button
@@ -132,12 +158,21 @@
 
 #define TFT_RST    D7 // ORIGINAL D0/ changed from previous(9) to allow for MISO connection for Touch
 //#define TFT_RST  D9
-
-
-/* These pins do not have to be defined as they are hardware pins
-  Connect TFT_SCLK to pin   D8
-  Connect TFT_MOSI to pin   D10
 */
+
+/* ESP32C3 SPi Hardware only for speed*/
+#define TFT_CS     D5 // ORIGINAL
+
+#define TFT_DC     D7 // Original D7 / D2 Works / D3 Works / D0 Works / D9 works(miso)/ D6 is NEOPIXEL / D4 is  BL / D1 is Button
+//#define TFT_DC   D7 //  DC on D7 Interferes with Serial RX 
+
+#define TFT_RST    D0 // ORIGINAL D0/ changed from previous(9) to allow for MISO connection for Touch
+//#define TFT_RST  D9
+
+/* These pins do not have to be defined as they are hardware pins */
+//Connect TFT_SCLK to pin   D8
+//Connect TFT_MOSI to pin   D10
+
 
 
 Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC, TFT_RST); // Use hardware SPI
@@ -154,7 +189,7 @@ int TFT_backlight_PIN = D4;
 
 /*TFT Brightness*/
 
-int brightness_countLast = 0;   // Store Last PWM Value
+int brightness_countLast      = 0;   // Store Last PWM Value
 
 //-----------------------------------------------------------------------------
 
@@ -210,18 +245,29 @@ void setup() {
   inputString.reserve(200); // String Buffer
 
 
+  /* Set up the NeoPixel*/
+  pixels.begin();    // This initializes the NeoPixel library.
+
+#ifdef enableTX_LED
+
+#ifdef Adafruit_QTPY
+  TX_pixel.begin();  // This initializes the library for the Built in NeoPixel.
+#endif
+#endif
+
+  pixels.setBrightness(NeoBrightness); // Atmel Global Brightness (does not work for STM32!!!!)
+  pixels.show(); // Turn off all Pixels
+
   /* Set up PINs*/
   pinMode(mode_Button, INPUT_PULLUP);
   pinMode(TFT_backlight_PIN, OUTPUT); // declare backlight pin to be an output:
-
-#ifdef enableTX_LED
 
 #ifdef Seeeduino_XIAO
 #ifdef enableTX_LED
   pinMode(TX_LEDPin, OUTPUT); //  Builtin LED /  HIGH(OFF) LOW (ON)
 #endif
 #endif
-#endif
+
   backlightOFF();
 
   /* TFT SETUP */
@@ -262,6 +308,13 @@ void loop() {
 #endif
 #endif
 
+#ifdef enableTX_LED
+  /* Serial Activity NeoPixel */
+#ifdef Adafruit_QTPY
+  TX_pixel.setPixelColor(0, 0, 0, 0 ); // turn built in NeoPixel Off
+  TX_pixel.show();
+#endif
+#endif
 
   //-----------------------------
 
@@ -273,8 +326,20 @@ void loop() {
 /* END of Main Loop */
 
 
+//-----------------------------  NeoPixels  -----------------------------------
+void allNeoPixelsOff() {
+  for ( int i = 0; i < NUM_PIXELS; i++ ) {
+    pixels.setPixelColor(i, 0, 0, 0 );
+  }
+  pixels.show();
+}
 
-
+void allNeoPixelsRED() {
+  for ( int i = 0; i < NUM_PIXELS; i++ ) {
+    pixels.setPixelColor(i, 255, 0, 0 );
+  }
+  pixels.show();
+}
 //-----------------------------  Serial Events -------------------------------
 /*
   SerialEvent occurs whenever a new data comes in the hardware serial RX. This
@@ -305,7 +370,13 @@ void serialEvent() {
 #endif
 #endif
 
-
+#ifdef enableTX_LED
+      /* Serial Activity NeoPixel */
+#ifdef Adafruit_QTPY
+      TX_pixel.setPixelColor(0, 10, 0, 0 ); // turn built in NeoPixel on
+      TX_pixel.show();
+#endif
+#endif
     }
   }
 }
@@ -326,6 +397,8 @@ void activityChecker() {
 
     //if (invertedStatus)
 
+    //Turn off NeoPixel when there is no activity
+    allNeoPixelsOff();
     /* Set Default Adafruit GRFX Font*/
     tft.setFont();
 
@@ -371,11 +444,12 @@ void backlightOFF () {
 }
 #endif
 
-
 //----------------------------- Splash Screens --------------------------------
 void splashScreen() {
 
   /* Initial Boot Screen, */
+
+  allNeoPixelsOff();
 
   tft.setRotation(0);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
 
@@ -433,7 +507,15 @@ void splashScreen() {
 
   backlightON();
 
+  FeatureSet_Indicator2(); // Display Icons for enabled features
+
   delay(6000);
+
+#ifdef enableNeopixelGauges
+
+  allNeoPixelsRED();
+
+#endif
 
 #ifdef splashScreenLS // Quick landscape hack job, also in FeatureSet
   tft.setRotation(0);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
