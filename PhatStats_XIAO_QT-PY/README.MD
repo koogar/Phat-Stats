@@ -1,7 +1,5 @@
 
-Seeeduino XIAO  ATSAMD21, Adafruit  QT-PY ATSAMD21, Seeeduino XIAO RP2040, Seeeduino XIAO NRF5284, Seeeduino XIAO ESP32C3, 
-
-
+Seeeduino XIAO  (ATSAMD21), (RP2040), (NRF52840), (ESP32C3), Adafruit  QT-PY (ATSAMD21),
 
 
 #Coming Soon
