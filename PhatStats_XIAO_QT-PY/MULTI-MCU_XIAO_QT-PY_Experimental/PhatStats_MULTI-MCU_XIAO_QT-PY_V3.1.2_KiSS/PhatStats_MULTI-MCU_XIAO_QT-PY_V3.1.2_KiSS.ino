@@ -98,15 +98,11 @@
   XIAO  (RP2040)   Built in LED      =  25     (*Not Required for Reference only!!!)
   XIAO  (ATSAMD21) Built in LED      =  13     (*Not Required for Reference only!!!)
   QT-PY (ATSAMD21) Built in LED      =         (None on the QT-PY)
-  
+
   QT-PY (ATSAMD21) Built in Neopixel =  11 or (12 to turn it off) (*Not Required for Reference only!!!)
 
   ==========================================================================================================
 */
-
-
-//---------------------------------------------------------------------------------------
-
 
 
 #ifdef Seeeduino_XIAO_ATSAMD
@@ -122,8 +118,12 @@
 
 
 #ifdef Adafruit_QTPY_ATSAMD
+#ifdef enableTX_LED
 /*onboard QT-PY NeoPixel for TX*/
+#include <Adafruit_NeoPixel.h>
 #define TX_NeoPin   11
+Adafruit_NeoPixel TX_pixel(1, TX_NeoPin, NEO_GRB + NEO_KHZ800);
+#endif
 #endif
 
 #ifdef Seeeduino_XIAO_NRF52840
@@ -143,39 +143,45 @@
 /* RP2040 SPi Hardware only for speed*/
 #define TFT_CS     D5
 #define TFT_DC     D7
-#define TFT_RST    D0  // changed from previous(9) to allow for MISO connection for Touch
 
 #ifdef  OLDPCB_V0_93
+
 #define TFT_RST    D9  // OLDPCB_V0_93
+#else
+#define TFT_RST    D0  // changed from previous(9) to allow for MISO connection for Touch
 #endif
 
-/* These pins do not have to be defined as they are hardware pins
-  Connect TFT_SCLK to pin   D8
-  Connect TFT_MOSI to pin   D10
-*/
+
+  /* These pins do not have to be defined as they are hardware pins
+    Connect TFT_SCLK to pin   D8
+    Connect TFT_MOSI to pin   D10
+  */
 #endif
 
-//--------------------------------------------------
+  //--------------------------------------------------
 #if defined(Seeeduino_XIAO_ATSAMD) ^ defined(Adafruit_QTPY_ATSAMD) ^ defined(Seeeduino_XIAO_NRF52840)
-/* ATSAMD21 SPi Hardware only for speed*/
+  /* ATSAMD21 SPi Hardware only for speed*/
 #define TFT_CS     5
 #define TFT_DC     7
 #define TFT_RST    0 // changed from previous(9) to allow for MISO connection for Touch
 
 #ifdef  OLDPCB_V0_93
-#define TFT_RST 9    // OLDPCB_V0_93
+
+#define TFT_RST    9  // OLDPCB_V0_93
+#else
+#define TFT_RST    0  // changed from previous(9) to allow for MISO connection for Touch
 #endif
 
-/* These pins do not have to be defined as they are hardware pins
-  Connect TFT_SCLK to pin   8
-  Connect TFT_MOSI to pin   10
-*/
+  /* These pins do not have to be defined as they are hardware pins
+    Connect TFT_SCLK to pin   8
+    Connect TFT_MOSI to pin   10
+  */
 
 #endif
 
-//-----------------------------------------------------------------------------
+  //-----------------------------------------------------------------------------
 
-Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC, TFT_RST); // Use hardware SPI
+  Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC, TFT_RST); // Use hardware SPI
 
 //-----------------------------------------------------------------------------
 
@@ -473,6 +479,7 @@ void backlightON () {
 void backlightOFF () {
 
   digitalWrite(TFT_backlight_PIN, LOW);
+
 }
 #else
 void backlightON () {
@@ -481,6 +488,7 @@ void backlightON () {
 
 void backlightOFF () {
   analogWrite(TFT_backlight_PIN, 0);        // TFT turn off backlight,
+
 }
 #endif
 

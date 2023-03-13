@@ -180,7 +180,10 @@ Adafruit_NeoPixel pixels(NUM_PIXELS, NEOPIN, NEO_GRB + NEO_KHZ800);
 #define TFT_RST    D0  // changed from previous(9) to allow for MISO connection for Touch
 
 #ifdef  OLDPCB_V0_93
+
 #define TFT_RST    D9  // OLDPCB_V0_93
+#else
+#define TFT_RST    D0  // changed from previous(9) to allow for MISO connection for Touch
 #endif
 
 /* These pins do not have to be defined as they are hardware pins
@@ -198,7 +201,10 @@ Adafruit_NeoPixel pixels(NUM_PIXELS, NEOPIN, NEO_GRB + NEO_KHZ800);
 #define TFT_RST    0 // changed from previous(9) to allow for MISO connection for Touch
 
 #ifdef  OLDPCB_V0_93
-#define TFT_RST 9    // OLDPCB_V0_93
+
+#define TFT_RST    9  // OLDPCB_V0_93
+#else
+#define TFT_RST    0  // changed from previous(9) to allow for MISO connection for Touch
 #endif
 
 /* These pins do not have to be defined as they are hardware pins
