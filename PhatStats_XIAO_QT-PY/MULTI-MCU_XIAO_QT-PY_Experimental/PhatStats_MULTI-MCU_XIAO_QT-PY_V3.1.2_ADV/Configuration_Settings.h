@@ -32,9 +32,10 @@
     V3.1.2  Kiss & ADV
 
         Add support for:
-                          XIAO NRF52840
-                          XIAO RP2040
-                          XIAO ESP32C3
+                          XIAO NRF52840 / QT PY NRF52840(untested)
+                          XIAO RP2040   / QT PY RP2040  (untested)
+                          XIAO ESP32C3  / QT PY ESP32C3 (untested)
+                          
 
   Note: Gnat-Stats/Phat-Stats is optimised for desktop CPU's with dedicated graphics cards, such as Nvidia/Radeon.
       You may get wierd results on mobile CPUs and integrated GPU's (iGPU's) on laptops.
@@ -55,11 +56,12 @@
 //--------------------------- Micro Controller Selection---------------------------------
 
 /* Uncomment your Micro Processor,*/
+
 //#define Adafruit_QTPY_ATSAMD
 //#define Seeeduino_XIAO_ATSAMD
-//#define Seeeduino_XIAO_RP2040
-//#define Seeeduino_XIAO_NRF52840
-#define Seeeduino_XIAO_ESP32C3
+//#define Seeeduino_XIAO_RP2040   // Adafruit QT PY RP2040  (untested)
+//#define Seeeduino_XIAO_NRF52840 // Adafruit QT PY NRF52840(untested)
+#define Seeeduino_XIAO_ESP32C3  // Adafruit QT PY ESP32S2, QT PY ESP32S3,  QT Py ESP32 Pico (untested)
 
 
 //----------------------------------------------------------------------------------------

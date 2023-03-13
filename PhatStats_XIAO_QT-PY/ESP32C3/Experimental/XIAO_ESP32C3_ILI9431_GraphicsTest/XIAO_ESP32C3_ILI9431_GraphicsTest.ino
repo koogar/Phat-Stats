@@ -20,23 +20,15 @@
 // uncomment if you are powering the backlight from a MCU pin, If powering direct from VCC comment out.
 #define backlightMCU
 
-// For the Adafruit shield, these are the default.
-///#define TFT_CS   D5
-///#define TFT_DC   D7
-///#define TFT_RST  D0 // changed from previous(9) to allow for MISO connection for Touch
-
 /* ESP32C3 SPi Hardware only for speed*/
 #define TFT_CS     D5 // ORIGINAL
+#define TFT_DC     D7 // Original D7 / D2 Works / D3 Works / D0 Works / D9 works(miso)/ D6 is NEOPIXEL / D4 is  BL / D1 is Button
+#define TFT_RST    D0 // ORIGINAL D0/ changed from previous(9) to allow for MISO connection for Touch
 
-#define TFT_DC     D0 // Original D7 / D2 Works / D3 Works / D0 Works / D9 works(miso)/ D6 is NEOPIXEL / D4 is BL / D1 is Button
-//#define TFT_DC   D7 //  DC on D7 Interferes with Serial RX 
-
-#define TFT_RST    D7 // ORIGINAL D0/ changed from previous(9) to allow for MISO connection for Touch
-//#define TFT_RST  D9
 
 /* These pins do not have to be defined as they are hardware pins */
-//Connect TFT_SCLK to pin   8
-//Connect TFT_MOSI to pin   10
+//Connect TFT_SCLK to pin   D8
+//Connect TFT_MOSI to pin   D10
 
 // Use hardware SPI (on Uno, #13, #12, #11) and the above for CS/DC
 //Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC);

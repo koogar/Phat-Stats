@@ -134,7 +134,7 @@ String set_GPUram = "xxxxxx"; //in GB
 
 //-------------------------------- TFT Fixed or PWM Brightness -------------------------------------
 
-//#define fixedBacklight // enable a fixed backlight (no PWM) powered from VCC
+#define fixedBacklight // enable a fixed backlight (no PWM) powered from VCC
 
 /*Start Up PWM Brightness if using MCU Pin*/
 volatile int brightness_count = 200; // Start Up PWM Brightness
@@ -150,7 +150,7 @@ volatile int brightness_count = 200; // Start Up PWM Brightness
 
 //-------------------------------- NeoPixel Modes -------------------------------------
 
-#define enableNeopixelGauges     // NeoPixel Phat-Stats PCB 
+//#define enableNeopixelGauges     // NeoPixel Phat-Stats PCB 
 #define NeoPixel_Landscape       // If commented out, use portrait
 
 
