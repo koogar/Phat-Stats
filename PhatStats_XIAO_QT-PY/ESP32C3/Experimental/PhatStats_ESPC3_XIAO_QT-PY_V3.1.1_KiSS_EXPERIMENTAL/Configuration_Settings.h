@@ -154,7 +154,7 @@ volatile int brightness_count = 200; // Start Up PWM Brightness
 int debounceButton = 1000; //  Use a 0.1uf/100nf/(104) ceramic capacitor from button Pin to GND
 
 /* Enable the built in LED blinking when transmitting data,*/
-#define enableTX_LED
+//#define enableTX_LED
 int TX_LED_Delay = 100; // TX blink delay
 
 int baudRate = 9600; // set serial baud rate to match that of HardwareSerialMonitor 115200 will use more resources

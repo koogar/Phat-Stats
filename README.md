@@ -3,8 +3,8 @@
   #GNATSTATS OLED, PHATSTATS TFT PC Performance Monitor & HardwareSerialMonitor Windows Client  
    Rupert Hirst & Colin Conway © 2016-2021
 
-  http://tallmanlabs.com
-  http://runawaybrainz.blogspot.com/  
+ http://tallmanlabs.com
+ http://runawaybrainz.blogspot.com/  
  https://hackaday.io/project/19018-phat-stats-pc-performance-tft-display
   
 

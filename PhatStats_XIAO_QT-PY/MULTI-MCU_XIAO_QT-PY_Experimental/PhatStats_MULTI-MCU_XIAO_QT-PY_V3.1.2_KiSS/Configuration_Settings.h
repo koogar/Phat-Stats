@@ -27,11 +27,12 @@
         Fix set_GPUram
         NeoPixels
 
-     V3.1.2
+     V3.1.2  Kiss & ADV
 
      Add support for:
                       XIAO NRF52840
                       XIAO RP2040
+                      XIAO ESP32C3
 
   Note: Gnat-Stats/Phat-Stats is optimised for desktop CPU's with dedicated graphics cards, such as Nvidia/Radeon.
       You may get wierd results on mobile CPUs and integrated GPU's (iGPU's) on laptops.
@@ -49,16 +50,24 @@
   --------------------------------------------------------------------------------------
 */
 
+
+
 //--------------------------- Micro Controller Selection---------------------------------
 
 /* Uncomment your Micro Processor,*/
-//#define Adafruit_QTPY_ATSAMD
-//#define Seeeduino_XIAO_ATSAMD
-#define Seeeduino_XIAO_RP2040
-//#define Seeeduino_XIAO_NRF52
 
+//#define Seeeduino_XIAO_ATSAMD
+//#define Seeeduino_XIAO_RP2040
+//#define Seeeduino_XIAO_NRF52840
+#define Seeeduino_XIAO_ESP32C3
+//#define Adafruit_QTPY_ATSAMD
+
+//----------------------------------------------------------------------------------------
+
+#define OLDPCB_V0_93 //  TFT_RST is on D9 (Miso) as D0 was used for IR
 
 //--------------------------- CPU/GPU Display Settings -----------------------------------
+
 /* Uncomment your CPU,*/
 //#define AMD_CPU
 #define INTEL_CPU
@@ -162,7 +171,7 @@ volatile int brightness_count = 200; // Start Up PWM Brightness
 int debounceButton = 1000; //  Use a 0.1uf/100nf/(104) ceramic capacitor from button Pin to GND
 
 /* Enable the built in LED blinking when transmitting data,*/
-#define enableTX_LED
+//#define enableTX_LED
 
 int TX_LED_Delay = 100; // TX blink delay
 
@@ -171,11 +180,17 @@ int baudRate = 9600; // set serial baud rate to match that of HardwareSerialMoni
 /* Delay screen event, to stop screen data corruption ESP8622 use 25, most others 5 will do*/
 int Serial_eventDelay = 0; //
 
+
+
+
+
+
+
+
 //----------------------------- Debug Screen Erasers ---------------------------------------
 
 /* Debug Screen, Update Erasers, */
 //#define Debug
-
 
 //------------------- Show Networks Stats when using WeeStatServer -----------------------
 

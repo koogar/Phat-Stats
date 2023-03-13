@@ -41,7 +41,7 @@
   -----------
   https://github.com/earlephilhower/arduino-pico/releases/download/global/package_rp2040_index.json
 
-  XIAO ESPC3
+  XIAO ESP32C3
   -----------
   https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_dev_index.json
 
@@ -81,9 +81,6 @@
 
   Adafruit QT-PY / XIAO
   ---------------------
-  ATSAMD21G18 @ 48MHz with 3.3V logic/power
-  256KB of FLASH + 32KB of RAM
-  ---------------------
   (TFT)
   CS     =  5
   RST    =  0
@@ -91,19 +88,19 @@
   SCLK   =  8
   MOSI   =  10
 
+  B.LIGHT             = 4
+  Screen Mode Button  = 1
+  NeoPixel            = 6
 
-  B.LIGHT =  4
-  ---------------------
+  Onboard LED's
+  --------------
+  XIAO  (NRF52840) Built in LED      =  11     (*Not Required for Reference only!!!)
+  XIAO  (RP2040)   Built in LED      =  25     (*Not Required for Reference only!!!)
+  XIAO  (ATSAMD21) Built in LED      =  13     (*Not Required for Reference only!!!)
+  QT-PY (ATSAMD21) Built in LED      =         (None on the QT-PY)
+  
+  QT-PY (ATSAMD21) Built in Neopixel =  11 or (12 to turn it off) (*Not Required for Reference only!!!)
 
-  Screen Mode Button      = 1
-
-
-  Neopixel / LED's
-  ---------------------
-  XIAO Built in LED       =  13  None on the QT-PY     (*Not Required for Reference only!!!)
-  QT-PY Built in Neopixel =  11 or (12 to turn it off) (*Not Required for Reference only!!!)
-
-  NeoPixel         =  6
   ==========================================================================================================
 */
 
@@ -126,23 +123,31 @@
 
 #ifdef Adafruit_QTPY_ATSAMD
 /*onboard QT-PY NeoPixel for TX*/
-#define TX_NeoPin   11  
+#define TX_NeoPin   11
 #endif
 
-#ifdef Seeeduino_XIAO_NRF52
+#ifdef Seeeduino_XIAO_NRF52840
 /*onboard XIAO BUILD in LED for TX*/
 #define TX_LEDPin   11
 #endif
+
+//----------------------------------------------------------------------------
+
 /* ILI9321 TFT setup */
 
 //----------------------------------------------------------------------------
 
-#ifdef Seeeduino_XIAO_RP2040
+
+#if defined(Seeeduino_XIAO_RP2040) ^ defined(Seeeduino_XIAO_ESP32C3)
 //----------------------------------------------------------------------------
 /* RP2040 SPi Hardware only for speed*/
 #define TFT_CS     D5
 #define TFT_DC     D7
-#define TFT_RST    D0 // changed from previous(9) to allow for MISO connection for Touch
+#define TFT_RST    D0  // changed from previous(9) to allow for MISO connection for Touch
+
+#ifdef  OLDPCB_V0_93
+#define TFT_RST    D9  // OLDPCB_V0_93
+#endif
 
 /* These pins do not have to be defined as they are hardware pins
   Connect TFT_SCLK to pin   D8
@@ -151,16 +156,21 @@
 #endif
 
 //--------------------------------------------------
-#if defined(Seeeduino_XIAO_ATSAMD) ^ defined(Adafruit_QTPY_ATSAMD) ^ defined(Seeeduino_XIAO_NRF52)
+#if defined(Seeeduino_XIAO_ATSAMD) ^ defined(Adafruit_QTPY_ATSAMD) ^ defined(Seeeduino_XIAO_NRF52840)
 /* ATSAMD21 SPi Hardware only for speed*/
 #define TFT_CS     5
 #define TFT_DC     7
 #define TFT_RST    0 // changed from previous(9) to allow for MISO connection for Touch
 
+#ifdef  OLDPCB_V0_93
+#define TFT_RST 9    // OLDPCB_V0_93
+#endif
+
 /* These pins do not have to be defined as they are hardware pins
   Connect TFT_SCLK to pin   8
   Connect TFT_MOSI to pin   10
 */
+
 #endif
 
 //-----------------------------------------------------------------------------
@@ -170,7 +180,7 @@ Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC, TFT_RST); // Use hardwar
 //-----------------------------------------------------------------------------
 
 
-#if defined(Seeeduino_XIAO_ATSAMD) ^ defined(Adafruit_QTPY_ATSAMD) ^ defined(Seeeduino_XIAO_NRF52)
+#if defined(Seeeduino_XIAO_ATSAMD) ^ defined(Adafruit_QTPY_ATSAMD) ^ defined(Seeeduino_XIAO_NRF52840)
 
 /* Mode Button pin*/
 int mode_Button       = 1;
@@ -181,7 +191,7 @@ int TFT_backlight_PIN = 4;
 
 //----------------------------
 
-#ifdef Seeeduino_XIAO_RP2040
+#if defined(Seeeduino_XIAO_RP2040) ^ defined(Seeeduino_XIAO_ESP32C3)
 
 /* Mode Button pin*/
 int mode_Button       = D1;
@@ -275,7 +285,7 @@ void setup() {
 #endif
 #endif
 
-#ifdef Seeeduino_XIAO_NRF52
+#ifdef Seeeduino_XIAO_NRF52840
 #ifdef enableTX_LED
   pinMode(TX_LEDPin, OUTPUT); //  Builtin LED /  HIGH(OFF) LOW (ON)
 #endif
@@ -335,7 +345,7 @@ void loop() {
 #endif
 #endif
 
-#ifdef Seeeduino_XIAO_NRF52
+#ifdef Seeeduino_XIAO_NRF52840
   /*Serial Activity LED */
 #ifdef enableTX_LED
   pinMode(TX_LEDPin, HIGH); //  Builtin LED /  HIGH(OFF) LOW (ON)
@@ -401,7 +411,7 @@ void serialEvent() {
 
 #ifdef enableTX_LED
       /* Serial Activity LED */
-#ifdef Seeeduino_XIAO_NRF52
+#ifdef Seeeduino_XIAO_NRF52840
       digitalWrite(TX_LEDPin, LOW);   // turn the LED off HIGH(OFF) LOW (ON)
 #endif
 #endif
