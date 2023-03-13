@@ -1,11 +1,24 @@
+#Compatibility Tested:
 
-Seeeduino XIAO  ATSAMD21, Adafruit  QT-PY ATSAMD21, Seeeduino XIAO RP2040, Seeeduino XIAO NRF5284, Seeeduino XIAO ESP32C3, 
+           Adafruit_QTPY_ATSAMD
+           Seeeduino_XIAO_ATSAMD
+           Seeeduino_XIAO_RP2040
+           Seeeduino_XIAO_NRF52840
+           Seeeduino_XIAO_ESP32C3
 
 
 
+#Compatibility Presumed working:
 
-#Coming Soon
+           Adafruit QT PY RP2040   
+           Adafruit QT PY NRF52840   
+           Adafruit QT PY ESP32S2  
+           Adafruit QT PY ESP32S3
+           Adafruit QT Py ESP32 Pico
 
- WIO Terminal, 
+
+#Coming Soon:
+
+           Seeed WIO Terminal 
 
 
