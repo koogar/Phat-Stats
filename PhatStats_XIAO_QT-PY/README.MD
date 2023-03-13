@@ -1,9 +1,13 @@
 
-Seeeduino XIAO  (ATSAMD21), (RP2040), (NRF52840), (ESP32C3), Adafruit  QT-PY (ATSAMD21),
+Adafruit_QTPY_ATSAMD,
+Seeeduino_XIAO_ATSAMD,
+Seeeduino_XIAO_RP2040   // QT PY RP2040  (untested),
+Seeeduino_XIAO_NRF52840 // QT PY NRF52840(untested),
+Seeeduino_XIAO_ESP32C3  // QT PY ESP32C3  (untested),
 
 
 #Coming Soon
 
- WIO Terminal, 
+           Seeed WIO Terminal 
 
 
