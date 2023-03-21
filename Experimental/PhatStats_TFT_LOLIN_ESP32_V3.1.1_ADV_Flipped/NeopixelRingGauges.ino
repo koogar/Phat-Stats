@@ -1,5 +1,7 @@
 
 /*
+
+  ------------------------------------------------------------------------------------------
    _   _            _____ _          _    _____                        _
   | \ | |          |  __ (_)        | |  / ____|                      ( )
   |  \| | ___  ___ | |__) |__  _____| | | |  __  __ _ _   _  __ _  ___|/ ___
@@ -21,17 +23,16 @@
 
   CPU Pixel 15 - 8
   GPU Pixel  0 - 7
+  ------------------------------------------------------------------------------------------
 
 */
-#ifdef ProMicroNeoPixels // !!!!!! Sorry no NeoPixels for the STM32 as it uses the SPi MOSI pin !!!!!!!!
 
 void refreshNeopixels() {
-  for ( int i = 0; i < NUMPIXELS; i++ ) {
+  for ( int i = 0; i < NUM_PIXELS; i++ ) {
     pixels.setPixelColor(i, 0, 0, 0 );
   }
-  pixels.show();
+  //pixels.show();
 }
-
 
 
 //---------------------- CPU--------------------
@@ -43,7 +44,7 @@ void CPU_loadGauge(int cpuUsage ) {
   float CPUloadfactor = cpuUsage ;
 
   if (CPUloadfactor >= 0 ) {
-    pixels.setPixelColor(15, 229, 193, 0);
+    pixels.setPixelColor(15, 229, 193, 0); // 1st Pixel
   }
   if (CPUloadfactor >= 12.5 ) {
     pixels.setPixelColor(14, 230, 165, 1);
@@ -80,7 +81,7 @@ void CPU_tempGauge(int cpuDegree ) {
   float CPUtempfactor = cpuDegree ;
 
   if (CPUtempfactor >= 0 ) {
-    pixels.setPixelColor(0, 229, 193, 0);
+    pixels.setPixelColor(0, 229, 193, 0); // 1st Pixel
   }
   if (CPUtempfactor >= 12.5 ) {
     pixels.setPixelColor(1, 230, 165, 1);
@@ -120,7 +121,7 @@ void GPU_loadGauge(int gpuUsage ) {
   float GPUloadfactor = gpuUsage ;
 
   if (GPUloadfactor >= 0 ) {
-    pixels.setPixelColor(0, 229, 193, 0);
+    pixels.setPixelColor(0, 229, 193, 0); // 1st Pixel
   }
   if (GPUloadfactor >= 12.5 ) {
     pixels.setPixelColor(1, 230, 165, 1);
@@ -157,7 +158,7 @@ void GPU_tempGauge(int gpuDegree ) {
   float GPUtempfactor = gpuDegree ;
 
   if (GPUtempfactor >= 0 ) {
-    pixels.setPixelColor(0, 229, 193, 0);
+    pixels.setPixelColor(0, 229, 193, 0); // 1st Pixel
   }
   if (GPUtempfactor >= 12.5 ) {
     pixels.setPixelColor(1, 230, 165, 1);
@@ -184,5 +185,3 @@ void GPU_tempGauge(int gpuDegree ) {
   pixels.show();
 
 }
-
-#endif

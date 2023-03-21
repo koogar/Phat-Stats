@@ -11,9 +11,9 @@
               |_|            |___/                                        |_|
 */
 
-/* Landscape Version 3.1 Optimised for ILI9341 320 x 240 in landscape*/
+/* Landscape Flipped Version 3.1 Optimised for ILI9341 320 x 240 in landscape*/
 
-void DisplayStyle_Landscape_Batt_ESP () {
+void DisplayStyle_Landscape_Batt_ESP_Flipped () {
 #ifdef batteryMonitor
 
   if (BL.getBatteryVolts() <= 3.2 ) {
@@ -64,7 +64,9 @@ void DisplayStyle_Landscape_Batt_ESP () {
       backlightON (); //Turn ON display when there is  activity
 
 
-      tft.setRotation(1);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
+      tft.setRotation(3);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
+      //tft.setRotation(tft_Landscape_flip);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
+
       tft.setFont(); // set to default Adafruit library font
       tft.setTextColor(ILI9341_WHITE, ILI9341_BLACK);
 
@@ -768,13 +770,13 @@ void DisplayStyle_Landscape_Batt_ESP () {
       //--------------------------Trigger an event when CPU or GPU threshold is met ---------------------------------
 
 #ifdef enable_BoostIndicator
-      CustomTriggerCPU_BOOST_LSNB( cpuClockString.toInt     ()); // CPU Frequency
-      CustomTriggerGPU_BOOST_LSNB( gpuCoreClockString.toInt ()); // GPU Frequency
+      CustomTriggerCPU_BOOST_LSNB_Flipped( cpuClockString.toInt     ()); // CPU Frequency
+      CustomTriggerGPU_BOOST_LSNB_Flipped( gpuCoreClockString.toInt ()); // GPU Frequency
 #endif
 
 #ifdef enable_ThrottleIndicator
-      CustomTriggerCPU_ThrottleIndicator_LSNB( cpuString1.toInt() ); //  CPU TJMax/Throttle Incicator BMP
-      CustomTriggerGPU_ThrottleIndicator_LSNB( gpuString1.toInt() ); //  GPU TJMax/Throttle Incicator BMP
+      CustomTriggerCPU_ThrottleIndicator_LSNB_Flipped( cpuString1.toInt() ); //  CPU TJMax/Throttle Incicator BMP
+      CustomTriggerGPU_ThrottleIndicator_LSNB_Flipped( gpuString1.toInt() ); //  GPU TJMax/Throttle Incicator BMP
 #endif
 
 #ifdef enableNeopixelGauges
@@ -798,9 +800,6 @@ void DisplayStyle_Landscape_Batt_ESP () {
 }
 
 
-
-
-
 /*
     _____          _                    _______   _
    / ____|        | |                  |__   __| (_)
@@ -817,7 +816,7 @@ void DisplayStyle_Landscape_Batt_ESP () {
 
 // -------------------  CPU Throttle Indicator Event Landscape --------------------
 
-void CustomTriggerCPU_ThrottleIndicator_LSNB(int cpuDegree ) {  // i5-9600k TJMax is 100c
+void CustomTriggerCPU_ThrottleIndicator_LSNB_Flipped(int cpuDegree ) {  // i5-9600k TJMax is 100c
   float CPUtempfactor = cpuDegree ;
 
   if (CPUtempfactor >= CPU_TJMAX ) {  // TJ Max for the Intel 9900K 100c
@@ -834,7 +833,7 @@ void CustomTriggerCPU_ThrottleIndicator_LSNB(int cpuDegree ) {  // i5-9600k TJMa
 
 // -------------------  GPU Throttle Indicator Event Landscape --------------------
 
-void CustomTriggerGPU_ThrottleIndicator_LSNB(int gpuDegree ) {
+void CustomTriggerGPU_ThrottleIndicator_LSNB_Flipped(int gpuDegree ) {
   float GPUtempfactor = gpuDegree ;
 
   if (GPUtempfactor >= GPU_TJMAX ) {  //GTX 1080 TJMax = 83c
@@ -853,7 +852,7 @@ void CustomTriggerGPU_ThrottleIndicator_LSNB(int gpuDegree ) {
 
 // -------------------  CPU Turbo Boost Indicator Event Landscape --------------------
 
-void CustomTriggerCPU_BOOST_LSNB(int cpuClockString ) {
+void CustomTriggerCPU_BOOST_LSNB_Flipped(int cpuClockString ) {
   float CPUboostfactor = cpuClockString;
 
   delay(350); // Small delay so Turbo frequency gains stay on screen longer
@@ -886,7 +885,7 @@ void CustomTriggerCPU_BOOST_LSNB(int cpuClockString ) {
 
 // -------------------  GPU Boost Clock Indicator Event Landscape --------------------
 
-void CustomTriggerGPU_BOOST_LSNB(int gpuCoreClockString ) {
+void CustomTriggerGPU_BOOST_LSNB_Flipped(int gpuCoreClockString ) {
 
   float GPUboostfactor = gpuCoreClockString ;
 

@@ -65,6 +65,8 @@ void DisplayStyle_Landscape_Batt_ESP () {
 
 
       tft.setRotation(1);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
+      //tft.setRotation(tft_Landscape);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
+
       tft.setFont(); // set to default Adafruit library font
       tft.setTextColor(ILI9341_WHITE, ILI9341_BLACK);
 

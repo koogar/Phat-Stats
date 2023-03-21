@@ -10,7 +10,7 @@
               |_|            |___/
 */
 
-/* Version 3.1 Optimised for ILI9341 320 x 240 in portrait,*/
+/* Portrait Version 3.1 Optimised for ILI9341 320 x 240 in portrait,*/
 
 void DisplayStyle_Portrait_Batt_ESP () {
 #ifdef batteryMonitor
