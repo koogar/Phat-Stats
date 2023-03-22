@@ -34,7 +34,7 @@ void DisplayStyle_Portrait_XIAO_QTPY () {
     backlightON (); //Turn ON display when there is  activity
 
 
-    tft.setRotation(0);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
+    tft.setRotation(2);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
     tft.setFont(); // set to default Adafruit library font
     tft.setTextColor(ILI9341_WHITE, ILI9341_BLACK); // used to stop flickering when updating digits that do not increase in length. CPU/GPU load still need a clear box on the end digits
 
@@ -673,8 +673,8 @@ void DisplayStyle_Portrait_XIAO_QTPY () {
     //--------------------------Trigger an event when CPU or GPU threshold is met ---------------------------------
 
 #ifdef enable_BoostIndicator
-    CustomTriggerCPU_BOOST( cpuClockString.toInt     ()); // CPU Frequency
-    CustomTriggerGPU_BOOST( gpuCoreClockString.toInt ()); // GPU Frequency
+    CustomTriggerCPU_BOOST_PortraitNB( cpuClockString.toInt     ()); // CPU Frequency
+    CustomTriggerGPU_BOOST_PortraitNB( gpuCoreClockString.toInt ()); // GPU Frequency
 #endif
 
 
@@ -760,7 +760,7 @@ void CustomTriggerGPU_ThrottleIndicator_PortraitNB(int gpuDegree ) {
 
 // -------------------  CPU Turbo Boost Indicator Event Portrait --------------------
 
-void CustomTriggerCPU_BOOST(int cpuClockString ) {
+void CustomTriggerCPU_BOOST_PortraitNB(int cpuClockString ) {
   float CPUboostfactor = cpuClockString;
 
   delay(350); // Small delay so Turbo frequency gains stay on screen longer
@@ -792,7 +792,7 @@ void CustomTriggerCPU_BOOST(int cpuClockString ) {
 
 // -------------------  GPU Boost Clock Indicator Event Portrait --------------------
 
-void CustomTriggerGPU_BOOST(int gpuCoreClockString ) {
+void CustomTriggerGPU_BOOST_PortraitNB(int gpuCoreClockString ) {
   float GPUboostfactor = gpuCoreClockString ;
 
 

@@ -37,12 +37,12 @@ void button_Modes() {
 
         break;
 
-      case 2: // 2nd SCREEN
+      case 2: // 3nd SCREEN
         DisplayStyle_Portrait_Batt_ESP();
 
         break;
 
-      case 3: // 2nd SCREEN
+      case 3: // 4nd SCREEN
         DisplayStyle_Portrait_Batt_ESP_Flipped();
 
         break;
