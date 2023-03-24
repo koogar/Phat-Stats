@@ -207,6 +207,7 @@ int debounceButton = 1000; //  Use a 0.1uf/100nf/(104) ceramic capacitor from bu
 int Serial_eventDelay = 15;  // 15 is the minimum setting for an ESP32 with a Silicon Labs CP210x serial chip
 
 
+int baudRate = 9600; // set serial baud rate to match that of HardwareSerialMonitor 115200 will use more resources
 //----------------------------- Debug Screen Erasers ---------------------------------------
 
 /* Debug Screen, Update Erasers, */

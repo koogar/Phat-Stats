@@ -1,0 +1,124 @@
+/*    
+
+WIO TERMINAL Arduino Keywords
+------------------------------
+ATSAMD51   /   Arduino
+------------------------------
+
+ILI9431 2.4 SPi TFT
+----------------------
+
+// Needed for LCD library
+
+LCD_SPI SPI3
+LCD_MISO_PIN  / PIN_SPI3_MISO
+LCD_MOSI_PIN  / PIN_SPI3_MOSI
+LCD_SCK_PIN   / PIN_SPI3_SCK
+LCD_SS_PIN    / PIN_SPI3_SS
+LCD_DC        / (70ul)
+LCD_RESET     / (71Ul)
+LCD_BACKLIGHT / (72Ul)
+
+Touch
+LCD_XL (73ul)
+LCD_YU (74ul)
+LCD_XR (75ul)
+LCD_YD (76ul)
+
+
+Buttons
+----------------------
+
+BUTTON_1 (28ul)
+BUTTON_2 (29ul)
+BUTTON_3 (30ul)
+WIO_KEY_A (28ul)
+WIO_KEY_B (29ul)
+WIO_KEY_C (30ul)
+
+
+SIDE SWITCH
+----------------------
+SWITCH_X (31ul)
+SWITCH_Y (32ul)
+SWITCH_Z (33ul)
+SWITCH_B (34ul)
+SWITCH_U (35ul)
+
+WIO_5S_UP (31ul)
+WIO_5S_LEFT (32ul)
+WIO_5S_RIGHT (33ul)
+WIO_5S_DOWN (34ul)
+WIO_5S_PRESS (35ul)
+
+
+Joy Pad
+----------------------
+SW X (DOWN)  = PD08
+SW Y (RIGHT) = PD09   
+SW Z (PRESS) = PD10
+SW B (LEFT)  = PD12
+SW U (UP)    = PD20
+
+
+TOP L       = PC28
+TOP M       = PC27
+TOP R       = PC26
+----------------------
+
+User LED
+----------------------   
+LED_BUILTIN / 13 / PA15
+
+
+i2c   ???
+----------------------
+PIN_WIRE_SDA
+PIN_WIRE_SCL
+
+
+IR sensor 
+----------------------
+WIO_IR    (14ul) / PB31
+
+
+
+BUZZER_CTR
+----------------------
+BUZZER_CTR (12ul)
+WIO_BUZZER (12ul)
+
+
+MIC_INPUT
+----------------------
+#define MIC_INPUT (39ul)
+#define WIO_MIC   (39ul)
+
+
+light sensor
+----------------------
+WIO_LIGHT (27ul)
+
+
+????????? Gyro
+----------------------
+PIN_GYROSCOPE_WIRE_SDA PIN_WIRE1_SDA
+PIN_GYROSCOPE_WIRE_SCL PIN_WIRE1_SCL
+GYROSCOPE_WIRE Wire1
+GYROSCOPE_INT1 (79ul)
+
+Ti 3-axis MEMS accelerometer
+----------------------
+WIO_LIS3DH_SDA PIN_WIRE1_SDA
+WIO_LIS3DH_SCL PIN_WIRE1_SCL
+WIO_LIS3DH_WiRE Wire1
+WIO_LIS3DH_INT (79ul)
+
+MISC
+----------------------
+OUTPUT_CTR_5V  (91ul)
+OUTPUT_CTR_3V3 (92ul)
+
+
+/*
+

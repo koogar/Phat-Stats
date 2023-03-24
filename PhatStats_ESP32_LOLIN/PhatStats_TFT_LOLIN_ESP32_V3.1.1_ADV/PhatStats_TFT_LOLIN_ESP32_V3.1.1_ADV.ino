@@ -509,10 +509,10 @@ void splashScreen() {
 
 #endif
 
-  tft.setTextSize(1);
-  tft.setCursor(14, 14);
-  tft.setTextColor(ILI9341_WHITE);
-  tft.print("Baud: "); tft.print(baud); tft.println("");
+  //tft.setTextSize(1);
+  //tft.setCursor(14, 14);
+  //tft.setTextColor(ILI9341_WHITE);
+  //tft.print("Baud: "); tft.print(baud); tft.println("");
 
   tft.setTextSize(3);
   tft.setCursor(86, 140);
@@ -532,16 +532,48 @@ void splashScreen() {
   tft.setTextColor(ILI9341_RED);
   tft.print("tallmanlabs.com");
 
+//----------------------------------------------------------
 
+#ifdef splashScreenLS
+
+  /*  Baud Rate */
+  tft.setFont(); // Set Default Adafruit GRFX Font
+  tft.setTextColor(ILI9341_WHITE);
+  tft.setTextSize(1);
+  tft.setCursor(140-130, 12);
+  tft.print("Baud: ");
+  tft.print (baudRate);
+  tft.print(" bps ");
 
   /* Set version */
   tft.setFont(); // Set Default Adafruit GRFX Font
   tft.setTextColor(ILI9341_WHITE);
   tft.setTextSize(1);
-  tft.setCursor(95, 290);
+  tft.setCursor(140-130, 3);
   tft.print("TFT: v");
   tft.print (CODE_VERS);
+  
+#else
 
+  /*  Baud Rate */
+  tft.setFont(); // Set Default Adafruit GRFX Font
+  tft.setTextColor(ILI9341_WHITE);
+  tft.setTextSize(1);
+  tft.setCursor(110, 288);
+  tft.print("Baud: ");
+  tft.print (baudRate);
+  tft.print(" bps ");
+
+  /* Set version */
+  tft.setFont(); // Set Default Adafruit GRFX Font
+  tft.setTextColor(ILI9341_WHITE);
+  tft.setTextSize(1);
+  tft.setCursor(110, 300);
+  tft.print("TFT: v");
+  tft.print (CODE_VERS);
+  
+#endif
+//----------------------------------------------------------
   tft.setTextColor(ILI9341_WHITE);
   tft.setFont(); // Set Default Adafruit GRFX Font
 
