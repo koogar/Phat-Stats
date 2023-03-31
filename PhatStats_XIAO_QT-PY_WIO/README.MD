@@ -5,7 +5,7 @@
            Seeeduino_XIAO_RP2040
            Seeeduino_XIAO_NRF52840
            Seeeduino_XIAO_ESP32C3
-
+           Seeed_WIO_Terminal 
 
 
 #Compatibility Presumed working:
@@ -19,6 +19,6 @@
 
 #Coming Soon:
 
-           Seeed WIO Terminal 
+           
 
 
