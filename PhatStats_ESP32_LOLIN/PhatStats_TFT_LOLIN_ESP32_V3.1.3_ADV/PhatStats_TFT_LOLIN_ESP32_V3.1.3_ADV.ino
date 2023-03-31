@@ -2,15 +2,9 @@
 
 /*
   uVolume, GNATSTATS OLED, PHATSTATS TFT PC Performance Monitor & HardwareSerialMonitor Windows Client
-  Rupert Hirst & Colin Conway © 2016 - 2021
-  http://tallmanlabs.com
-  http://runawaybrainz.blogspot.com/
+  Rupert Hirst © 2016 - 2023 http://tallmanlabs.com http://runawaybrainz.blogspot.com/
+  https://github.com/koogar/Phat-Stats  https://hackaday.io/project/19018-phat-stats-pc-performance-tft-display
 
-  Licence
-  --------
-  GPL v3
-
-  This Sketch Requires HardwareSerialMonitor v1.3 or higher
 
   WARNING!!!last successful compile espressif v2.0.5
   if your compile fails (analogWriteResolution) uninstall in the IDE boards manager down to the above version

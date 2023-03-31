@@ -134,18 +134,30 @@ void Display_LS_Batt_180 () {
 
       tft.setTextSize(3);
       tft.setCursor(1, 132); // (Left/Right, UP/Down)
-
+      
 #ifdef NVIDIA_GRAPHICS
-      tft.drawBitmap(16, 148, Nvidia_Logo_BMP, 82, 82, ILI9341_GREEN); // Nvidia Logo
+    tft.drawBitmap(16, 148, Nvidia_Logo_BMP, 82, 82, ILI9341_GREEN); // Nvidia Logo
+#endif
+
+#ifdef NVIDIA_GTX_Ti_GRAPHICS
+    tft.drawBitmap(16, 148, NvidiaGTX_Ti_Logo_BMP, 82, 82, ILI9341_GREEN); // Nvidia Logo
+#endif
+
+#ifdef NVIDIA_RTX_GRAPHICS
+    tft.drawBitmap(16, 148, NvidiaRTX_Logo_BMP, 82, 82, ILI9341_GREEN); // Nvidia Logo
+#endif
+
+#ifdef NVIDIA_RTX_SUPER_GRAPHICS
+    tft.drawBitmap(16, 148, NvidiaRTXSuper_Logo_BMP, 82, 82, ILI9341_GREEN); // Nvidia Logo
 #endif
 
 #ifdef AMD_GRAPHICS
-      tft.drawBitmap(16, 148, RADEON_Logo_BMP, 82, 82, ILI9341_RED); // Nvidia Logo
+    tft.drawBitmap(16, 148, RADEON_Logo_BMP, 82, 82, ILI9341_RED); // Nvidia Logo
 #endif
 
 #ifdef INTEL_GRAPHICS
-      //tft.fillRoundRect  (14, 141, 86,  87, 5,    ILI9341_BLUE);  // INTEL GPU Logo
-      tft.drawBitmap(13, 147, IntelCoreOnly_BMP, 88, 82, ILI9341_BLUE);
+    //tft.fillRoundRect  (14, 141, 86,  87, 5,    ILI9341_BLUE);  // INTEL GPU Logo
+    tft.drawBitmap(13, 147, IntelCoreOnly_BMP, 88, 82, ILI9341_BLUE);
 #endif
 
 

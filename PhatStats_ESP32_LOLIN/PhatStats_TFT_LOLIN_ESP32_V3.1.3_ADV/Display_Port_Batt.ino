@@ -129,16 +129,28 @@ void Display_Port_Batt () {
       tft.setCursor(1, 132);
 
 #ifdef NVIDIA_GRAPHICS
-      tft.drawBitmap(16, 144, Nvidia_Logo_BMP, 82, 82, ILI9341_GREEN); // Nvidia Logo
+    tft.drawBitmap(16, 144, Nvidia_Logo_BMP, 82, 82, ILI9341_GREEN); // Nvidia Logo
+#endif
+
+#ifdef NVIDIA_GTX_Ti_GRAPHICS
+    tft.drawBitmap(16, 144, NvidiaGTX_Ti_Logo_BMP, 82, 82, ILI9341_GREEN); // Nvidia Logo
+#endif
+
+#ifdef NVIDIA_RTX_GRAPHICS
+    tft.drawBitmap(16, 144, NvidiaRTX_Logo_BMP, 82, 82, ILI9341_GREEN); // Nvidia Logo
+#endif
+
+#ifdef NVIDIA_RTX_SUPER_GRAPHICS
+    tft.drawBitmap(16, 144, NvidiaRTXSuper_Logo_BMP, 82, 82, ILI9341_GREEN); // Nvidia Logo
 #endif
 
 #ifdef AMD_GRAPHICS
-      tft.drawBitmap(16, 144, RADEON_Logo_BMP, 82, 82, ILI9341_RED); // Nvidia Logo
+    tft.drawBitmap(16, 144, RADEON_Logo_BMP, 82, 82, ILI9341_RED); // Nvidia Logo
 #endif
 
 #ifdef INTEL_GRAPHICS
-      // tft.fillRoundRect  (14, 141, 86,  87, 5,    ILI9341_BLUE);
-      tft.drawBitmap(13, 143, IntelCoreOnly_BMP, 88, 82, ILI9341_BLUE); // INTEL GPU Logo
+    // tft.fillRoundRect  (14, 141, 86,  87, 5,    ILI9341_BLUE);
+    tft.drawBitmap(13, 143, IntelCoreOnly_BMP, 88, 82, ILI9341_BLUE); // INTEL GPU Logo
 #endif
 
       //---------------------------------------CPU & GPU Hardware ID---------------------------------------------------------

@@ -3,48 +3,19 @@
      / __ \/ / / /   |/_  __/  / ___/_  __/   |/_  __/ ___/   /_  __/ ____/_  __/
     / /_/ / /_/ / /| | / /_____\__ \ / / / /| | / /  \__ \     / / / /_    / /
    / ____/ __  / ___ |/ /_____/__/ // / / ___ |/ /  ___/ /    / / / __/   / /
-  /_/   /_/ /_/_/  |_/_/     /____//_/ /_/  |_/_/  /____/    /_/ /_/     /_/
+  /_/   /_/ /_/_/  |_/_/     /____//_/ /_/  |_/_/  /____/    /_/ /_/     /_//*
 
-  /*
-
-
-
-    V3.1.1.KiSS     [K]eep [i]t [S]toopid [S]imple
-
-        Bare bones version
-        Button to change aspect
-
-        Add enable_gpuVram, enable_gpuShader, enable_gpuCore
-        Remove specific GPU stats in landscape mode, this helps to make room if your GPU memory is over 9999MB
-        Fix set_GPUram
-
-     V3.1.1.ADV    Advanced
-   
-        Button to change aspect
-        NeoPixels
-        
-        Add enable_gpuVram, enable_gpuShader, enable_gpuCore
-        Remove specific GPU stats in landscape mode, this helps to make room if your GPU memory is over 9999MB
-        Fix set_GPUram
-        NeoPixels
-     
-     V3.1.3.BT.ADV   (ESP32)
-
-        Fixes
-        Retro CRT look option
-
-  Note: Gnat-Stats/Phat-Stats is optimised for desktop CPU's with dedicated graphics cards, such as Nvidia/Radeon.
-      You may get wierd results on mobile CPUs and integrated GPU's (iGPU's) on laptops.
-
-  --------------------------------------------------------------------------------------
     ___ ___  _  _ ___ ___ ___ _   _ ___    _ _____ ___ ___  _  _
    / __/ _ \| \| | __|_ _/ __| | | | _ \  /_\_   _|_ _/ _ \| \| |
   | (_| (_) | .` | _| | | (_ | |_| |   / / _ \| |  | | (_) | .` |
    \___\___/|_|\_|_| |___\___|\___/|_|_\/_/ \_\_| |___\___/|_|\_|
-     ___  ___ _____ ___ ___  _  _ ___
-    / _ \| _ \_   _|_ _/ _ \| \| / __|
-   | (_) |  _/ | |  | | (_) | .` \__ \
-    \___/|_|   |_| |___\___/|_|\_|___/*/
+
+  uVolume, GNATSTATS OLED, PHATSTATS TFT PC Performance Monitor & HardwareSerialMonitor Windows Client
+  Rupert Hirst © 2016 - 2023 http://tallmanlabs.com http://runawaybrainz.blogspot.com/
+  https://github.com/koogar/Phat-Stats  https://hackaday.io/project/19018-phat-stats-pc-performance-tft-display
+
+  Gnat-Stats & Phat-Stats are optimised for desktop CPU's with dedicated graphics cards,
+  You may get weird results on integrated GPU's (iGPU's) on laptops.*/
 
 //------------------------------- BT Limitations --------------------------------------
 
@@ -108,14 +79,23 @@ int TX_LED_Delay = 200; // TX blink delay
   Use the battery/type in accordance with the manufacturer's recommendations.*/
 
 
-//--------------------------- CPU/GPU Display Settings -----------------------------------
+//--------------------------- Uncomment your CPU/GPU Display  -----------------------------------
 
 /* Uncomment your CPU,*/
-//#define AMD_CPU
+
 #define INTEL_CPU
+//#define AMD_CPU
+
+
 /* Uncomment your GPU,*/
+
 #define NVIDIA_GRAPHICS
+//#define NVIDIA_GTX_Ti_GRAPHICS
+//#define NVIDIA_RTX_GRAPHICS
+//#define NVIDIA_RTX_SUPER_GRAPHICS
+
 //#define AMD_GRAPHICS
+//#define INTEL_GRAPHICS
 
 /* Characters to delete from the start of the CPU/GPU name eg: Remove "Intel" or "Nvidia" to save space*/
 #define cpuNameStartLength 10  // i5-9600k = 10 / i9-13900k = 19
@@ -153,8 +133,8 @@ String set_GPUram = "xx";
 
 //-------------------------------- Show GPU Stats ------------------------------------
 
-/* Remove Specific GPU stats in landscape mode(enable_gpuVram, enable_gpuShader),  
-this helps to make room if your GPU memory is over 9999MB */
+/* Remove Specific GPU stats in landscape mode(enable_gpuVram, enable_gpuShader),
+  this helps to make room if your GPU memory is over 9999MB */
 
 //#define enable_gpuVram
 //#define enable_gpuShader
@@ -234,8 +214,27 @@ int baudRate  = 9600; // set serial baud rate to match that of HardwareSerialMon
 #endif
 
 
+//-------------------------------------------- Versions ---------------------------------- -
+/*
 
+     V3.1.1.ADV    Advanced
 
+        Button to change aspect
+        NeoPixels
+
+        Add enable_gpuVram, enable_gpuShader, enable_gpuCore
+        Remove specific GPU stats in landscape mode, this helps to make room if your GPU memory is over 9999MB
+        Fix set_GPUram
+
+     V3.1.3.BT.ADV   (ESP32)
+
+        Fixes
+        Retro CRT look option
+
+  Note: Gnat-Stats/Phat-Stats is optimised for desktop CPU's with dedicated graphics cards, such as Nvidia/Radeon.
+      You may get wierd results on mobile CPUs and integrated GPU's (iGPU's) on laptops.
+
+*/
 
 
 
