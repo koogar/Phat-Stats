@@ -8,8 +8,9 @@ void button_Modes() {
 
   {
 
-    display_Button_counter ++;
     delay(debounceButton); // Debounce Button
+    display_Button_counter ++;
+
 
     /* Clear Screen*/
     backlightOFF();
@@ -26,7 +27,11 @@ void button_Modes() {
 
     /* Change Mode */
     switch (display_Button_counter) {
-
+      
+      default:
+        Display_Port();
+        break;
+        
       case 0: // 1st SCREEN
         Display_Port();
         break;
@@ -42,9 +47,6 @@ void button_Modes() {
       //case 3: // 4nd SCREEN
       //  Display_Port_180();
       //  break;
-
-      default:
-        break;
 
     }
 }

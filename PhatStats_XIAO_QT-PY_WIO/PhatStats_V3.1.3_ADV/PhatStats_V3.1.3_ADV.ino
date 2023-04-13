@@ -76,6 +76,18 @@
 #include <cstdint>
 #endif
 
+/* Declare Prototype voids to the compiler*/
+void Display_LS      ();
+void Display_Port    ();
+void Display_LS_180  ();
+void Display_Port_180();
+void button_Modes    ();
+void serialEvent     ();
+void activityChecker ();
+void splashScreen    ();
+void backlightON ();
+void backlightOFF();
+
 /*
   eBay Special Red PCB pinouts VCC(3.3v), GND, CS, RST, D/C, MOSI, SCK, BL, (MISO, T_CLK, T_CS, T_DIN, T_DO, T_IRQ)
 
@@ -259,7 +271,7 @@ int TFT_backlight_PIN = LCD_BACKLIGHT;
 
 #if defined(Seeeduino_XIAO_ATSAMD) ^ defined(Adafruit_QTPY_ATSAMD) ^ defined(Seeeduino_XIAO_NRF52840)
 /* Mode Button pin*/
-int mode_Button       = 1;
+int mode_Button       = 1;  //Mode Button pin
 /* Screen TFT backlight Pin */
 int TFT_backlight_PIN = 4;
 #endif
@@ -382,6 +394,7 @@ void setup() {
 
   /* Set up PINs */
   pinMode(mode_Button, INPUT_PULLUP);
+  
   pinMode(TFT_backlight_PIN, OUTPUT); // declare backlight pin to be an output:
 
 

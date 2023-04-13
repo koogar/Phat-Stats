@@ -77,6 +77,18 @@
 #include <cstdint>
 #endif
 
+/* Declare Prototype voids to the compiler*/
+void Display_LS      ();
+void Display_Port    ();
+void Display_LS_180  ();
+void Display_Port_180();
+void button_Modes    ();
+void serialEvent     ();
+void activityChecker ();
+void splashScreen    ();
+void backlightON ();
+void backlightOFF();
+
 /*
   eBay Special Red PCB pinouts VCC(3.3v), GND, CS, RST, D/C, MOSI, SCK, BL, (MISO, T_CLK, T_CS, T_DIN, T_DO, T_IRQ)
 
@@ -141,7 +153,7 @@
 /* Debounce  Button, button mode is a bit flaky at present as it needs interrupts, Sometimes it gets caught during a screen refresh
   and does not change. WIO Terminal & ESP32 seem to like 1000ms and works just!!! ok */
 
-int debounceButton = 100; //  Use a 0.1uf/100nf/(104) ceramic capacitor from button Pin to GND
+int debounceButton = 25; //  Use a 0.1uf/100nf/(104) ceramic capacitor from button Pin to GND
 
 /* Enable the built in LED blinking when transmitting data,*/
 //#define enableTX_LED
