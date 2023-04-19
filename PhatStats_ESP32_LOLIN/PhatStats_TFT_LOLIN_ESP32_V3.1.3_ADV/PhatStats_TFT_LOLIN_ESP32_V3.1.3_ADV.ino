@@ -44,6 +44,13 @@
   Hookup Guide
   https://runawaybrainz.blogspot.com/2021/03/phat-stats-ili9341-tft-display-hook-up.html
 
+      Library Working Version Checker 18/04/2023
+  ------------------------------------------------
+  Adafruit BusIO            v1.14.0 (Current 04/2023
+  Adafruit_GFX              v1.11.5 (Current 04/2023)
+  Adafruit_NeoPixel         v1.11.0 (Current 04/2023)
+  Adafruit ILI9341          v1.5.12 (Current 04/2023)
+
   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                SEE CONFIGURATION TAB FIRST, FOR QUICK SETTINGS!!!!
   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -442,12 +449,12 @@ void activityChecker() {
 
   if (!activeConn) {
 
-  
+
     /* Set Default Adafruit GRFX Font*/
     tft.setFont();
 
     tft.fillScreen(ILI9341_BLACK);
-    
+
     tft.setRotation(2);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
     tft.drawRoundRect  (0, 0  , 240, 320, 8,    ILI9341_RED);
     tft.setTextColor(ILI9341_RED);
@@ -457,7 +464,7 @@ void activityChecker() {
 
     delay(2000);
 
-   /* Clear Screen, Turn Off Backlight & Neopixels when there is no activity, */
+    /* Clear Screen, Turn Off Backlight & Neopixels when there is no activity, */
 
     //tft.invertDisplay(0);
     backlightOFF ();
@@ -502,7 +509,7 @@ void splashScreen() {
   /* Initial Boot Screen, */
 
   allNeoPixelsOff();
-  
+
   tft.setRotation(0);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
 
   tft.setFont(&Org_01);
@@ -600,8 +607,8 @@ void splashScreen() {
   tft.print (CODE_VERS);
 
 #endif
-  
-//-------------------------------------------------------------------
+
+  //-------------------------------------------------------------------
   //tft.setTextColor(ILI9341_WHITE);
   tft.setFont(); // Set Default Adafruit GRFX Font
 
@@ -681,6 +688,6 @@ void splashScreen() {
 
 
   delay(2000);
-  
- tft.fillScreen(ILI9341_BLACK);
+
+  tft.fillScreen(ILI9341_BLACK);
 }

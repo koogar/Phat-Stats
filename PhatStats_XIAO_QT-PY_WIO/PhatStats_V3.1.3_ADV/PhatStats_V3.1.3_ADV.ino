@@ -55,6 +55,13 @@
   Hookup Guide
   https://runawaybrainz.blogspot.com/2021/03/phat-stats-ili9341-tft-display-hook-up.html
 
+      Library Working Version Checker 18/04/2023
+  ------------------------------------------------
+  Adafruit BusIO            v1.14.0 (Current 04/2023
+  Adafruit_GFX              v1.11.5 (Current 04/2023)
+  Adafruit_NeoPixel         v1.11.0 (Current 04/2023)
+  Adafruit ILI9341          v1.5.12 (Current 04/2023)
+
   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                SEE CONFIGURATION TAB FIRST, FOR QUICK SETTINGS!!!!
   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
