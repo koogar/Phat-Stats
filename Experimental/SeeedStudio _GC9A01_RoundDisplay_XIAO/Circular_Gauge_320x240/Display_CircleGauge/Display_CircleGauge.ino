@@ -1,8 +1,10 @@
 
+/* Version 3.2 Optimised for ILI9341 320 x 240 in landscape, Do not turn on the screen till there is activity and the Screen is drawn*/
+
 #define enableSideLevelGauges // Phat-Tacho CircleGauge only
 
-void DisplayStyle_CircleGauge_ATSAMD ()  // Landscape only
-{
+void Display_CircleGauge() {  // Landscape only
+
 
 
   //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -37,7 +39,7 @@ void DisplayStyle_CircleGauge_ATSAMD ()  // Landscape only
   if (stringComplete) {
 
     if (bootMode) {
-backlightOFF();
+      backlightOFF();
       tft.fillScreen(ILI9341_BLACK);
 
       tft.setFont(); // set to default Adafruit library font
@@ -59,13 +61,13 @@ backlightOFF();
 #endif
 
     //--------------------------------------- Display Background ----------------------------------------------------
-    #ifdef  touchScreen 
+#ifdef  touchScreen
     touch.setRotation(3);
-    #endif
-    
+#endif
+
     tft.setRotation(3);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
 
-    backlightON (); //Turn ON display when there is  activity
+
     //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 
@@ -391,7 +393,7 @@ backlightOFF();
     int gpuMemoryStart = inputString.indexOf("GMT") + 3;
     int gpuMemoryEnd = inputString.indexOf("|", gpuMemoryStart);
     String gpuMemoryString = inputString.substring(gpuMemoryStart, gpuMemoryEnd);
-    
+
     //Char erase and spacing adjust, MaDerer
     while (gpuMemoryString.length() < 4) gpuMemoryString = " " + gpuMemoryString;
 
@@ -485,9 +487,44 @@ backlightOFF();
     tft.drawCircle(136 - X_Offset, 120 + Y_Offset, 114, ILI9341_BLACK); // landscape circle 119 for radius -1 for line thickness
     tft.drawCircle(136 - X_Offset, 120 + Y_Offset, 115, ILI9341_BLACK); // landscape circle 119 for radius -1 for line thickness
 
-    //-------------------------------------------------------------------------------------------------------------
+
+    //-------------------------------------- ETHERNET USAGE Libre ----------------------------------------------
+
+    /* Reserved,*/
+
+#ifdef enable_LibreNet
+    /* Network Outline, */
+    //                 ( X  , Y ,  W , H , Radius ,    Color
+    //tft.drawRoundRect  (196, 209, 120, 22, 2, ILI9341_RED); //
+
+    /* ETHERNET UP String,*/
+    int EthUpStringStart = inputString.indexOf("ETU") + 3;
+    int EthUpStringLimit = inputString.indexOf("|", EthUpStringStart);
+    String EthUpString   = inputString.substring(EthUpStringStart, EthUpStringLimit);
+    while (EthUpString.length() < 9) EthUpString = " " + EthUpString;
+
+    /* UP USAGE DISPLAY,*/
+    tft.setTextSize(1);
+    //tft.setCursor(198, 212);
+    tft.print("Net UP  : ");
+    tft.println(EthUpString);
+
+    /* ETHERNET Down String,*/
+    int EthDownStringStart = inputString.indexOf("ETD") + 3;
+    int EthDownStringLimit = inputString.indexOf("|", EthDownStringStart);
+    String EthDownString   = inputString.substring(EthDownStringStart, EthDownStringLimit);
+    while (EthDownString.length() < 9) EthDownString = " " + EthDownString;
+
+    /* DOWN USAGE DISPLAY,*/
+    tft.setTextSize(1);
+    //tft.setCursor(198, 221);
+    tft.print("Net DOWN: ");
+    tft.println(EthDownString);
+#endif
 
     displayDraw = 1;
+
+
 
     //--------------------------Trigger an event when CPU or GPU threshold is met ---------------------------------
 
@@ -538,6 +575,7 @@ backlightOFF();
 
     inputString = "";
     stringComplete = false;
+    backlightON (); //Turn ON display when there is  activity and the Screen is drawn
 
   }
 }
@@ -639,7 +677,7 @@ void CustomTriggerGPU_ThrottleIndicator_Circle(int gpuDegree ) {
   }
 }
 
-//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
 
 //---------------- Phat-Tacho Side Level Bar Graph Threshold Indicators ------------------------  //#define enableSideLevelGauges
 

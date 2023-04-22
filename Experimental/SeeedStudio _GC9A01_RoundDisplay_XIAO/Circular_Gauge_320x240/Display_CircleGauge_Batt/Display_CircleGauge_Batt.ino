@@ -1,7 +1,10 @@
 
+
+/* Version 3.2 Optimised for ILI9341 320 x 240 in landscape, Do not turn on the screen till there is activity and the Screen is drawn*/
+
 #define enableSideLevelGauges // Phat-Tacho CircleGauge only
 
-void DisplayStyle_CircleGauge_Batt_ESP () {
+void Display_CircleGauge_Batt() {
 
 
 #ifdef batteryMonitor
@@ -20,9 +23,6 @@ void DisplayStyle_CircleGauge_Batt_ESP () {
 
 #endif
 
-#ifdef enable_DualSerialEvent
-    serialBTEvent();    // Check for Bluetooth Serial Activity
-#endif
 
 #ifdef enable_BT
     serialBTEvent();    // Check for Bluetooth Serial Activity
@@ -294,7 +294,7 @@ void DisplayStyle_CircleGauge_Batt_ESP () {
       //tft.setTextSize(1);
       //tft.println ("MHz");
 #endif
-#ifdef ShowFrequencyGain%
+#ifdef ShowFrequencyGainPerc
       tft.setTextSize(1);
 
       if (cpuOverclockGainPercentSum > 0)
@@ -388,7 +388,7 @@ void DisplayStyle_CircleGauge_Batt_ESP () {
       //tft.setTextSize(1);
       //tft.println ("MHz");
 #endif
-#ifdef ShowFrequencyGain%
+#ifdef ShowFrequencyGainPerc
       tft.setTextSize(1);
 
       if (gpuOverclockGainPercentSum > 0)
@@ -550,6 +550,41 @@ void DisplayStyle_CircleGauge_Batt_ESP () {
       tft.drawCircle(136 - X_Offset, 120 + Y_Offset, 113, ILI9341_BLACK); // landscape circle 119 for radius -1 for line thickness
       tft.drawCircle(136 - X_Offset, 120 + Y_Offset, 114, ILI9341_BLACK); // landscape circle 119 for radius -1 for line thickness
       tft.drawCircle(136 - X_Offset, 120 + Y_Offset, 115, ILI9341_BLACK); // landscape circle 119 for radius -1 for line thickness
+
+
+      //-------------------------------------- ETHERNET USAGE Libre ----------------------------------------------
+
+      /* Reserved,*/
+
+#ifdef enable_LibreNet
+      /* Network Outline, */
+      //                 ( X  , Y ,  W , H , Radius ,    Color
+      //tft.drawRoundRect  (196, 209, 120, 22, 2, ILI9341_RED); //
+
+      /* ETHERNET UP String,*/
+      int EthUpStringStart = inputString.indexOf("ETU") + 3;
+      int EthUpStringLimit = inputString.indexOf("|", EthUpStringStart);
+      String EthUpString   = inputString.substring(EthUpStringStart, EthUpStringLimit);
+      while (EthUpString.length() < 9) EthUpString = " " + EthUpString;
+
+      /* UP USAGE DISPLAY,*/
+      tft.setTextSize(1);
+      //tft.setCursor(198, 212);
+      tft.print("Net UP  : ");
+      tft.println(EthUpString);
+
+      /* ETHERNET Down String,*/
+      int EthDownStringStart = inputString.indexOf("ETD") + 3;
+      int EthDownStringLimit = inputString.indexOf("|", EthDownStringStart);
+      String EthDownString   = inputString.substring(EthDownStringStart, EthDownStringLimit);
+      while (EthDownString.length() < 9) EthDownString = " " + EthDownString;
+
+      /* DOWN USAGE DISPLAY,*/
+      tft.setTextSize(1);
+      //tft.setCursor(198, 221);
+      tft.print("Net DOWN: ");
+      tft.println(EthDownString);
+#endif
 
       //-------------------------------------------------------------------------------------------------------------
 

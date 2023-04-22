@@ -32,7 +32,7 @@ backlightOFF();
 
     //--------------------------------------- Display Background ----------------------------------------------------
 
-    backlightON (); //Turn ON display when there is  activity
+
 
 #ifdef  touchScreen
     touch.setRotation(0);
@@ -654,7 +654,7 @@ backlightOFF();
 
 #endif
     //---------------------------------
-
+    backlightON (); //Turn ON display when there is  activity
     inputString = "";
     stringComplete = false;
 

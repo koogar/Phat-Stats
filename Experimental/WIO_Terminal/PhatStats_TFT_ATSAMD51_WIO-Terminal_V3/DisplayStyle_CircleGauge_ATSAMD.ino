@@ -65,7 +65,7 @@ backlightOFF();
     
     tft.setRotation(3);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
 
-    backlightON (); //Turn ON display when there is  activity
+
     //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 
@@ -534,7 +534,7 @@ backlightOFF();
 #endif
 
     //---------------------------------
-
+    backlightON (); //Turn ON display when there is  activity
     inputString = "";
     stringComplete = false;
 

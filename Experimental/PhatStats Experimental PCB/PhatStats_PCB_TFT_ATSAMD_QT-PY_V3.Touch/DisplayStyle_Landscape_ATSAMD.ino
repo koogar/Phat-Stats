@@ -30,7 +30,7 @@ void DisplayStyle_Landscape_ATSAMD () {
 
     //--------------------------------------- Display Background ----------------------------------------------------
 
-    backlightON (); //Turn ON display when there is  activity
+
 
 #ifdef  touchScreen
     touch.setRotation(3);
@@ -673,6 +673,8 @@ void DisplayStyle_Landscape_ATSAMD () {
     //GPU_tempGauge( gpuString1.toInt() ); // Neopixel Ring Gauge  GPU  Temperature
 
 #endif
+
+    backlightON (); //Turn ON display when there is  activity
     inputString = "";
     stringComplete = false;
     //tft.fillScreen(ILI9341_BLACK);

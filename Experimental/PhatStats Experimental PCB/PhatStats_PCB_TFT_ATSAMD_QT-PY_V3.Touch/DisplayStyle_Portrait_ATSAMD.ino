@@ -32,7 +32,7 @@ void DisplayStyle_Portrait_ATSAMD () {
 
     //--------------------------------------- Display Background ----------------------------------------------------
 
-    backlightON (); //Turn ON display when there is  activity
+
 
 #ifdef  touchScreen
     touch.setRotation(0);
@@ -675,7 +675,7 @@ void DisplayStyle_Portrait_ATSAMD () {
 
 #endif
     //---------------------------------
-
+    backlightON (); //Turn ON display when there is  activity
     inputString = "";
     stringComplete = false;
 
