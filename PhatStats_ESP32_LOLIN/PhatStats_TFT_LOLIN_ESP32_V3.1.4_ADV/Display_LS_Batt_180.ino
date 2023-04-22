@@ -11,9 +11,9 @@
               |_|            |___/                                        |_|
 */
 
-/* Landscape Version 3.1 Optimised for ILI9341 320 x 240 in landscape*/
+/* Version 3.2 Optimised for ILI9341 320 x 240 in landscape, Do not turn on the screen till there is activity and the Screen is drawn*/
 
-void Display_LS_Batt () {
+void Display_LS_Batt_180 () {
 #ifdef batteryMonitor
 
   if (BL.getBatteryVolts() <= 3.2 ) {
@@ -61,11 +61,9 @@ void Display_LS_Batt () {
 
       //--------------------------------------- Display Background ----------------------------------------------------
 
-      backlightON (); //Turn ON display when there is  activity
 
-
-      tft.setRotation(1);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
-      //tft.setRotation(tft_Landscape);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
+      tft.setRotation(3);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
+      //tft.setRotation(tft_Landscape_flip);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
 
       tft.setFont(); // set to default Adafruit library font
       tft.setTextColor(ILI9341_WHITE, ILI9341_BLACK);
@@ -99,14 +97,14 @@ void Display_LS_Batt () {
       /*                 (X  ,Y ,  W ,  H , Radius ,    Color*/
 
       /* CPU Outline, */
-      tft.drawRoundRect  (13, 22,  88,  89,  6,    ILI9341_WHITE);
+      tft.drawRoundRect  (13,  22, 88,  89, 6,    ILI9341_WHITE);
 
       /* GPU Outline, */
-      tft.drawRoundRect  (13, 144, 88,  89,  6,    ILI9341_WHITE);
+      tft.drawRoundRect  (13, 144, 88,  89, 6,    ILI9341_WHITE);
 
-      tft.drawRoundRect  (0,  0  , 320, 120, 8,    ILI9341_BLUE);
+      tft.drawRoundRect  (0,   0  , 320, 120, 8,    ILI9341_BLUE);
 
-      tft.drawRoundRect  (0, 124,  320, 116, 8,    ILI9341_GREEN);
+      tft.drawRoundRect  (0, 124, 320, 116, 8,    ILI9341_GREEN);
 
 
       //------------------------------------CPU/GPU/RAM BMP IMAGES--------------------------------------------
@@ -136,28 +134,28 @@ void Display_LS_Batt () {
       tft.setCursor(1, 132); // (Left/Right, UP/Down)
 
 #ifdef NVIDIA_GRAPHICS
-    tft.drawBitmap(16, 148, Nvidia_Logo_BMP, 82, 82, ILI9341_GREEN); // Nvidia Logo
+      tft.drawBitmap(16, 148, Nvidia_Logo_BMP, 82, 82, ILI9341_GREEN); // Nvidia Logo
 #endif
 
 #ifdef NVIDIA_GTX_Ti_GRAPHICS
-    tft.drawBitmap(16, 148, NvidiaGTX_Ti_Logo_BMP, 82, 82, ILI9341_GREEN); // Nvidia Logo
+      tft.drawBitmap(16, 148, NvidiaGTX_Ti_Logo_BMP, 82, 82, ILI9341_GREEN); // Nvidia Logo
 #endif
 
 #ifdef NVIDIA_RTX_GRAPHICS
-    tft.drawBitmap(16, 148, NvidiaRTX_Logo_BMP, 82, 82, ILI9341_GREEN); // Nvidia Logo
+      tft.drawBitmap(16, 148, NvidiaRTX_Logo_BMP, 82, 82, ILI9341_GREEN); // Nvidia Logo
 #endif
 
 #ifdef NVIDIA_RTX_SUPER_GRAPHICS
-    tft.drawBitmap(16, 148, NvidiaRTXSuper_Logo_BMP, 82, 82, ILI9341_GREEN); // Nvidia Logo
+      tft.drawBitmap(16, 148, NvidiaRTXSuper_Logo_BMP, 82, 82, ILI9341_GREEN); // Nvidia Logo
 #endif
 
 #ifdef AMD_GRAPHICS
-    tft.drawBitmap(16, 148, RADEON_Logo_BMP, 82, 82, ILI9341_RED); // Nvidia Logo
+      tft.drawBitmap(16, 148, RADEON_Logo_BMP, 82, 82, ILI9341_RED); // Nvidia Logo
 #endif
 
 #ifdef INTEL_GRAPHICS
-    //tft.fillRoundRect  (14, 141, 86,  87, 5,    ILI9341_BLUE);  // INTEL GPU Logo
-    tft.drawBitmap(13, 147, IntelCoreOnly_BMP, 88, 82, ILI9341_BLUE);
+      //tft.fillRoundRect  (14, 141, 86,  87, 5,    ILI9341_BLUE);  // INTEL GPU Logo
+      tft.drawBitmap(13, 147, IntelCoreOnly_BMP, 88, 82, ILI9341_BLUE);
 #endif
 
 
@@ -331,7 +329,7 @@ void Display_LS_Batt () {
       //tft.println ("MHz");
 
 
-/* CPU OVERCLOCK Display Freq Gain, */
+      /* CPU OVERCLOCK Display Freq Gain, */
 #ifdef  enable_ShowFrequencyGain
 
       //tft.print ("O/C:+ ");
@@ -341,6 +339,7 @@ void Display_LS_Batt () {
 
       //tft.setCursor(109 - 6, 94); // (Left/Right, UP/Down)
       tft.setCursor(108 , 94); // (Left/Right, UP/Down)
+
       tft.setTextSize(2);
 
       if (cpuOverclockSum > 0)
@@ -353,7 +352,8 @@ void Display_LS_Batt () {
       //tft.println ("MHz");
 #endif
 
-#ifdef ShowFrequencyGainPerc //CPU
+#ifdef ShowFrequencyGainPerc
+
       //tft.setCursor(109 - 6, 94); // (Left/Right, UP/Down)
       tft.setCursor(109 , 94); // (Left/Right, UP/Down)
       tft.setTextSize(2);
@@ -476,12 +476,13 @@ void Display_LS_Batt () {
       /* GPU OVERCLOCK Freq Gain in Percent, eg: 1683MHz/100 = 16.83MHz(1%) , (OC Gain)254MHz / 16.83MHz(1%) = 15.09%,*/
       double gpuOverclockGainPercentSum = gpuOverclockSum / (GPU_BOOST / 100); // % of gain over Stock GPU
 
-
-/* GPU OVERCLOCK Display Freq Gain, */
+      /* GPU OVERCLOCK Display Freq Gain, */
 #ifdef  enable_ShowFrequencyGain
-      
-#ifdef ShowFrequencyGainMHz
-      //tft.setCursor(109 - 6, 213);
+
+      /* GPU OVERCLOCK Display Freq Gain in MHz */
+      //tft.print ("O/C:+ ");
+
+#ifdef ShowFrequencyGainMHz  //GPU
       tft.setCursor(109 + 6, 213);
       tft.setTextSize(2);
 
@@ -495,7 +496,7 @@ void Display_LS_Batt () {
       tft.println ("MHz");
 #endif
 
-#ifdef ShowFrequencyGainPerc
+#ifdef ShowFrequencyGainPerc  //GPU
       tft.setCursor(109, 213);
       tft.setTextSize(2);
 
@@ -608,7 +609,6 @@ void Display_LS_Batt () {
       //Char erase and spacing adjust, MaDerer
       while (gpuPowerString.length() < 6) gpuPowerString = " " + gpuPowerString;
 
-
 #ifdef enable_BigGPUw
       //---------------------------------------------------- Big GPU Watts---------------------------------------------
 
@@ -635,7 +635,6 @@ void Display_LS_Batt () {
       tft.print("w");
 #endif
 #endif
-
 
       //------------------------------------------------GPU FAN Speed Percentage-------------------------------------------------------
 #ifdef enable_gpuFanStatsPerc
@@ -808,13 +807,13 @@ void Display_LS_Batt () {
       //--------------------------Trigger an event when CPU or GPU threshold is met ---------------------------------
 
 #ifdef enable_BoostIndicator
-      CustomTriggerCPU_BOOST_LSNB( cpuClockString.toInt     ()); // CPU Frequency
-      CustomTriggerGPU_BOOST_LSNB( gpuCoreClockString.toInt ()); // GPU Frequency
+      CustomTriggerCPU_BOOST_LSNB_Flipped( cpuClockString.toInt     ()); // CPU Frequency
+      CustomTriggerGPU_BOOST_LSNB_Flipped( gpuCoreClockString.toInt ()); // GPU Frequency
 #endif
 
 #ifdef enable_ThrottleIndicator
-      CustomTriggerCPU_ThrottleIndicator_LSNB( cpuString1.toInt() ); //  CPU TJMax/Throttle Incicator BMP
-      CustomTriggerGPU_ThrottleIndicator_LSNB( gpuString1.toInt() ); //  GPU TJMax/Throttle Incicator BMP
+      CustomTriggerCPU_ThrottleIndicator_LSNB_Flipped( cpuString1.toInt() ); //  CPU TJMax/Throttle Incicator BMP
+      CustomTriggerGPU_ThrottleIndicator_LSNB_Flipped( gpuString1.toInt() ); //  GPU TJMax/Throttle Incicator BMP
 #endif
 
 #ifdef enableNeopixelGauges
@@ -829,6 +828,7 @@ void Display_LS_Batt () {
       inputString = "";
       stringComplete = false;
       //tft.fillScreen(ILI9341_BLACK);
+      backlightON (); //Turn ON display when there is  activity and the Screen is drawn
 
 #ifdef batteryMonitor
     }
@@ -836,9 +836,6 @@ void Display_LS_Batt () {
 
   }
 }
-
-
-
 
 
 /*
@@ -857,7 +854,7 @@ void Display_LS_Batt () {
 
 // -------------------  CPU Throttle Indicator Event Landscape --------------------
 
-void CustomTriggerCPU_ThrottleIndicator_LSNB(int cpuDegree ) {  // i5-9600k TJMax is 100c
+void CustomTriggerCPU_ThrottleIndicator_LSNB_Flipped(int cpuDegree ) {  // i5-9600k TJMax is 100c
   float CPUtempfactor = cpuDegree ;
 
   if (CPUtempfactor >= CPU_TJMAX ) {  // TJ Max for the Intel 9900K 100c
@@ -874,7 +871,7 @@ void CustomTriggerCPU_ThrottleIndicator_LSNB(int cpuDegree ) {  // i5-9600k TJMa
 
 // -------------------  GPU Throttle Indicator Event Landscape --------------------
 
-void CustomTriggerGPU_ThrottleIndicator_LSNB(int gpuDegree ) {
+void CustomTriggerGPU_ThrottleIndicator_LSNB_Flipped(int gpuDegree ) {
   float GPUtempfactor = gpuDegree ;
 
   if (GPUtempfactor >= GPU_TJMAX ) {  //GTX 1080 TJMax = 83c
@@ -893,7 +890,7 @@ void CustomTriggerGPU_ThrottleIndicator_LSNB(int gpuDegree ) {
 
 // -------------------  CPU Turbo Boost Indicator Event Landscape --------------------
 
-void CustomTriggerCPU_BOOST_LSNB(int cpuClockString ) {
+void CustomTriggerCPU_BOOST_LSNB_Flipped(int cpuClockString ) {
   float CPUboostfactor = cpuClockString;
 
   delay(350); // Small delay so Turbo frequency gains stay on screen longer
@@ -926,7 +923,7 @@ void CustomTriggerCPU_BOOST_LSNB(int cpuClockString ) {
 
 // -------------------  GPU Boost Clock Indicator Event Landscape --------------------
 
-void CustomTriggerGPU_BOOST_LSNB(int gpuCoreClockString ) {
+void CustomTriggerGPU_BOOST_LSNB_Flipped(int gpuCoreClockString ) {
 
   float GPUboostfactor = gpuCoreClockString ;
 

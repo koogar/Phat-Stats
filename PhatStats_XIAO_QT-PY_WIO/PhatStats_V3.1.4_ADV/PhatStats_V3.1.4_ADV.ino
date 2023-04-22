@@ -1,4 +1,4 @@
-#define CODE_VERS  "3.1.3.ADV"  // Code version number
+#define CODE_VERS  "3.1.4.ADV"  // Code version number
 
 /*
   uVolume, GNATSTATS OLED, PHATSTATS TFT PC Performance Monitor & HardwareSerialMonitor Windows Client
@@ -401,7 +401,7 @@ void setup() {
 
   /* Set up PINs */
   pinMode(mode_Button, INPUT_PULLUP);
-  
+
   pinMode(TFT_backlight_PIN, OUTPUT); // declare backlight pin to be an output:
 
 
@@ -738,32 +738,34 @@ void splashScreen() {
   FeatureSet_Indicator2(); // Display Icons for enabled features
 
   delay(1000);
+  backlightOFF();// Hide the Screen while drawing
 
 #ifdef enableNeopixelGauges
   allNeoPixelsRED();
 #endif
 
-  /*
+  /**/
 
-    #ifdef splashScreenLS // Quick landscape hack job, also in FeatureSet
-    #ifdef Seeeduino_WIO_ATSAMD51
-    tft.setRotation(3);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
-    tft.fillScreen(ILI9341_BLACK);
-    //tft.drawRoundRect  (0, 0  , 240, 320, 8,    ILI9341_RED);
-    tft.drawBitmap(120, 26, WaitingDataBMP_USB, 76, 190, ILI9341_RED);
+#ifdef splashScreenLS // Quick landscape hack job, also in FeatureSet
+#ifdef Seeeduino_WIO_ATSAMD51
+  tft.setRotation(3);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
+  tft.fillScreen(ILI9341_BLACK);
+  //tft.drawRoundRect  (0, 0  , 240, 320, 8,    ILI9341_RED);
+  tft.drawBitmap(120, 26, WaitingDataBMP_USB, 76, 190, ILI9341_RED);
+  backlightON();
+#else
 
-    #else
+  tft.setRotation(0);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
+  tft.fillScreen(ILI9341_BLACK);
+  //tft.drawRoundRect  (0, 0  , 240, 320, 8,    ILI9341_RED);
+  tft.drawBitmap(82, 62, WaitingDataBMP_USB, 76, 190, ILI9341_RED);
+  backlightON();
+#endif
+#endif
 
-    tft.setRotation(0);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
-    tft.fillScreen(ILI9341_BLACK);
-    //tft.drawRoundRect  (0, 0  , 240, 320, 8,    ILI9341_RED);
-    tft.drawBitmap(82, 62, WaitingDataBMP_USB, 76, 190, ILI9341_RED);
-    #endif
-    #endif
+  delay(2000);
 
-    delay(2000);
-  */
-
+  backlightOFF();// Hide the Screen while drawing
   tft.fillScreen(ILI9341_BLACK);
 
 }

@@ -56,7 +56,7 @@
   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 */
 
-#define CODE_VERS  "3.1.3.BT.ADV"  // Code version number
+#define CODE_VERS  "3.1.4.BT.ADV"  // Code version number
 
 #include <Arduino.h>
 #include <Wire.h>
@@ -635,6 +635,7 @@ void splashScreen() {
 #endif
 
   tft.fillScreen(ILI9341_BLACK);
+  backlightOFF();// Hide the Screen while drawing
 
 #ifdef enable_BT
   tft.drawRoundRect  (0, 0  , 240, 320, 8,    ILI9341_RED);
@@ -686,8 +687,9 @@ void splashScreen() {
   tft.drawBitmap(82, 62, WaitingDataBMP_BT,  76, 190, ILI9341_BLUE);
 #endif
 
-
+  backlightON();
   delay(2000);
-
+  backlightOFF();// Hide the Screen while drawing
   tft.fillScreen(ILI9341_BLACK);
+
 }

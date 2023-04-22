@@ -1,6 +1,6 @@
 
 
-/* Landscape Version 3.1 Optimised for ILI9341 320 x 240 in landscape*/
+/* Version 3.2 Optimised for ILI9341 320 x 240 in landscape, Do not turn on the screen till there is activity and the Screen is drawn*/
 
 #define enableSideLevelGauges // Phat-Tacho CircleGauge only
 

@@ -10,16 +10,16 @@
               |_|            |___/
 */
 
-/* Version 3.1.1 Optimised for ILI9341 320 x 240 in portrait,*/
+/* Version 3.2 Optimised for ILI9341 320 x 240 in portrait, Do not turn on the screen till there is activity and the Screen is drawn*/
 
 
-void Display_Port () {
-  
+void Display_Port_180 () {
+
   /* TFT DRAW STATS, */
   if (stringComplete) {
 
     if (bootMode) {
-      backlightOFF();
+      backlightOFF(); // Hide the Screen while drawing
 
       tft.fillScreen(ILI9341_BLACK);
 
@@ -32,10 +32,8 @@ void Display_Port () {
 
     //--------------------------------------- Display Background ----------------------------------------------------
 
-    backlightON (); //Turn ON display when there is  activity
 
-
-    tft.setRotation(2);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
+    tft.setRotation(0);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
     tft.setFont(); // set to default Adafruit library font
     tft.setTextColor(ILI9341_WHITE, ILI9341_BLACK); // used to stop flickering when updating digits that do not increase in length. CPU/GPU load still need a clear box on the end digits
 
@@ -120,6 +118,9 @@ void Display_Port () {
     // tft.fillRoundRect  (14, 141, 86,  87, 5,    ILI9341_BLUE);
     tft.drawBitmap(13, 143, IntelCoreOnly_BMP, 88, 82, ILI9341_BLUE); // INTEL GPU Logo
 #endif
+
+
+
 
     //---------------------------------------CPU & GPU Hardware ID---------------------------------------------------------
 
@@ -551,7 +552,7 @@ void Display_Port () {
 
     //------------------------------------------------GPU FAN Speed Percentage-------------------------------------------------------
 
-#ifdef enable_gpuFanStats%
+#ifdef enable_gpuFanStatsPerc
     /* GPU Fan Load %,*/
     int gpuFanStart = inputString.indexOf("GFANL") + 5;  //
     int gpuFanEnd = inputString.indexOf("|", gpuFanStart);
@@ -627,7 +628,7 @@ void Display_Port () {
     tft.setTextSize(2); //set background txt font size
     tft.print(ramString)    ; tft.setTextSize(0); tft.print("GB");
 
- //-------------------------------------- ETHERNET USAGE Libre ----------------------------------------------
+    //-------------------------------------- ETHERNET USAGE Libre ----------------------------------------------
 
     /* Reserved,*/
 
@@ -669,19 +670,20 @@ void Display_Port () {
     //-------------------------------------------------------------------------------------------------------------
     //tft.drawCircle(120, 120, 120,  ILI9341_WHITE);// Test for 240 x 240 round tft
 
+
     displayDraw = 1;
 
     //--------------------------Trigger an event when CPU or GPU threshold is met ---------------------------------
 
 #ifdef enable_BoostIndicator
-    CustomTriggerCPU_BOOST_PortraitNB( cpuClockString.toInt     ()); // CPU Frequency
-    CustomTriggerGPU_BOOST_PortraitNB( gpuCoreClockString.toInt ()); // GPU Frequency
+    CustomTriggerCPU_BOOST_PortraitNB_Flipped( cpuClockString.toInt     ()); // CPU Frequency
+    CustomTriggerGPU_BOOST_PortraitNB_Flipped( gpuCoreClockString.toInt ()); // GPU Frequency
 #endif
 
 
 #ifdef enable_ThrottleIndicator
-    CustomTriggerCPU_ThrottleIndicator_PortraitNB( cpuString1.toInt() ); //  CPU TJMax/Throttle Incicator BMP
-    CustomTriggerGPU_ThrottleIndicator_PortraitNB( gpuString1.toInt() ); //  GPU TJMax/Throttle Incicator BMP
+    CustomTriggerCPU_ThrottleIndicator_PortraitNB_Flipped( cpuString1.toInt() ); //  CPU TJMax/Throttle Incicator BMP
+    CustomTriggerGPU_ThrottleIndicator_PortraitNB_Flipped( gpuString1.toInt() ); //  GPU TJMax/Throttle Incicator BMP
 #endif
 
 
@@ -707,7 +709,7 @@ void Display_Port () {
 
     inputString = "";
     stringComplete = false;
-
+    backlightON (); //Turn ON display when there is  activity and the Screen is drawn
   }
 }
 
@@ -726,7 +728,7 @@ void Display_Port () {
 */
 // -------------------  CPU Throttle Indicator Event Portrait --------------------
 
-void CustomTriggerCPU_ThrottleIndicator_PortraitNB(int cpuDegree ) {  // i5-9600k TJMax is 100c
+void CustomTriggerCPU_ThrottleIndicator_PortraitNB_Flipped(int cpuDegree ) {  // i5-9600k TJMax is 100c
   float CPUtempfactor = cpuDegree ;
 
   if (CPUtempfactor >= CPU_TJMAX ) {  // TJ Max for the Intel 9900K 100c
@@ -744,7 +746,7 @@ void CustomTriggerCPU_ThrottleIndicator_PortraitNB(int cpuDegree ) {  // i5-9600
 
 // -------------------  GPU Throttle Indicator Event Portrait --------------------
 
-void CustomTriggerGPU_ThrottleIndicator_PortraitNB(int gpuDegree ) {
+void CustomTriggerGPU_ThrottleIndicator_PortraitNB_Flipped(int gpuDegree ) {
   float GPUtempfactor = gpuDegree ;
 
   if (GPUtempfactor >= GPU_TJMAX ) {  //GTX 1080 TJMax = 83c
@@ -761,7 +763,7 @@ void CustomTriggerGPU_ThrottleIndicator_PortraitNB(int gpuDegree ) {
 
 // -------------------  CPU Turbo Boost Indicator Event Portrait --------------------
 
-void CustomTriggerCPU_BOOST_PortraitNB(int cpuClockString ) {
+void CustomTriggerCPU_BOOST_PortraitNB_Flipped(int cpuClockString ) {
   float CPUboostfactor = cpuClockString;
 
   delay(350); // Small delay so Turbo frequency gains stay on screen longer
@@ -793,7 +795,7 @@ void CustomTriggerCPU_BOOST_PortraitNB(int cpuClockString ) {
 
 // -------------------  GPU Boost Clock Indicator Event Portrait --------------------
 
-void CustomTriggerGPU_BOOST_PortraitNB(int gpuCoreClockString ) {
+void CustomTriggerGPU_BOOST_PortraitNB_Flipped(int gpuCoreClockString ) {
   float GPUboostfactor = gpuCoreClockString ;
 
 

@@ -27,11 +27,11 @@ void button_Modes() {
 
     /* Change Mode */
     switch (display_Button_counter) {
-      
-      default:
-        Display_Port();
-        break;
-        
+
+      //default:
+      //  Display_Port();
+      //  break;
+
       case 0: // 1st SCREEN
         Display_Port();
         break;
@@ -40,13 +40,13 @@ void button_Modes() {
         Display_LS();
         break;
 
-      //case 2: // 3nd SCREEN
-      //  Display_LS_180();
-      //  break;
+        //case 2: // 3nd SCREEN
+        //  Display_LS_180();
+        //  break;
 
-      //case 3: // 4nd SCREEN
-      //  Display_Port_180();
-      //  break;
+        //case 3: // 4nd SCREEN
+        //  Display_Port_180();
+        //  break;
 
     }
 }

@@ -1,4 +1,4 @@
-#define CODE_VERS  "3.1.3.KiSS"  // Code version number
+#define CODE_VERS  "3.1.4.KiSS"  // Code version number
 
 /*
   uVolume, GNATSTATS OLED, PHATSTATS TFT PC Performance Monitor & HardwareSerialMonitor Windows Client
@@ -104,7 +104,7 @@ void backlightOFF();
   --------------------------------------
 
   CS     =  5  or D5
-  RST    =  0  or D0 or D9 on ESP32C3
+  RST    =  0  or D0 or D9 (Use D9 for XIAO_ESP32C3 or old PCB Version)
   DC     =  7  or D7
   SCLK   =  8  or D8
   MOSI   =  10 Or D10
@@ -161,12 +161,12 @@ void backlightOFF();
 /* Debounce  Button, button mode is a bit flaky at present as it needs interrupts, Sometimes it gets caught during a screen refresh
   and does not change. WIO Terminal & ESP32 seem to like 1000ms and works just!!! ok */
 
-int debounceButton = 25; //  Use a 0.1uf/100nf/(104) ceramic capacitor from button Pin to GND
+int debounceButton = 150; //  Use a 0.1uf/100nf/(104) ceramic capacitor from button Pin to GND
 
 /* Enable the built in LED blinking when transmitting data,*/
 //#define enableTX_LED
 
-int TX_LED_Delay = 75; // TX blink delay
+int TX_LED_Delay = 0; // TX blink delay, lags button
 
 int baudRate     = 9600; // set serial baud rate to match that of HardwareSerialMonitor 115200 will use more resources
 
@@ -229,7 +229,7 @@ int Serial_eventDelay = 5; //
 #define TFT_DC     D7
 
 #ifdef  ALT_TFT_RST
-#define TFT_RST    D9  // ESP32C3 & OLD PCB V0.93
+#define TFT_RST    D9  // ESP32C3 & OLD PCB V0.93(Use D9 for XIAO_ESP32C3 or old PCB Version)
 #else
 #define TFT_RST    D0  // changed from previous(9) to allow for MISO connection for Touch
 #endif
@@ -299,7 +299,7 @@ int mode_Button       = 1;
 int TFT_backlight_PIN = 4;
 #endif
 
-//int display_Button_counter = 0;
+
 
 //-----------------------------------------------------------------------------
 
@@ -688,9 +688,9 @@ void splashScreen() {
   //FeatureSet_Indicator2(); // Display Icons for enabled features
 
   delay(1000);
+backlightOFF();// Hide the Screen while drawing
 
-
-  /*
+  /**/
 
     #ifdef splashScreenLS // Quick landscape hack job, also in FeatureSet
     #ifdef Seeeduino_WIO_ATSAMD51
@@ -698,6 +698,7 @@ void splashScreen() {
     tft.fillScreen(ILI9341_BLACK);
     //tft.drawRoundRect  (0, 0  , 240, 320, 8,    ILI9341_RED);
     tft.drawBitmap(120, 26, WaitingDataBMP_USB, 76, 190, ILI9341_RED);
+    backlightON();
 
     #else
 
@@ -705,12 +706,14 @@ void splashScreen() {
     tft.fillScreen(ILI9341_BLACK);
     //tft.drawRoundRect  (0, 0  , 240, 320, 8,    ILI9341_RED);
     tft.drawBitmap(82, 62, WaitingDataBMP_USB, 76, 190, ILI9341_RED);
+    backlightON();
     #endif
     #endif
 
     delay(2000);
-  */
-
+  
+  
+  backlightOFF();// Hide the Screen while drawing
   tft.fillScreen(ILI9341_BLACK);
 
 }
