@@ -33,7 +33,7 @@ void Display_Port () {
     //--------------------------------------- Display Background ----------------------------------------------------
 
 
-    tft.setRotation(2);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
+    tft.setRotation(0);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
     tft.setFont(); // set to default Adafruit library font
     tft.setTextColor(ILI9341_WHITE, ILI9341_BLACK); // used to stop flickering when updating digits that do not increase in length. CPU/GPU load still need a clear box on the end digits
 
@@ -685,13 +685,24 @@ void Display_Port () {
 #endif
 
 
-#ifdef enable_CustomThesholdtriggers
+#ifdef PCB_enableThesholdtriggers
 
-    CustomTriggerCPU_temp( cpuString1.toInt() ); //  CPU  Temperature
-    CustomTriggerCPU_load( cpuString2.toInt() ); //  CPU  Load
+    //PCB_TriggerCPU_temp_Port( cpuString1.toInt() ); // Neopixel CPU  Temperature
+    PCB_TriggerCPU_load_Port( cpuString2.toInt() );  // Neopixel CPU  Load
 
-    CustomTriggerGPU_temp( gpuString1.toInt() ); //  GPU  Temperature
-    CustomTriggerGPU_load( gpuString2.toInt() ); //  GPU  Load
+    //PCB_TriggerGPU_temp_Port( gpuString1.toInt() ); // Neopixel GPU  Temperature
+    PCB_TriggerGPU_load_Port( gpuString2.toInt() );  // Neopixel GPU  Load
+
+#endif
+
+#ifdef enableCustomThesholdtriggers // Portrait
+
+    CustomTriggerCPU_temp( cpuString1.toInt() ); // Neopixel CPU  Temperature
+    CustomTriggerCPU_load( cpuString2.toInt() ); // Neopixel CPU  Load
+
+    CustomTriggerGPU_temp( gpuString1.toInt() ); // Neopixel GPU  Temperature
+    CustomTriggerGPU_load( gpuString2.toInt() ); // Neopixel GPU  Load
+
 #endif
 
 #ifdef enableNeopixelGauges

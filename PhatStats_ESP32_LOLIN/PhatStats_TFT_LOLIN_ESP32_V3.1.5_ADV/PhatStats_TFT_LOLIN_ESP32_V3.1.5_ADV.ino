@@ -1,4 +1,5 @@
 
+#define CODE_VERS  "3.1.5.BT.ADV"  // Code version number
 
 /*
   uVolume, GNATSTATS OLED, PHATSTATS TFT PC Performance Monitor & HardwareSerialMonitor Windows Client
@@ -46,17 +47,19 @@
 
       Library Working Version Checker 18/04/2023
   ------------------------------------------------
+  espressif                 v2.0.5
   Adafruit BusIO            v1.14.0 (Current 04/2023
   Adafruit_GFX              v1.11.5 (Current 04/2023)
   Adafruit_NeoPixel         v1.11.0 (Current 04/2023)
   Adafruit ILI9341          v1.5.12 (Current 04/2023)
+  ESP32_AnalogWrite         v0.2    (Current 04/2023)
 
   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                SEE CONFIGURATION TAB FIRST, FOR QUICK SETTINGS!!!!
   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 */
 
-#define CODE_VERS  "3.1.4.BT.ADV"  // Code version number
+
 
 #include <Arduino.h>
 #include <Wire.h>
@@ -144,14 +147,14 @@ Pangodream_18650_CL BL(ADC_PIN, CONV_FACTOR, READS);
 Adafruit_NeoPixel pixels(NUM_PIXELS, NEOPIN, NEO_GRB + NEO_KHZ800);
 
 /* Pre-define Hex NeoPixel colours,  eg. pixels.setPixelColor(0, BLUE); https://htmlcolorcodes.com/color-names/ */
-#define BLUE       0x0000FF
-#define GREEN      0x008000
-#define RED        0xFF0000
-#define ORANGE     0xFFA500
-#define DARKORANGE 0xFF8C00
-#define YELLOW     0xFFFF00
-#define WHITE      0xFFFFFF
-#define BLACK      0x000000 // OFF
+#define neo_BLUE       0x0000FF
+#define neo_GREEN      0x008000
+#define neo_RED        0xFF0000
+#define neo_ORANGE     0xFFA500
+#define neo_DARKORANGE 0xFF8C00
+#define neo_YELLOW     0xFFFF00
+#define neo_WHITE      0xFFFFFF
+#define neo_BLACK      0x000000 // OFF
 
 /*onboard BUILD in LED for RX*/
 #define TX_LEDPin 5

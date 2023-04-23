@@ -46,8 +46,8 @@
 //#define enable_BT              // Use baud of 9600, enable only Bluetooth Classic serial connection
 
 /* Enable the built in LED blinking when transmitting, saves power when using battery if disabled,*/
-#define enableTX_LED //
-int TX_LED_Delay = 200; // TX blink delay
+//#define enableTX_LED //
+int TX_LED_Delay = 0; // TX blink delay
 
 
 //----------------------------- Battery Monitor ------------------------------------
@@ -165,6 +165,7 @@ String set_GPUram = "xx";
 
 //#define enableNeopixelGauges     // NeoPixel ring bargraph example
 
+//#define PCB_enableThesholdtriggers // New PCB 4x NeoPixel Rotate States,0,1,2,3  Trigger functions when CPU or GPU thresholds are met 
 
 /* If  NeoBrightness = 0 Phat-Stats will start with no NeoPixels lit. Turn the Rotary Encoder to turn on the NeoPixels, */
 int NeoBrightness   = 20;           // Global start up brightness

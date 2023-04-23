@@ -752,6 +752,16 @@ void Display_Port_Batt_180 () {
 
       //--------------------------Trigger an event when CPU or GPU threshold is met ---------------------------------
 
+#ifdef PCB_enableThesholdtriggers // Portrait Flipped 180
+
+      //PCB_TriggerCPU_temp_Port180( cpuString1.toInt() ); // Neopixel CPU  Temperature
+      PCB_TriggerCPU_load_Port180( cpuString2.toInt() ); // Neopixel CPU  Load
+
+      //PCB_TriggerGPU_temp_Port180( gpuString1.toInt() ); // Neopixel GPU  Temperature
+      PCB_TriggerGPU_load_Port180( gpuString2.toInt() ); // Neopixel GPU  Load
+
+#endif
+
 #ifdef enable_BoostIndicator
       CustomTriggerCPU_BOOST_Batt_PortraitNB_Flipped( cpuClockString.toInt     ()); // CPU Frequency
       CustomTriggerGPU_BOOST_Batt_PortraitNB_Flipped( gpuCoreClockString.toInt ()); // GPU Frequency

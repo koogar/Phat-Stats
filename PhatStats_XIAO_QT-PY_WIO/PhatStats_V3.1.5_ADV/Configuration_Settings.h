@@ -19,8 +19,8 @@
   
 //--------------------------- Uncomment your Micro Processor---------------------------------
 
-//#define Adafruit_QTPY_ATSAMD
-#define Seeeduino_XIAO_ATSAMD
+#define Adafruit_QTPY_ATSAMD
+//#define Seeeduino_XIAO_ATSAMD
 //#define Seeeduino_XIAO_RP2040   // Adafruit QT PY RP2040  (untested)
 //#define Seeeduino_XIAO_NRF52840 // Adafruit QT PY NRF52840(untested)
 
@@ -31,7 +31,7 @@
 /* Uncomment ALT_TFT_RST for XIAO ESP32C3 &  OLD PCB v0.93, TFT_RST is on D9 (Miso) as D0 was used for IR */
 
 //#define Seeeduino_XIAO_ESP32C3   // Adafruit QT PY ESP32S2, QT PY ESP32S3,  QT Py ESP32 Pico (untested)
-#define ALT_TFT_RST              // Use for XIAO_ESP32C3 or old PCB Version- TFT Reset on PIN D9
+//#define ALT_TFT_RST              // Use for XIAO_ESP32C3 or old PCB Version- TFT Reset on PIN D9
 
 //--------------------------- Uncomment your CPU/GPU Display  -----------------------------------
 /* Uncomment your CPU,*/
@@ -141,11 +141,14 @@ volatile int brightness_count = 100; // Start Up PWM Brightness
 
 //-------------------------------- NeoPixel Modes -------------------------------------
 
-#define enableNeopixelGauges     // NeoPixel Phat-Stats PCB 
-#define NeoPixel_Landscape       // If commented out, use portrait
+//#define enableNeopixelGauges     // NeoPixel Phat-Stats PCB 
+#define PCB_enableThesholdtriggers // New PCB 4x NeoPixel Rotate States,0,1,2,3  Trigger functions when CPU or GPU thresholds are met 
 
 /* If  NeoBrightness = 0 Phat-Stats will start with no NeoPixels lit. Turn the Rotary Encoder to turn on the NeoPixels, */
 int NeoBrightness   = 50;           // Global start up brightness
+
+
+//#define NeoPixel_Landscape       // If commented out, use portrait
 
 //-------------------------------- Misco Setting -----------------------------------------
 

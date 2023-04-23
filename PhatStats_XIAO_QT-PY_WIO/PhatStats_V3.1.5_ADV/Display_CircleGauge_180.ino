@@ -3,7 +3,7 @@
 
 #define enableSideLevelGauges // Phat-Tacho CircleGauge only
 
-void Display_CircleGauge() {  // Landscape only
+void Display_CircleGauge_180() {  // Landscape only
 
 
 
@@ -62,10 +62,10 @@ void Display_CircleGauge() {  // Landscape only
 
     //--------------------------------------- Display Background ----------------------------------------------------
 #ifdef  touchScreen
-    touch.setRotation(3);
+    touch.setRotation(1);
 #endif
 
-    tft.setRotation(3);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
+    tft.setRotation(1);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
 
 
     //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -529,26 +529,37 @@ void Display_CircleGauge() {  // Landscape only
     //--------------------------Trigger an event when CPU or GPU threshold is met ---------------------------------
 
 #ifdef enable_BoostIndicator
-    CustomTriggerCPU_BOOST_Circle( cpuClockString.toInt     ()); // CPU Frequency
-    CustomTriggerGPU_BOOST_Circle( gpuCoreClockString.toInt ()); // GPU Frequency
+    CustomTriggerCPU_BOOST_Circle_180( cpuClockString.toInt     ()); // CPU Frequency
+    CustomTriggerGPU_BOOST_Circle_180( gpuCoreClockString.toInt ()); // GPU Frequency
 #endif
 
 #ifdef enable_ThrottleIndicator
-    CustomTriggerCPU_ThrottleIndicator_Circle( cpuString1.toInt() ); //  CPU TJMax/Throttle Incicator BMP
-    CustomTriggerGPU_ThrottleIndicator_Circle( gpuString1.toInt() ); //  GPU TJMax/Throttle Incicator BMP
+    CustomTriggerCPU_ThrottleIndicator_Circle_180( cpuString1.toInt() ); //  CPU TJMax/Throttle Incicator BMP
+    CustomTriggerGPU_ThrottleIndicator_Circle_180( gpuString1.toInt() ); //  GPU TJMax/Throttle Incicator BMP
 #endif
 
 
     //--------------------------Trigger an event when CPU or GPU threshold is met ---------------------------------
 
 
-#ifdef enable_CustomThesholdtriggers
+#ifdef PCB_enableThesholdtriggers
 
-    CustomTriggerCPU_temp( cpuString1.toInt() ); //  CPU  Temperature
-    CustomTriggerCPU_load( cpuString2.toInt() ); //  CPU  Load
+    //PCB_TriggerCPU_temp_LS180( cpuString1.toInt() ); // Neopixel CPU  Temperature
+    PCB_TriggerCPU_load_LS180( cpuString2.toInt() ); // Neopixel CPU  Load
 
-    CustomTriggerGPU_temp( gpuString1.toInt() ); //  GPU  Temperature
-    CustomTriggerGPU_load( gpuString2.toInt() ); //  GPU  Load
+    //PCB_TriggerGPU_temp_LS180( gpuString1.toInt() ); // Neopixel GPU  Temperature
+    PCB_TriggerGPU_load_LS180( gpuString2.toInt() ); // Neopixel GPU  Load
+
+#endif
+
+#ifdef enableCustomThesholdtriggers
+
+    CustomTriggerCPU_temp( cpuString1.toInt() ); // Neopixel CPU  Temperature
+    CustomTriggerCPU_load( cpuString2.toInt() ); // Neopixel CPU  Load
+
+    CustomTriggerGPU_temp( gpuString1.toInt() ); // Neopixel GPU  Temperature
+    CustomTriggerGPU_load( gpuString2.toInt() ); // Neopixel GPU  Load
+
 #endif
 
 #ifdef enableNeopixelGauges // Uncomment only 2, in any combination
@@ -584,7 +595,7 @@ void Display_CircleGauge() {  // Landscape only
 
 // -------------------  CPU Turbo Boost Indicator Event Portrait --------------------
 
-void CustomTriggerCPU_BOOST_Circle(int cpuClockString ) {
+void CustomTriggerCPU_BOOST_Circle_180(int cpuClockString ) {
   float CPUboostfactor = cpuClockString;
 
 
@@ -615,7 +626,7 @@ void CustomTriggerCPU_BOOST_Circle(int cpuClockString ) {
 
 // -------------------  GPU Boost Clock Indicator Event Portrait --------------------
 
-void CustomTriggerGPU_BOOST_Circle(int gpuCoreClockString ) {
+void CustomTriggerGPU_BOOST_Circle_180(int gpuCoreClockString ) {
   float GPUboostfactor = gpuCoreClockString ;
 
   //Do Something!!!
@@ -637,7 +648,7 @@ void CustomTriggerGPU_BOOST_Circle(int gpuCoreClockString ) {
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // -------------------  CPU Throttle Indicator Event Portrait --------------------
 
-void CustomTriggerCPU_ThrottleIndicator_Circle(int cpuDegree ) {  // i5-9600k TJMax is 100c
+void CustomTriggerCPU_ThrottleIndicator_Circle_180(int cpuDegree ) {  // i5-9600k TJMax is 100c
   float CPUtempfactor = cpuDegree ;
 
 
@@ -658,7 +669,7 @@ void CustomTriggerCPU_ThrottleIndicator_Circle(int cpuDegree ) {  // i5-9600k TJ
 
 // -------------------  GPU Throttle Indicator Event Portrait --------------------
 
-void CustomTriggerGPU_ThrottleIndicator_Circle(int gpuDegree ) {
+void CustomTriggerGPU_ThrottleIndicator_Circle_180(int gpuDegree ) {
   float GPUtempfactor = gpuDegree ;
 
 
@@ -685,7 +696,7 @@ void CustomTriggerGPU_ThrottleIndicator_Circle(int gpuDegree ) {
 
 //>>>>>>>>>>>> CPU TEMP
 
-void CPU_tempLevelGauge(int cpuDegree ) {
+void CPU_tempLevelGauge_180(int cpuDegree ) {
 
   /*Top CPU Temp Level Clear Box,*/
   tft.fillRoundRect(293 - X_Offset, 0 + Y_Offset,   8, 102 , 1, ILI9341_BLACK);
@@ -733,7 +744,7 @@ void CPU_tempLevelGauge(int cpuDegree ) {
 
 //>>>>>>>>>>>> CPU LOAD
 
-void CPU_loadLevelGauge(int cpuUsage ) {
+void CPU_loadLevelGauge_180(int cpuUsage ) {
 
   /*Top CPU Load Level Clear Box,*/
   tft.fillRoundRect(306 - X_Offset, 0 + Y_Offset,   8, 102 , 1, ILI9341_BLACK);
@@ -773,7 +784,7 @@ void CPU_loadLevelGauge(int cpuUsage ) {
 
 //>>>>>>>>>>>> GPU TEMP
 
-void GPU_tempLevelGauge(int gpuDegree ) {
+void GPU_tempLevelGauge_180(int gpuDegree ) {
 
   /*Bottom GPU Temp Level Clear Box,*/
   tft.fillRoundRect(293 - X_Offset , 129 + Y_Offset,   8, 102 , 1, ILI9341_BLACK);
@@ -824,7 +835,7 @@ void GPU_tempLevelGauge(int gpuDegree ) {
 
 //>>>>>>>>>>>> GPU LOAD
 
-void GPU_loadLevelGauge(int gpuUsage ) {
+void GPU_loadLevelGauge_180(int gpuUsage ) {
 
   /*Bottom GPU Load Level Clear Box,*/
   tft.fillRoundRect(306 - X_Offset , 129 + Y_Offset,   8, 102 , 1, ILI9341_BLACK);

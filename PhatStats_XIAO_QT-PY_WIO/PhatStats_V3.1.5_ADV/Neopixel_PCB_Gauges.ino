@@ -46,26 +46,26 @@ void CPU_loadGauge(int cpuUsage ) {
 
   if (CPUloadfactor >=  (0) ) {
 
-    pixels.setPixelColor(0, BLUE);
-    pixels.setPixelColor(3, BLUE);
+    pixels.setPixelColor(0, neo_BLUE);
+    pixels.setPixelColor(3, neo_BLUE);
 
   }
   if (CPUloadfactor >=  (25) ) {
 
-    pixels.setPixelColor(0, GREEN);
-    pixels.setPixelColor(3, GREEN);
+    pixels.setPixelColor(0, neo_GREEN);
+    pixels.setPixelColor(3, neo_GREEN);
   }
 
   if (CPUloadfactor >=  (50) ) {
 
-    pixels.setPixelColor(0, DARKORANGE);
-    pixels.setPixelColor(3, DARKORANGE);
+    pixels.setPixelColor(0, neo_DARKORANGE);
+    pixels.setPixelColor(3, neo_DARKORANGE);
   }
 
   if (CPUloadfactor >=  (90) ) {
 
-    pixels.setPixelColor(0, RED);
-    pixels.setPixelColor(3, RED);
+    pixels.setPixelColor(0, neo_RED);
+    pixels.setPixelColor(3, neo_RED);
   }
 
   pixels.show();
@@ -82,28 +82,28 @@ void CPU_tempGauge(int cpuDegree ) {
 
   if (CPUtempfactor >=  (50) ) {
 
-    pixels.setPixelColor(0, BLUE);
-    pixels.setPixelColor(3, BLUE);
+    pixels.setPixelColor(0, neo_BLUE);
+    pixels.setPixelColor(3, neo_BLUE);
   }
 
   if (CPUtempfactor >=  (60) ) {
 
-    pixels.setPixelColor(0, RED);
-    pixels.setPixelColor(3, RED);
+    pixels.setPixelColor(0, neo_RED);
+    pixels.setPixelColor(3, neo_RED);
 
   }
 
   if (CPUtempfactor >=  (70) ) {
 
-    pixels.setPixelColor(0, RED);
-    pixels.setPixelColor(3, RED);
+    pixels.setPixelColor(0, neo_RED);
+    pixels.setPixelColor(3, neo_RED);
 
   }
 
   if (CPUtempfactor >=  (80) ) {
 
-    pixels.setPixelColor(0, RED);
-    pixels.setPixelColor(3, RED);
+    pixels.setPixelColor(0, neo_RED);
+    pixels.setPixelColor(3, neo_RED);
 
   }
 
@@ -121,31 +121,31 @@ void GPU_loadGauge(int gpuUsage ) {
 
   if (GPUloadfactor >=  (0) ) {
 
-    pixels.setPixelColor(2, BLUE);
-    pixels.setPixelColor(1, BLUE);
+    pixels.setPixelColor(2, neo_BLUE);
+    pixels.setPixelColor(1, neo_BLUE);
   }
 
   if (GPUloadfactor >=  (25) ) {
 
-    pixels.setPixelColor(2, GREEN);
-    pixels.setPixelColor(1, GREEN);
+    pixels.setPixelColor(2, neo_GREEN);
+    pixels.setPixelColor(1, neo_GREEN);
   }
 
   if (GPUloadfactor >=  (50) ) {
 
-    pixels.setPixelColor(2, GREEN);
-    pixels.setPixelColor(1, GREEN);
+    pixels.setPixelColor(2, neo_GREEN);
+    pixels.setPixelColor(1, neo_GREEN);
   }
 
   if (GPUloadfactor >=  (70) ) {
 
-    pixels.setPixelColor(2, DARKORANGE);
-    pixels.setPixelColor(1, DARKORANGE);
+    pixels.setPixelColor(2, neo_DARKORANGE);
+    pixels.setPixelColor(1, neo_DARKORANGE);
   }
   if (GPUloadfactor >=  (90) ) {
 
-    pixels.setPixelColor(2, RED);
-    pixels.setPixelColor(1, RED);
+    pixels.setPixelColor(2, neo_RED);
+    pixels.setPixelColor(1, neo_RED);
   }
 
   pixels.show();
@@ -162,28 +162,28 @@ void GPU_tempGauge(int gpuDegree ) {
 
   if (GPUtempfactor >=  (50) ) {
 
-    pixels.setPixelColor(2, BLUE);
-    pixels.setPixelColor(1, BLUE);
+    pixels.setPixelColor(2, neo_BLUE);
+    pixels.setPixelColor(1, neo_BLUE);
 
   }
 
   if (GPUtempfactor >=  (60) ) {
 
-    pixels.setPixelColor(2, BLUE);
-    pixels.setPixelColor(1, BLUE);
+    pixels.setPixelColor(2, neo_BLUE);
+    pixels.setPixelColor(1, neo_BLUE);
 
   }
 
   if (GPUtempfactor >=  (70) ) {
 
-    pixels.setPixelColor(2, RED);
-    pixels.setPixelColor(1, RED);
+    pixels.setPixelColor(2, neo_RED);
+    pixels.setPixelColor(1, neo_RED);
   }
 
   if (GPUtempfactor >= (80) ) {
 
-    pixels.setPixelColor(2, RED);
-    pixels.setPixelColor(1, RED);
+    pixels.setPixelColor(2, neo_RED);
+    pixels.setPixelColor(1, neo_RED);
   }
 
   pixels.show();
@@ -206,26 +206,26 @@ void CPU_loadGauge(int cpuUsage ) {
 
   if (CPUloadfactor >=  (0) ) {
 
-    pixels.setPixelColor(0, BLUE);
-    pixels.setPixelColor(1, BLUE);
+    pixels.setPixelColor(0, neo_BLUE);
+    pixels.setPixelColor(1, neo_BLUE);
 
   }
   if (CPUloadfactor >= (25) ) {
 
-    pixels.setPixelColor(0, GREEN);
-    pixels.setPixelColor(1, GREEN);
+    pixels.setPixelColor(0, neo_GREEN);
+    pixels.setPixelColor(1, neo_GREEN);
   }
 
   if (CPUloadfactor >= (50) ) {
 
-    pixels.setPixelColor(0, DARKORANGE);
-    pixels.setPixelColor(1, DARKORANGE);
+    pixels.setPixelColor(0, neo_DARKORANGE);
+    pixels.setPixelColor(1, neo_DARKORANGE);
   }
 
   if (CPUloadfactor >= (90) ) {
 
-    pixels.setPixelColor(0, RED);
-    pixels.setPixelColor(1, RED);
+    pixels.setPixelColor(0, neo_RED);
+    pixels.setPixelColor(1, neo_RED);
   }
 
   pixels.show();
@@ -242,28 +242,28 @@ void CPU_tempGauge(int cpuDegree ) {
 
   if (CPUtempfactor >=  (50) ) {
 
-    pixels.setPixelColor(0, BLUE);
-    pixels.setPixelColor(1, BLUE);
+    pixels.setPixelColor(0, neo_BLUE);
+    pixels.setPixelColor(1, neo_BLUE);
   }
 
   if (CPUtempfactor >=  (60) ) {
 
-    pixels.setPixelColor(0, RED);
-    pixels.setPixelColor(1, RED);
+    pixels.setPixelColor(0, neo_RED);
+    pixels.setPixelColor(1, neo_RED);
 
   }
 
   if (CPUtempfactor >=  (70) ) {
 
-    pixels.setPixelColor(0, RED);
-    pixels.setPixelColor(1, RED);
+    pixels.setPixelColor(0, neo_RED);
+    pixels.setPixelColor(1, neo_RED);
 
   }
 
   if (CPUtempfactor >=  (80) ) {
 
-    pixels.setPixelColor(0, RED);
-    pixels.setPixelColor(1, RED);
+    pixels.setPixelColor(0, neo_RED);
+    pixels.setPixelColor(1, neo_RED);
 
   }
 
@@ -281,31 +281,31 @@ void GPU_loadGauge(int gpuUsage ) {
 
   if (GPUloadfactor >=  (0) ) {
 
-    pixels.setPixelColor(2, BLUE);
-    pixels.setPixelColor(3, BLUE);
+    pixels.setPixelColor(2, neo_BLUE);
+    pixels.setPixelColor(3, neo_BLUE);
   }
 
   if (GPUloadfactor >=  (25) ) {
 
-    pixels.setPixelColor(2, GREEN);
-    pixels.setPixelColor(3, GREEN);
+    pixels.setPixelColor(2, neo_GREEN);
+    pixels.setPixelColor(3, neo_GREEN);
   }
 
   if (GPUloadfactor >=  (50) ) {
 
-    pixels.setPixelColor(2, GREEN);
-    pixels.setPixelColor(3, GREEN);
+    pixels.setPixelColor(2, neo_GREEN);
+    pixels.setPixelColor(3, neo_GREEN);
   }
 
   if (GPUloadfactor >=  (70) ) {
 
-    pixels.setPixelColor(2, DARKORANGE);
-    pixels.setPixelColor(3, DARKORANGE);
+    pixels.setPixelColor(2, neo_DARKORANGE);
+    pixels.setPixelColor(3, neo_DARKORANGE);
   }
   if (GPUloadfactor >=  (90) ) {
 
-    pixels.setPixelColor(2, RED);
-    pixels.setPixelColor(3, RED);
+    pixels.setPixelColor(2, neo_RED);
+    pixels.setPixelColor(3, neo_RED);
   }
 
   pixels.show();
@@ -322,28 +322,28 @@ void GPU_tempGauge(int gpuDegree ) {
 
   if (GPUtempfactor >=  (50) ) {
 
-    pixels.setPixelColor(2, BLUE);
-    pixels.setPixelColor(3, BLUE);
+    pixels.setPixelColor(2, neo_BLUE);
+    pixels.setPixelColor(3, neo_BLUE);
 
   }
 
   if (GPUtempfactor >=  (60) ) {
 
-    pixels.setPixelColor(2, BLUE);
-    pixels.setPixelColor(3, BLUE);
+    pixels.setPixelColor(2, neo_BLUE);
+    pixels.setPixelColor(3, neo_BLUE);
 
   }
 
   if (GPUtempfactor >=  (70) ) {
 
-    pixels.setPixelColor(2, RED);
-    pixels.setPixelColor(3, RED);
+    pixels.setPixelColor(2, neo_RED);
+    pixels.setPixelColor(3, neo_RED);
   }
 
   if (GPUtempfactor >=  (80) ) {
 
-    pixels.setPixelColor(2, RED);
-    pixels.setPixelColor(3, RED);
+    pixels.setPixelColor(2, neo_RED);
+    pixels.setPixelColor(3, neo_RED);
   }
 
   pixels.show();

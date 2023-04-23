@@ -604,6 +604,15 @@ void Display_CircleGauge_Batt() {
 
 
       //--------------------------Trigger an event when CPU or GPU threshold is met ---------------------------------
+#ifdef PCB_enableThesholdtriggers
+
+      //PCB_TriggerCPU_temp_LS( cpuString1.toInt() ); // Neopixel CPU  Temperature
+      PCB_TriggerCPU_load_LS( cpuString2.toInt() ); // Neopixel CPU  Load
+
+      //PCB_TriggerGPU_temp_LS( gpuString1.toInt() ); // Neopixel GPU  Temperature
+      PCB_TriggerGPU_load_LS( gpuString2.toInt() ); // Neopixel GPU  Load
+
+#endif
 
 
 #ifdef enable_CustomThesholdtriggers
@@ -649,7 +658,7 @@ void Display_CircleGauge_Batt() {
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-// -------------------  CPU Turbo Boost Indicator Event Portrait --------------------
+// -------------------  CPU Turbo Boost Indicator Event  --------------------
 
 void CustomTriggerCPU_BOOST_Circle(int cpuClockString ) {
   float CPUboostfactor = cpuClockString;
@@ -680,7 +689,7 @@ void CustomTriggerCPU_BOOST_Circle(int cpuClockString ) {
   }
 }
 
-// -------------------  GPU Boost Clock Indicator Event Portrait --------------------
+// -------------------  GPU Boost Clock Indicator Event  --------------------
 
 void CustomTriggerGPU_BOOST_Circle(int gpuCoreClockString ) {
   float GPUboostfactor = gpuCoreClockString ;
@@ -702,7 +711,7 @@ void CustomTriggerGPU_BOOST_Circle(int gpuCoreClockString ) {
 }
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-// -------------------  CPU Throttle Indicator Event Portrait --------------------
+// -------------------  CPU Throttle Indicator Event  --------------------
 
 void CustomTriggerCPU_ThrottleIndicator_Circle(int cpuDegree ) {  // i5-9600k TJMax is 100c
   float CPUtempfactor = cpuDegree ;
@@ -723,7 +732,7 @@ void CustomTriggerCPU_ThrottleIndicator_Circle(int cpuDegree ) {  // i5-9600k TJ
 }
 
 
-// -------------------  GPU Throttle Indicator Event Portrait --------------------
+// -------------------  GPU Throttle Indicator Event  --------------------
 
 void CustomTriggerGPU_ThrottleIndicator_Circle(int gpuDegree ) {
   float GPUtempfactor = gpuDegree ;

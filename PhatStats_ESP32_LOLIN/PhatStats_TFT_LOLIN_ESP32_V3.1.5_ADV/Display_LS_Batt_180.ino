@@ -806,6 +806,16 @@ void Display_LS_Batt_180 () {
 
       //--------------------------Trigger an event when CPU or GPU threshold is met ---------------------------------
 
+#ifdef PCB_enableThesholdtriggers // Landscape Flipped 180
+
+      //PCB_TriggerCPU_temp_LS180( cpuString1.toInt() ); // Neopixel CPU  Temperature
+      PCB_TriggerCPU_load_LS180( cpuString2.toInt() ); // Neopixel CPU  Load
+
+      //PCB_TriggerGPU_temp_LS180( gpuString1.toInt() ); // Neopixel GPU  Temperature
+      PCB_TriggerGPU_load_LS180( gpuString2.toInt() ); // Neopixel GPU  Load
+
+#endif
+
 #ifdef enable_BoostIndicator
       CustomTriggerCPU_BOOST_LSNB_Flipped( cpuClockString.toInt     ()); // CPU Frequency
       CustomTriggerGPU_BOOST_LSNB_Flipped( gpuCoreClockString.toInt ()); // GPU Frequency
