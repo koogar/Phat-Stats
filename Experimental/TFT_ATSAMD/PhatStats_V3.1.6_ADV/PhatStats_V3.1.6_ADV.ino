@@ -1,5 +1,5 @@
 
-#define CODE_VERS  "3.1.5.ADV"  // Code version number
+#define CODE_VERS  "3.1.6.ADV"  // Code version number
 
 /*
   uVolume, GNATSTATS OLED, PHATSTATS TFT PC Performance Monitor & HardwareSerialMonitor Windows Client
@@ -157,6 +157,7 @@ void backlightOFF();
   ==========================================================================================================
 
 */
+
 
 
 #if defined(Seeeduino_XIAO_ATSAMD) ^ defined(Adafruit_QTPY_ATSAMD) ^ defined(Seeeduino_XIAO_NRF52840)

@@ -1,5 +1,5 @@
 
-#define CODE_VERS  "3.1.5.BT.ADV"  // Code version number
+#define CODE_VERS  "3.1.6.BT.ADV"  // Code version number
 
 /*
   uVolume, GNATSTATS OLED, PHATSTATS TFT PC Performance Monitor & HardwareSerialMonitor Windows Client
@@ -153,7 +153,7 @@ Pangodream_18650_CL BL(ADC_PIN, CONV_FACTOR, READS);
 //---------------------------------------------------------------------------------------
 #include <Adafruit_NeoPixel.h>
 #define NEOPIN      2
-#define NUM_PIXELS  16
+//#define NUM_PIXELS  16 // moved to CFG
 Adafruit_NeoPixel pixels(NUM_PIXELS, NEOPIN, NEO_GRB + NEO_KHZ800);
 
 /* Pre-define Hex NeoPixel colours,  eg. pixels.setPixelColor(0, BLUE); https://htmlcolorcodes.com/color-names/ */
@@ -637,7 +637,7 @@ void splashScreen() {
 
   delay(2000);
 
-#ifdef enableNeopixelGauges
+#ifdef enable_NeopixelGauges
 
 #ifdef enable_BT
   allNeoPixelsBLUE();

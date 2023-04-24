@@ -1,3 +1,4 @@
+
 #define CODE_VERS  "3.1.5.KiSS"  // Code version number
 
 /*
@@ -56,13 +57,24 @@
   Hookup Guide
   https://runawaybrainz.blogspot.com/2021/03/phat-stats-ili9341-tft-display-hook-up.html
 
-    Library Working Version Checker 18/04/2023
+  Library Working Version Checker 18/04/2023
+  (some libraries may not be used in this sketch)
   ------------------------------------------------
-  Adafruit BusIO            v1.14.0 (Current 04/2023
-  Adafruit_GFX              v1.11.5 (Current 04/2023)
-  Adafruit_NeoPixel         v1.11.0 (Current 04/2023)
-  Adafruit ILI9341          v1.5.12 (Current 04/2023)
-  
+  Arduino IDE           v1.8.19
+  espressif (ESP32)     v2.0.5 (v2.08 = ESP32_AnalogWrite compile error)
+  ------------------------------------------------
+  ESP32_AnalogWrite     v0.2    (Current 04/2023)
+  Adafruit BusIO        v1.14.0 (Current 04/2023
+  Adafruit_GFX          v1.11.5 (Current 04/2023)
+  Adafruit_NeoPixel     v1.11.0 (Current 04/2023)
+  Adafruit ILI9341      v1.5.12 (Current 04/2023)
+  Adafruit_SH1106_BADZZ v1.1.0  (32u4 only Current 04/2023)
+  Adafruit SH110X       v2.1.8  (Current 04/2023)
+  Adafruit SD1306       v2.5.7  (Current 04/2023)
+  HID-Project           v2.8.4  (Current 04/2023)
+  IRremote              v4.1.2  (Current 04/2023)
+  TML_ErriezRotaryFullStep      (Current 04/2023)
+
 
   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                SEE CONFIGURATION TAB FIRST, FOR QUICK SETTINGS!!!!
@@ -687,32 +699,32 @@ void splashScreen() {
   backlightON();
   //FeatureSet_Indicator2(); // Display Icons for enabled features
 
-  delay(1000);
-backlightOFF();// Hide the Screen while drawing
+  delay(2000);
+  backlightOFF();// Hide the Screen while drawing
 
-  /**/
+  /*
 
-    #ifdef splashScreenLS // Quick landscape hack job, also in FeatureSet
-    #ifdef Seeeduino_WIO_ATSAMD51
-    tft.setRotation(3);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
-    tft.fillScreen(ILI9341_BLACK);
-    //tft.drawRoundRect  (0, 0  , 240, 320, 8,    ILI9341_RED);
-    tft.drawBitmap(120, 26, WaitingDataBMP_USB, 76, 190, ILI9341_RED);
-    backlightON();
+#ifdef splashScreenLS // Quick landscape hack job, also in FeatureSet
+#ifdef Seeeduino_WIO_ATSAMD51
+  tft.setRotation(3);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
+  tft.fillScreen(ILI9341_BLACK);
+  //tft.drawRoundRect  (0, 0  , 240, 320, 8,    ILI9341_RED);
+  tft.drawBitmap(120, 26, WaitingDataBMP_USB, 76, 190, ILI9341_RED);
+  backlightON();
 
-    #else
+#else
 
-    tft.setRotation(0);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
-    tft.fillScreen(ILI9341_BLACK);
-    //tft.drawRoundRect  (0, 0  , 240, 320, 8,    ILI9341_RED);
-    tft.drawBitmap(82, 62, WaitingDataBMP_USB, 76, 190, ILI9341_RED);
-    backlightON();
-    #endif
-    #endif
+  tft.setRotation(0);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
+  tft.fillScreen(ILI9341_BLACK);
+  //tft.drawRoundRect  (0, 0  , 240, 320, 8,    ILI9341_RED);
+  tft.drawBitmap(82, 62, WaitingDataBMP_USB, 76, 190, ILI9341_RED);
+  backlightON();
+#endif
+#endif
 
-    delay(2000);
-  
-  
+  delay(2000);
+*/
+
   backlightOFF();// Hide the Screen while drawing
   tft.fillScreen(ILI9341_BLACK);
 

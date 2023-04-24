@@ -140,10 +140,9 @@ volatile int brightness_count = 100; // Start Up PWM Brightness
 #define lastActiveDelay 8000
 
 //-------------------------------- NeoPixel Modes -------------------------------------
-
 #define NUM_PIXELS  4 // define the number of NeoPixels used
 
-//#define enable_NeopixelGauges     // 16 NeoPixel Ring
+//#define enable_NeopixelGauges     // NeoPixel Phat-Stats PCB 
 #define enable_Thresholdtriggers_PCB // New PCB 4x NeoPixel Rotate States,0,1,2,3  Trigger functions when CPU or GPU thresholds are met 
 
 /* If  NeoBrightness = 0 Phat-Stats will start with no NeoPixels lit. Turn the Rotary Encoder to turn on the NeoPixels, */
