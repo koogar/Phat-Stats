@@ -18,14 +18,16 @@
 
 //--------------------------- Uncomment your Micro Processor---------------------------------
 
-#define Adafruit_QTPY_ATSAMD
-//#define Seeeduino_XIAO_ATSAMD
+//#define Adafruit_QTPY_ATSAMD
+#define Seeeduino_XIAO_ATSAMD
 //#define Seeeduino_XIAO_RP2040   // Adafruit QT PY RP2040  (untested)
 //#define Seeeduino_XIAO_NRF52840 // Adafruit QT PY NRF52840(untested)
 
 //#define Seeeduino_WIO_ATSAMD51  // Seed Studio WIO Terminal
 
 //--------------------------- Seeeduino_XIAO_ESP32C3 Experimental!!! --------------------------------
+/* NOTE: The XIAO ESP32C3 is very problematic when uploading "in circuit" and has to be removed for programming. 
+Most of the time it has to be forced into bootloader mode (Hold BOOT button down and power cycle while uploading) */
 
 /* Uncomment ALT_TFT_RST for XIAO ESP32C3 &  OLD PCB v0.93, TFT_RST is on D9 (Miso) as D0 was used for IR */
 
@@ -148,4 +150,14 @@ volatile int brightness_count = 100; // Start Up PWM Brightness
                           Seeed Studio WIO Terminal (ATSAMD51)
                           Retro CRT look option
                           + Some Fixes
+
+   V3.1.6.ADV/KiSS
+
+       Clean up code
+       Turn off the backlight untill the stats have updated when using button mode.
+       Add PCB_ThresholdTriggerEvents for custom PCB, so neopixels rotate with button mode.
+
+      (ADV) Add option to display the splash screen in landscape.
+       
+       
 */

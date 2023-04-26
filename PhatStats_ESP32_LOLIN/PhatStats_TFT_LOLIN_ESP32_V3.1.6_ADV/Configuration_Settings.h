@@ -163,13 +163,15 @@ String set_GPUram = "xx";
 
 //-------------------------------- NeoPixel Modes -------------------------------------
 #define NUM_PIXELS  16
-
-//#define enable_NeopixelGauges     // NeoPixel ring bargraph example
-
-#define enable_Thresholdtriggers_PCB // New PCB 4x NeoPixel Rotate States,0,1,2,3  Trigger functions when CPU or GPU thresholds are met 
-
 /* If  NeoBrightness = 0 Phat-Stats will start with no NeoPixels lit. Turn the Rotary Encoder to turn on the NeoPixels, */
 int NeoBrightness   = 20;           // Global start up brightness
+
+/* Uncomment only one of the below*/
+//#define enable_NeopixelGauges     // NeoPixel ring bargraph example
+
+//#define enable_Thresholdtriggers_PCB // New PCB 4x NeoPixel Rotate States,0,1,2,3  Trigger functions when CPU or GPU thresholds are met
+
+
 
 //----------------------------- TFT Fixed or PWM Brightness ------------------------------------
 #define fixedBacklight // enable a fixed backlight (no PWM) powered from VCC
@@ -232,6 +234,15 @@ int baudRate  = 9600; // set serial baud rate to match that of HardwareSerialMon
 
         Fixes
         Retro CRT look option
+
+
+    V3.1.6.ADV/KiSS
+
+       Clean up code
+       Turn off the backlight untill the stats have updated when using button mode.
+       Add PCB_ThresholdTriggerEvents for custom PCB, so neopixels rotate with button mode.
+
+      (ADV) Add option to display the splash screen in landscape.
 
   Note: Gnat-Stats/Phat-Stats is optimised for desktop CPU's with dedicated graphics cards, such as Nvidia/Radeon.
       You may get wierd results on mobile CPUs and integrated GPU's (iGPU's) on laptops.

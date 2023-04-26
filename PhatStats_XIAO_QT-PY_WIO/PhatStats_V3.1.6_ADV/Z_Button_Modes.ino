@@ -30,8 +30,8 @@ void button_Modes() {
     switch (display_Button_counter) {
 
       //default:
-      //  Display_LS();
-      // break;
+      //Display_LS();
+      //break;
 
       case 0: // 1st SCREEN
         Display_LS();

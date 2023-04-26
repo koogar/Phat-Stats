@@ -1,5 +1,5 @@
 
-#define CODE_VERS  "3.1.6.KiSS"  // Code version number
+#define CODE_VERS  "3.1.6.ADV"  // Code version number
 
 /*
   uVolume, GNATSTATS OLED, PHATSTATS TFT PC Performance Monitor & HardwareSerialMonitor Windows Client
@@ -10,32 +10,31 @@
   ------------------------------------
   Click on File > Preference, and fill Additional Boards Manager URLs with the url below:
 
-
   XIAO ATSAMD21 / WIO Terminal
   ----------------------------
-   https://files.seeedstudio.com/arduino/package_seeeduino_boards_index.json
+  https://files.seeedstudio.com/arduino/package_seeeduino_boards_index.json
 
   XIAO NRF52840
   -------------
-    https://files.seeedstudio.com/arduino/package_seeeduino_boards_index.json
+  https://files.seeedstudio.com/arduino/package_seeeduino_boards_index.json
 
   XIAO RP2040
   -----------
-   https://github.com/earlephilhower/arduino-pico/releases/download/global/package_rp2040_index.json
+  https://github.com/earlephilhower/arduino-pico/releases/download/global/package_rp2040_index.json
 
   XIAO ESP32C3
   ------------
-   https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_dev_index.json
-   https://wiki.seeedstudio.com/XIAO_ESP32C3_Getting_Started/#q3-i-want-to-reflash-the-bootloader-with-factory-firmware
+  https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_dev_index.json
+  https://wiki.seeedstudio.com/XIAO_ESP32C3_Getting_Started/#q3-i-want-to-reflash-the-bootloader-with-factory-firmware
 
   QY-PY ATSAMD21
   --------------
-   !!!Install Arduino ATSAMD then ADD !!!
-   https://adafruit.github.io/arduino-board-index/package_adafruit_index.json
+  !!!Install Arduino ATSAMD then ADD !!!
+  https://adafruit.github.io/arduino-board-index/package_adafruit_index.json
 
   WIO Terminal
   --------------------------
-   https://files.seeedstudio.com/arduino/package_seeeduino_boards_index.json
+  https://files.seeedstudio.com/arduino/package_seeeduino_boards_index.json
 
 
   Libraries
@@ -75,7 +74,6 @@
   IRremote              v4.1.2  (Current 04/2023)
   TML_ErriezRotaryFullStep      (Current 04/2023)
 
-
   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                SEE CONFIGURATION TAB FIRST, FOR QUICK SETTINGS!!!!
   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -87,7 +85,7 @@
 #include <Adafruit_GFX.h>
 #include <Fonts/Org_01.h>
 #include <Adafruit_ILI9341.h>  // v1.5.6 Adafruit Standard
-
+#include <Adafruit_NeoPixel.h>
 #include "Configuration_Settings.h" // load settings
 #include "Z_Bitmaps.h"
 
@@ -102,12 +100,15 @@ void Display_LS      ();
 void Display_Port    ();
 void Display_LS_180  ();
 void Display_Port_180();
+void Display_CircleGauge    ();
+void Display_CircleGauge_180();
 void button_Modes    ();
 void serialEvent     ();
 void activityChecker ();
 void splashScreen    ();
-void backlightON ();
-void backlightOFF();
+void backlightON     ();
+void backlightOFF    ();
+
 
 /*
   eBay Special Red PCB pinouts VCC(3.3v), GND, CS, RST, D/C, MOSI, SCK, BL, (MISO, T_CLK, T_CS, T_DIN, T_DO, T_IRQ)
@@ -116,14 +117,14 @@ void backlightOFF();
   --------------------------------------
 
   CS     =  5  or D5
-  RST    =  0  or D0 or D9 (Use D9 for XIAO_ESP32C3 or old PCB Version)
+  RST    =  0  or D0 or D9 on ESP32C3
   DC     =  7  or D7
   SCLK   =  8  or D8
   MOSI   =  10 Or D10
 
   B.LIGHT             = 4
   Screen Mode Button  = 1
-
+  NeoPixel            = 6
 
   Onboard LED's
   --------------
@@ -159,55 +160,21 @@ void backlightOFF();
   ==========================================================================================================
 
 */
-//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ Hidden in Main Sketch for KiSS   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-
-//------------------------------- Display Activity Shutdown -----------------------------------
-
-/* Uncomment below to turn off the screen on serial timeout, else keep last display info eg: incase of PC Crash*/
-#define enableActivityChecker
-
-/* How long the display takes to timeout due to inactive serial data from the windows application */
-#define lastActiveDelay 8000
 
 
-/* Debounce  Button, button mode is a bit flaky at present as it needs interrupts, Sometimes it gets caught during a screen refresh
-  and does not change. WIO Terminal & ESP32 seem to like 1000ms and works just!!! ok */
 
-int debounceButton = 150; //  Use a 0.1uf/100nf/(104) ceramic capacitor from button Pin to GND
+#if defined(Seeeduino_XIAO_ATSAMD) ^ defined(Adafruit_QTPY_ATSAMD) ^ defined(Seeeduino_XIAO_NRF52840)
+#define NEOPIN      6
+#endif
 
-/* Enable the built in LED blinking when transmitting data,*/
-//#define enableTX_LED
+#if defined(Seeeduino_XIAO_RP2040) ^ defined(Seeeduino_XIAO_ESP32C3)
+#define NEOPIN      D6
+#endif
 
-int TX_LED_Delay = 0; // TX blink delay, lags button
+#if defined Seeeduino_WIO_ATSAMD51
 
-int baudRate     = 9600; // set serial baud rate to match that of HardwareSerialMonitor 115200 will use more resources
-
-/* Delay screen event, to stop screen data corruption ESP8622 use 25, most others 5 will do*/
-int Serial_eventDelay = 5; //
-
-//#define  splashScreenLS // quick splash screen landscape hack job, also in FeatureSet
-
-/* CPU is overclocked with Turbo boost disabled, to stop "TURBO" indicator,*/
-//#define CPU_OverClocked
-
-#define noDegree      // lose the "o"
-#define smallPercent  // Use small percent symbol
-
-//----------------------------- Frequency Gains Indicator --------------------------------
-
-/* Uncomment to enable the display of frequency gains */
-#define enable_ShowFrequencyGain
-
-/* Uncomment only one of the units to display below, MHz or Percent */
-//#define ShowFrequencyGainMHz        // Show Overlock/Turbo & Boost Clock Frequency Gains in MHZ  eg: "+24MHz"
-#define ShowFrequencyGainPerc       // Show Overlock/Turbo & Boost Clock Frequency Gains in Percent  eg: "+24%"
-
-//----------------------------- Throttle/Boost Indicator --------------------------------
-
-#define enable_ThrottleIndicator // Show TJMax Indicator 
-#define enable_BoostIndicator    // Show CPU & GPU Turbo/Boost Indicator
-
-//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+#define NEOPIN      D2 //(Grove Connector???)
+#endif
 
 
 
@@ -222,12 +189,32 @@ int Serial_eventDelay = 5; //
 #define TX_LEDPin   25
 #endif
 
+#ifdef Adafruit_QTPY_ATSAMD
+/*onboard QT-PY NeoPixel for TX*/
+#define TX_NeoPin   11  //
+#endif
 
 #ifdef Seeeduino_XIAO_NRF52840
 /*onboard XIAO BUILD in LED for TX*/
 #define TX_LEDPin   11
 #endif
 
+#ifdef Adafruit_QTPY_ATSAMD
+Adafruit_NeoPixel TX_pixel(1, TX_NeoPin, NEO_GRB + NEO_KHZ800);
+#endif
+
+Adafruit_NeoPixel pixels(NUM_PIXELS, NEOPIN, NEO_GRB + NEO_KHZ800);
+
+
+/* Pre-define Hex NeoPixel colours,  eg. pixels.setPixelColor(0, BLUE); https://htmlcolorcodes.com/color-names/ */
+#define neo_BLUE       0x0000FF
+#define neo_GREEN      0x008000
+#define neo_RED        0xFF0000
+#define neo_ORANGE     0xFFA500
+#define neo_DARKORANGE 0xFF8C00
+#define neo_YELLOW     0xFFFF00
+#define neo_WHITE      0xFFFFFF
+#define neo_BLACK      0x000000 // OFF
 
 
 //----------------------------------------------------------------------------
@@ -241,13 +228,14 @@ int Serial_eventDelay = 5; //
 #define TFT_DC     D7
 
 #ifdef  ALT_TFT_RST
-#define TFT_RST    D9  // ESP32C3 & OLD PCB V0.93(Use D9 for XIAO_ESP32C3 or old PCB Version)
+#define TFT_RST    D9  // ESP32C3 & OLD PCB V0.93
 #else
 #define TFT_RST    D0  // changed from previous(9) to allow for MISO connection for Touch
 #endif
 
 #define TFT_SCLK   D8
 #define TFT_MOSI   D10
+
 
 
 Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC, TFT_RST); // Use hardware SPI
@@ -306,12 +294,12 @@ int TFT_backlight_PIN = LCD_BACKLIGHT;
 
 #if defined(Seeeduino_XIAO_ATSAMD) ^ defined(Adafruit_QTPY_ATSAMD) ^ defined(Seeeduino_XIAO_NRF52840)
 /* Mode Button pin*/
-int mode_Button       = 1;
+int mode_Button       = 1;  //Mode Button pin
 /* Screen TFT backlight Pin */
 int TFT_backlight_PIN = 4;
 #endif
 
-
+//int display_Button_counter = 0;
 
 //-----------------------------------------------------------------------------
 
@@ -387,6 +375,33 @@ boolean stringComplete = false;
 #endif
 
 
+#ifdef  RETRO_AMBER
+#define ILI9341_YELLOW      0xFFE0 //ILI9341_YELLOW
+#define ILI9341_WHITE       0xFFE0 //ILI9341_YELLOW
+#define ILI9341_BLUE        0xA508 //ILI9341_GOLD
+#define ILI9341_GREEN       0xA508 //ILI9341_GOLD
+#define ILI9341_RED         0xA508 //ILI9341_GOLD
+//--
+#define ILI9341_SILVER      0xFFE0 //ILI9341_YELLOW
+#define ILI9341_GREY        0xA508 //ILI9341_GOLD
+#define ILI9341_LIGHT_GREY  0xA508 //ILI9341_GOLD
+#endif
+
+
+#ifdef  RETRO_GREEN
+#define ILI9341_YELLOW      0x07E0 //ILI9341_GREEN
+#define ILI9341_WHITE       0x07E0 //ILI9341_GREEN
+#define ILI9341_BLUE        0x7BE0 //ILI9341_OLIVE
+#define ILI9341_GREEN       0x7BE0 //ILI9341_OLIVE
+#define ILI9341_RED         0x7BE0 //ILI9341_OLIVE
+//--
+#define ILI9341_SILVER      0x07E0 //ILI9341_GREEN
+#define ILI9341_GREY        0x7BE0 //ILI9341_OLIVE
+#define ILI9341_LIGHT_GREY  0x7BE0 //ILI9341_OLIVE
+#endif
+
+
+
 //--------------------------------
 
 void setup() {
@@ -402,8 +417,12 @@ void setup() {
 
   /* Set up PINs */
   pinMode(mode_Button, INPUT_PULLUP);
+
   pinMode(TFT_backlight_PIN, OUTPUT); // declare backlight pin to be an output:
 
+
+  /* initializes the NeoPixel library */
+  pixels.begin();
 
 #if defined(Seeeduino_XIAO_ATSAMD) ^ defined(Seeeduino_WIO_ATSAMD51)
 #ifdef enableTX_LED
@@ -411,6 +430,12 @@ void setup() {
 #endif
 #endif
 
+#ifdef Adafruit_QTPY_ATSAMD
+#ifdef enableTX_LED
+  /* initializes the NeoPixel library */
+  TX_pixel.begin();
+#endif
+#endif
 
 #ifdef Seeeduino_XIAO_RP2040
 #ifdef enableTX_LED
@@ -425,6 +450,11 @@ void setup() {
 #endif
 
 
+  pixels.setBrightness(NeoBrightness); // Atmel Global Brightness (does not work for STM32!!!!)
+  pixels.show(); // Turn off all Pixels
+
+
+  backlightOFF();
 
   /* TFT SETUP */
 
@@ -473,6 +503,13 @@ void loop() {
 #endif
 #endif
 
+#ifdef Adafruit_QTPY_ATSAMD
+#ifdef enableTX_LED
+  /* Serial Activity NeoPixel */
+  TX_pixel.setPixelColor(0, 0, 0, 0 ); // turn built in NeoPixel Off
+  TX_pixel.show();
+#endif
+#endif
 
 #ifdef Seeeduino_XIAO_NRF52840
   /*Serial Activity LED */
@@ -487,7 +524,20 @@ void loop() {
 //-----End of Main Loop -------
 
 
+//-----------------------------  NeoPixels  -----------------------------------
+void allNeoPixelsOff() {
+  for ( int i = 0; i < NUM_PIXELS; i++ ) {
+    pixels.setPixelColor(i, 0, 0, 0 );
+  }
+  pixels.show();
+}
 
+void allNeoPixelsRED() {
+  for ( int i = 0; i < NUM_PIXELS; i++ ) {
+    pixels.setPixelColor(i, 255, 0, 0 );
+  }
+  pixels.show();
+}
 
 //-----------------------------  Serial Events -------------------------------
 
@@ -527,7 +577,12 @@ void serialEvent() {
 #endif
 #endif
 
-
+#ifdef enableTX_LED
+#ifdef Adafruit_QTPY_ATSAMD
+      TX_pixel.setPixelColor(0, 10, 0, 0 ); // turn built in NeoPixel on
+      TX_pixel.show();
+#endif
+#endif
 
 #ifdef enableTX_LED
 #ifdef Seeeduino_XIAO_NRF52840
@@ -560,8 +615,6 @@ void activityChecker() {
     tft.setRotation(0);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
     //tft.drawRoundRect  (0, 0  , 240, 320, 8,    ILI9341_RED);
     tft.setTextColor(ILI9341_RED);
-
-    tft.setRotation(2);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
     tft.drawBitmap(82, 80, WaitingDataBMP2_90, 76, 154, ILI9341_RED);
     tft.setTextSize(2); tft.setCursor(40, 40); tft.println("NO COM DATA!!!");
 
@@ -571,6 +624,7 @@ void activityChecker() {
 
     //tft.invertDisplay(0);
     backlightOFF ();
+    allNeoPixelsOff();
     tft.fillScreen(ILI9341_BLACK);
 
     displayDraw = 0;
@@ -616,12 +670,12 @@ void backlightOFF () {
 void splashScreen() {
 
   /* Initial Boot Screen, */
+  allNeoPixelsOff();
 
-  tft.setRotation(2);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
+  tft.setRotation(0);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
 
   tft.setFont(&Org_01);
   tft.fillScreen(ILI9341_BLACK);
-
   //tft.drawRoundRect  (0, 0  , 240, 320, 8,    ILI9341_RED);
 
 #ifdef splashScreenLS // Quick landscape hack job, also in FeatureSet
@@ -697,12 +751,16 @@ void splashScreen() {
   tft.setFont(); // Set Default Adafruit GRFX Font
 
   backlightON();
-  //FeatureSet_Indicator2(); // Display Icons for enabled features
+  FeatureSet_Indicator2(); // Display Icons for enabled features
 
-  delay(2000);
+  delay(1000);
   backlightOFF();// Hide the Screen while drawing
 
-  /*
+#ifdef enable_NeopixelGauges
+  allNeoPixelsRED();
+#endif
+
+  /**/
 
 #ifdef splashScreenLS // Quick landscape hack job, also in FeatureSet
 #ifdef Seeeduino_WIO_ATSAMD51
@@ -711,7 +769,6 @@ void splashScreen() {
   //tft.drawRoundRect  (0, 0  , 240, 320, 8,    ILI9341_RED);
   tft.drawBitmap(120, 26, WaitingDataBMP_USB, 76, 190, ILI9341_RED);
   backlightON();
-
 #else
 
   tft.setRotation(0);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
@@ -723,7 +780,6 @@ void splashScreen() {
 #endif
 
   delay(2000);
-*/
 
   backlightOFF();// Hide the Screen while drawing
   tft.fillScreen(ILI9341_BLACK);
