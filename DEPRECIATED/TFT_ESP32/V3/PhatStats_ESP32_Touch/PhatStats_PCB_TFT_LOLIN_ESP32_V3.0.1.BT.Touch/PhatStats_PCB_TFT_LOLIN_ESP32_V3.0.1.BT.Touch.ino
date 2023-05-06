@@ -1,86 +1,70 @@
 
-#define CODE_VERS  "3.1.6.BT.ADV"  // Code version number
 
 /*
   uVolume, GNATSTATS OLED, PHATSTATS TFT PC Performance Monitor & HardwareSerialMonitor Windows Client
-  Rupert Hirst © 2016 - 2023 http://tallmanlabs.com http://runawaybrainz.blogspot.com/
-  https://github.com/koogar/Phat-Stats  https://hackaday.io/project/19018-phat-stats-pc-performance-tft-display
+  Rupert Hirst & Colin Conway © 2016 - 2021
+  http://tallmanlabs.com
+  http://runawaybrainz.blogspot.com/
+
+  Licence
+  --------
+  GPL v2
 
 
-  WARNING!!!last successful compile espressif v2.0.5
-  if your compile fails (analogWriteResolution) uninstall in the IDE boards manager down to the above version
   https://github.com/espressif/arduino-esp32/blob/master/docs/arduino-ide/boards_manager.md
 
   Board Manager ESP32
   -------------------
-  Click on File > Preference, and fill Additional Boards Manager URLs with the url below:
+  Click on File > Preference, and fill Additional Boards Manager URLs with the url below
+  : last successful compile v2.0.5 versions after this do not currently compile due to a conflict with the ESP32_AnalogWrite library
+  
   https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
 
-
+  last successful compile Arduino IDE v1.8.19
 
   Libraries
   ---------
-  Adafruit Neopixel
+  Adafruit Neopixel:            last successful compile v1.10.5
   https://github.com/adafruit/Adafruit_NeoPixel
 
-  Adafruit GFX Library
+  Adafruit GFX Library:         last successful compile v1.11.3
   https://github.com/adafruit/Adafruit-GFX-Library
 
-  Adafruit ILI9341
+  Adafruit ILI9341:             last successful compile v1.5.12
   https://github.com/adafruit/Adafruit_ILI9341
 
-  Rotary encoder
+  Rotary encoder:               last successful compile v1.1.0
   https://github.com/koogar/ErriezRotaryEncoderFullStep
 
-
-  WARNING!!!last successful compile espressif v2.0.5
-  if your compile fails (analogWriteResolution) uninstall in the IDE boards manager down to the above version
-
-  ESP32 analogueWrite Function
+  ESP32 analogueWrite Function: last successful compile v1.0.1
   https://github.com/ERROPiX/ESP32_AnalogWrite
 
-  Battery Monitor by Alberto Iriberri Andrés
+  Battery Monitor by Alberto Iriberri Andrés: last successful compile v0.2
   https://github.com/pangodream/18650CL
 
   Hookup Guide
   https://runawaybrainz.blogspot.com/2021/03/phat-stats-ili9341-tft-display-hook-up.html
-
-
-
-  Library Working Version Checker 18/04/2023
-  (some libraries may not be used in this sketch)
-  ------------------------------------------------
-  Arduino IDE          v1.8.19
-  espressif (ESP32)    v2.0.5 (v2.08 = ESP32_AnalogWrite compile error)
-  ------------------------------------------------
-  ESP32_AnalogWrite    v0.2    (Current 04/2023)
-  Adafruit BusIO       v1.14.0 (Current 04/2023
-  Adafruit_GFX         v1.11.5 (Current 04/2023)
-  Adafruit_NeoPixel    v1.11.0 (Current 04/2023)
-  Adafruit ILI9341     v1.5.12 (Current 04/2023)
-  Adafruit SH110X      v2.1.8  (Current 04/2023)
-  Adafruit SD1306      v2.5.7  (Current 04/2023)
-  HID-Project          v2.8.4  (Current 04/2023)
-  IRremote             v4.1.2  (Current 04/2023)
-
 
   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                SEE CONFIGURATION TAB FIRST, FOR QUICK SETTINGS!!!!
   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 */
 
-
+#define CODE_VERS  "v3.0.1.BT.Touch"  // Code version number
 
 #include <Arduino.h>
 #include <Wire.h>
 #include <SPI.h>
+#include <analogWrite.h>
+
 #include <Adafruit_GFX.h>
 #include <Fonts/Org_01.h>
-#include <analogWrite.h>
+
 #include <TML_ErriezRotaryFullStep.h>
 
+
 #include "Configuration_Settings.h" // load settings
-#include "BT_Bitmaps.h"
+#include "Bitmaps.h"
 
 #include "BluetoothSerial.h" //https://www.electronicshub.org/esp32-bluetooth-tutorial/
 
@@ -102,30 +86,31 @@ BluetoothSerial SerialBT;    // Bluetooth Classic, not BLE
 
   --------------------------------------------
   CS     =  17             (15)
-  RST    =  15             (-1)
+  RST    =  15             (-1)(15)(19)
   DC     =  16             (2)
 
   SCLK   =  18
   MOSI   =  23
 
-  MISO   =  19   (*Touch, Not Required for Reference only!!!)
+  Touch
+  --------------------
+  MISO      = 19   (for XPT2046 touch)
+
+  TFT T_IRQ = 32
+  TFT T_CS  = 33
 
   B.LIGHT =  4             (0, 13)
   ---------------------
 
+  Rotary Encoder
+  ---------------------
 
-  Mode Button= 0            (0,17)
-  ---------------------
-  i2c
-  ---------------------
-  SCL = 22  (*Not Required for Reference only!!!)
-  SDA = 21  (*Not Required for Reference only!!!)
+  EncoderA = 14           (14,2,4)
+  EncoderB = 27           (27,15,16)
 
-  (Lolin32 Lite)
-  SCL = 23  (*Not Required for Reference only!!!)
-  SDA = 19  (*Not Required for Reference only!!!)
+  EncButton= 0            (0,17)
   ---------------------
-  ---------------------
+
 
   Neopixel / LED's
   ---------------------
@@ -135,6 +120,18 @@ BluetoothSerial SerialBT;    // Bluetooth Classic, not BLE
   Battery Monitor   Voltage divider (GND ---[100K]--- (Pin34 ADC) ----[100k]--- BATT+) 3.2v to 4.2v Range
   --------------------
   Battery Monitor = 34
+
+
+    i2c
+  ---------------------
+  (Lolin D32)
+  SCL = 22  (*Not Required for Reference only!!!)
+  SDA = 21  (*Not Required for Reference only!!!)
+
+  (Lolin32 Lite)
+  SCL = 23  (*Not Required for Reference only!!!)
+  SDA = 19  (*Not Required for Reference only!!!)
+  ---------------------
   ==========================================================================================================
 */
 
@@ -143,8 +140,10 @@ BluetoothSerial SerialBT;    // Bluetooth Classic, not BLE
 /* Battery Monitor Settings*/
 #include <Pangodream_18650_CL.h> // Copyright (c) 2019 Pangodream
 
-#define ADC_PIN 34        //!< ADC pin used, default is GPIO34 - ADC1_6 Voltage divider (2* 100K)
-#define CONV_FACTOR 1.8 //!< Convertion factor to translate analog units to volts
+#define ADC_PIN 34        //!< ADC pin used, default is GPIO34 - ADC1_6 Voltage divider (2* 10K)
+//#define CONV_FACTOR 1.8 //!< Conversion factor to translate analog units to volts
+#define CONV_FACTOR 1.73 //!< Conversion factor to translate analog units to volts
+
 #define READS 20
 Pangodream_18650_CL BL(ADC_PIN, CONV_FACTOR, READS);
 
@@ -153,18 +152,18 @@ Pangodream_18650_CL BL(ADC_PIN, CONV_FACTOR, READS);
 //---------------------------------------------------------------------------------------
 #include <Adafruit_NeoPixel.h>
 #define NEOPIN      2
-//#define NUM_PIXELS  16 // moved to CFG
+#define NUM_PIXELS  16
 Adafruit_NeoPixel pixels(NUM_PIXELS, NEOPIN, NEO_GRB + NEO_KHZ800);
 
 /* Pre-define Hex NeoPixel colours,  eg. pixels.setPixelColor(0, BLUE); https://htmlcolorcodes.com/color-names/ */
-#define neo_BLUE       0x0000FF
-#define neo_GREEN      0x008000
-#define neo_RED        0xFF0000
-#define neo_ORANGE     0xFFA500
-#define neo_DARKORANGE 0xFF8C00
-#define neo_YELLOW     0xFFFF00
-#define neo_WHITE      0xFFFFFF
-#define neo_BLACK      0x000000 // OFF
+#define BLUE       0x0000FF
+#define GREEN      0x008000
+#define RED        0xFF0000
+#define ORANGE     0xFFA500
+#define DARKORANGE 0xFF8C00
+#define YELLOW     0xFFFF00
+#define WHITE      0xFFFFFF
+#define BLACK      0x000000 // OFF
 
 /*onboard BUILD in LED for RX*/
 #define TX_LEDPin 5
@@ -174,23 +173,43 @@ Adafruit_NeoPixel pixels(NUM_PIXELS, NEOPIN, NEO_GRB + NEO_KHZ800);
 /* ILI9321 TFT setup */
 #include <Adafruit_ILI9341.h>  // v1.5.6 Adafruit Standard
 
-/* ESP32 SPi Hardware only for speed*/
+/*  SPi Hardware only for speed*/
 #define TFT_CS     17
 #define TFT_DC     16
-#define TFT_RST    15
+#define TFT_RST    15  // Moved from 19
 
 /* These pins do not have to be defined as they are hardware pins */
-//Connect TFT_SCLK to pin   18
-//Connect TFT_MOSI to pin   23
-
+// Connect TFT_SCLK to pin   18
+// Connect TFT_MOSI to pin   23
+// Connect TFT_MISO to pin   19
 Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC, TFT_RST); // Use hardware SPI
 
+#ifdef  touchScreen
+
+/* XPT2046 touch_Modes*/
+
+#include <XPT2046_Touchscreen.h> /* https://github.com/PaulStoffregen/XPT2046_Touchscreen */
+
+// Connect TFT_MISO to pin 19
+#define TOUCH_IRQ_PIN  32 // 32 T_IRQ Touch Screen Interupt pin)
+#define TOUCH_CS_PIN   33 // 33 T_CS  Touch Screen select
+
+//XPT2046_Touchscreen touch(TOUCH_CS_PIN);  // Param 2 - NULL - No interrupts
+//XPT2046_Touchscreen touch(TOUCH_CS_PIN, 255);  // Param 2 - 255 - No interrupts
+XPT2046_Touchscreen touch( TOUCH_CS_PIN, TOUCH_IRQ_PIN ); // Param 2 - Touch IRQ Pin - interrupt enabled polling
+int touch_Button_counter = 0;
+#endif
 //-----------------------------------------------------------------------------
 
+/* Rotary Encoder*/
+#define encoderOutA 27 // CLK
+#define encoderOutB 14 // DT
+
+RotaryFullStep rotary(encoderOutA, encoderOutB);
 
 /* Encoder Button pin*/
-int mode_Button     = 0;
-int display_Button_counter = 0;
+int encoder_Button     = 0;
+int enc_Button_counter = 0;
 
 /* Screen TFT backlight Pin */
 int TFT_backlight_PIN = 4;
@@ -245,82 +264,47 @@ boolean stringComplete = false;
 #define ILI9341_MAROON      0x7800
 #define ILI9341_PURPLE      0x780F
 #define ILI9341_OLIVE       0x7BE0
-
-//------------------------- CRT Style Colour Profiles ----------------------
-
-
-#ifdef  RETRO_MONO
-#define ILI9341_YELLOW      0xFFFF //ILI9341_WHITE
-#define ILI9341_WHITE       0xFFFF //ILI9341_WHITE
-#define ILI9341_BLUE        0xA510 //ILI9341_SILVER 
-#define ILI9341_GREEN       0x7BEF //ILI9341_GREY 
-#define ILI9341_RED         0xC618 //ILI9341_LIGHT_GREY
-//--
-#define ILI9341_SILVER      0xA510 //ILI9341_SILVER
-#define ILI9341_GREY        0x7BEF //ILI9341_GREY 
-#define ILI9341_LIGHT_GREY  0xC618 //ILI9341_LIGHT_GREY
-#endif
-
-
-#ifdef  RETRO_AMBER
-#define ILI9341_YELLOW      0xFFE0 //ILI9341_YELLOW
-#define ILI9341_WHITE       0xFFE0 //ILI9341_YELLOW
-#define ILI9341_BLUE        0xA508 //ILI9341_GOLD
-#define ILI9341_GREEN       0xA508 //ILI9341_GOLD
-#define ILI9341_RED         0xA508 //ILI9341_GOLD
-//--
-#define ILI9341_SILVER      0xFFE0 //ILI9341_YELLOW
-#define ILI9341_GREY        0xA508 //ILI9341_GOLD
-#define ILI9341_LIGHT_GREY  0xA508 //ILI9341_GOLD
-#endif
-
-
-#ifdef  RETRO_GREEN
-#define ILI9341_YELLOW      0x07E0 //ILI9341_GREEN
-#define ILI9341_WHITE       0x07E0 //ILI9341_GREEN
-#define ILI9341_BLUE        0x7BE0 //ILI9341_OLIVE
-#define ILI9341_GREEN       0x7BE0 //ILI9341_OLIVE
-#define ILI9341_RED         0x7BE0 //ILI9341_OLIVE
-//--
-#define ILI9341_SILVER      0x07E0 //ILI9341_GREEN
-#define ILI9341_GREY        0x7BE0 //ILI9341_OLIVE
-#define ILI9341_LIGHT_GREY  0x7BE0 //ILI9341_OLIVE
-#endif
-
-
 //--------------------------------
 
-
 void setup() {
+
+#ifdef  touchScreen
+  touch.begin();
+#endif
+
+#ifdef enable_DualSerialEvent
+  SerialBT.begin(device_BT); //Bluetooth device name
+#endif
 
 
 #ifdef enable_BT
   //btStart();
   SerialBT.begin(device_BT); //Bluetooth device name
 #else //USB
-
-  Serial.begin(baudRate);  //  USB Serial Baud Rate
+  //btStop();      // Turn off BT Radio
+  //SerialBT.end(); // Turn off BT Radio
+  Serial.begin(baud);  //  USB Serial Baud Rate
 #endif
 
-  inputString.reserve(220); // String Buffer
+  inputString.reserve(200); // String Buffer
 
-
+#ifdef Encoder_PWM2
+  // Initialize pin change interrupt on both rotary encoder pins
+  attachInterrupt(digitalPinToInterrupt(encoderOutA), rotaryInterrupt_PWM2, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(encoderOutB), rotaryInterrupt_PWM2, CHANGE);
+#endif
 
   /* Set up the NeoPixel*/
   pixels.begin();    // This initializes the NeoPixel library.
-  pixels.setBrightness(NeoBrightness); // Atmel Global Brightness
+  pixels.setBrightness(NeoBrightness); // Atmel Global Brightness (does not work for STM32!!!!)
   pixels.show(); // Turn off all Pixels
 
   /* Set up PINs*/
+  pinMode(encoder_Button, INPUT_PULLUP);
 
-  pinMode(mode_Button, INPUT_PULLUP);
 
-#ifdef fixedBacklight
-  pinMode(TFT_backlight_PIN, OUTPUT); // declare backlight pin to be an output:
-#else
   // Set resolution for a specific pin
   analogWriteResolution(TFT_backlight_PIN, 12); //ESP32 only
-#endif
 
 #ifdef enableTX_LED
   pinMode(TX_LEDPin, OUTPUT); //  Builtin LED /  HIGH(OFF) LOW (ON)
@@ -350,7 +334,9 @@ void setup() {
 void loop() {
 
 
-
+#ifdef Encoder_PWM2
+  void rotaryInterrupt_PWM();
+#endif
 
 #ifdef enableTX_LED
   /*ESP Activity LED */
@@ -358,8 +344,13 @@ void loop() {
 #endif
   //-----------------------------
 
-  /*Mode Button, moved to its own tab*/
-  button_Modes();
+// disable encoder_Modes(button) if touchScreen is enabled
+#ifdef  touchScreen
+  touch_Modes();
+#else
+  /*Encoder Mode Button, moved to its own tab*/
+  encoder_Modes();
+#endif
 
 }
 
@@ -462,13 +453,18 @@ void activityChecker() {
 
   if (!activeConn) {
 
+    /* Turn off display when there is no activity, */
+    backlightOFF ();
 
+    //if (invertedStatus)
+
+    //Turn off NeoPixel when there is no activity
+    allNeoPixelsOff();
     /* Set Default Adafruit GRFX Font*/
     tft.setFont();
 
     tft.fillScreen(ILI9341_BLACK);
-
-    tft.setRotation(2);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
+    tft.setRotation(0);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
     tft.drawRoundRect  (0, 0  , 240, 320, 8,    ILI9341_RED);
     tft.setTextColor(ILI9341_RED);
     tft.drawBitmap(82, 80, WaitingDataBMP2_90, 76, 154, ILI9341_RED);
@@ -477,32 +473,20 @@ void activityChecker() {
 
     delay(2000);
 
-    /* Clear Screen, Turn Off Backlight & Neopixels when there is no activity, */
-
+    //Turn off display when there is no activity
     //tft.invertDisplay(0);
-    backlightOFF ();
-    allNeoPixelsOff();
-    tft.fillScreen(ILI9341_BLACK);
+    displayDraw = 0;
 
+    /* Clear Screen & Turn Off Backlight, */
+    tft.fillScreen(ILI9341_BLACK);
+    backlightOFF ();
     displayDraw = 0;
 
   }
 
 }
 
-
-
 //----------------------------- TFT Backlight  -------------------------------
-#ifdef fixedBacklight //
-void backlightON () {
-  digitalWrite(TFT_backlight_PIN, HIGH);
-
-}
-void backlightOFF () {
-
-  digitalWrite(TFT_backlight_PIN, LOW);
-}
-#else
 
 void backlightON () {
   analogWrite(TFT_backlight_PIN, brightness_count); // TFT turn on backlight
@@ -514,7 +498,6 @@ void backlightOFF () {
 
 }
 
-#endif
 //----------------------------- Splash Screens --------------------------------
 
 void splashScreen() {
@@ -522,21 +505,31 @@ void splashScreen() {
   /* Initial Boot Screen, */
 
   allNeoPixelsOff();
-
   tft.setRotation(0);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
 
   tft.setFont(&Org_01);
   tft.fillScreen(ILI9341_BLACK);
+
   tft.drawRoundRect  (0, 0  , 240, 320, 8,    ILI9341_RED);
 
-#ifdef splashScreenLS // Quick landscape hack job, also in FeatureSet
-  tft.setRotation(1);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
-#endif
-
+  //tft.drawBitmap(84, 56, JustGnatBMP, 64, 64, ILI9341_YELLOW);
 
   tft.drawBitmap(44, 20, HSM_BG_BMP,  142, 128, ILI9341_WHITE);
   tft.drawBitmap(44, 20, HSM_BG2_BMP, 142, 128, ILI9341_RED);
   tft.drawBitmap(44, 20, HSM_BMP,     142, 128, ILI9341_GREY);
+
+#ifdef batteryMonitor
+  // Battery Level Indicator on Boot Screen
+  tft.drawBitmap(170, 10, BATTERY_BMP, 60, 20, ILI9341_WHITE);
+  tft.setTextSize(2);
+  tft.setCursor(178, 23);
+  tft.setTextColor(ILI9341_BLACK);
+  tft.print(BL.getBatteryVolts()); tft.print("v");
+#endif
+
+  tft.setCursor(20, 20);
+  tft.setTextColor(ILI9341_WHITE);
+  tft.print(baud);//tft.println(" bits/s");
 
   tft.setTextSize(3);
   tft.setCursor(86, 140);
@@ -557,76 +550,19 @@ void splashScreen() {
   tft.print("tallmanlabs.com");
 
 
-#ifdef batteryMonitor
-  // Battery Level Indicator on Boot Screen
-  //-------------------------------------------------------------
-  if (BL.getBatteryVolts() <= 3.4 ) {
-
-    tft.drawBitmap(170, 10, BATTERY_BMP, 60, 20, ILI9341_RED);
-    tft.setTextSize(2);
-    tft.setCursor(178, 23);
-    tft.setTextColor(ILI9341_BLACK);
-    tft.print(BL.getBatteryVolts()); tft.print("v");
-
-  } else {
-
-    //-------------------------------------------------------------
-
-    tft.drawBitmap(170, 10, BATTERY_BMP, 60, 20, ILI9341_GREEN);
-    tft.setTextSize(2);
-    tft.setCursor(178, 23);
-    tft.setTextColor(ILI9341_BLACK);
-    tft.print(BL.getBatteryVolts()); tft.print("v");
-  }
-
-#endif
-
-#ifdef splashScreenLS
-
-  /*  Baud Rate */
-  tft.setFont(); // Set Default Adafruit GRFX Font
-  tft.setTextColor(ILI9341_WHITE);
-  tft.setTextSize(1);
-  tft.setCursor(140 - 130, 12);
-  tft.print("Baud: ");
-  tft.print (baudRate);
-  tft.print(" bps ");
 
   /* Set version */
   tft.setFont(); // Set Default Adafruit GRFX Font
   tft.setTextColor(ILI9341_WHITE);
   tft.setTextSize(1);
-  tft.setCursor(140 - 130, 3);
+  tft.setCursor(110, 290);
   tft.print("TFT: v");
   tft.print (CODE_VERS);
 
-#else
-
-  /*  Baud Rate */
-  tft.setFont(); // Set Default Adafruit GRFX Font
   tft.setTextColor(ILI9341_WHITE);
-  tft.setTextSize(1);
-  tft.setCursor(110, 288);
-  tft.print("Baud: ");
-  tft.print (baudRate);
-  tft.print(" bps ");
-
-  /* Set version */
-  tft.setFont(); // Set Default Adafruit GRFX Font
-  tft.setTextColor(ILI9341_WHITE);
-  tft.setTextSize(1);
-  tft.setCursor(110, 300);
-  tft.print("TFT: v");
-  tft.print (CODE_VERS);
-
-#endif
-
-  //-------------------------------------------------------------------
-  //tft.setTextColor(ILI9341_WHITE);
   tft.setFont(); // Set Default Adafruit GRFX Font
 
   //tft.setTextSize(1);
-
   //tft.setCursor(10, 305);
   //tft.setTextColor(ILI9341_WHITE);
   //tft.print("If using USB Serial? Disconnect BT!!!");
@@ -635,9 +571,9 @@ void splashScreen() {
 
   FeatureSet_Indicator2(); // Display Icons for enabled features
 
-  delay(2000);
+  delay(4000);
 
-#ifdef enable_NeopixelGauges
+#ifdef enableNeopixelGauges
 
 #ifdef enable_BT
   allNeoPixelsBLUE();
@@ -648,7 +584,6 @@ void splashScreen() {
 #endif
 
   tft.fillScreen(ILI9341_BLACK);
-  backlightOFF();// Hide the Screen while drawing
 
 #ifdef enable_BT
   tft.drawRoundRect  (0, 0  , 240, 320, 8,    ILI9341_RED);
@@ -656,38 +591,17 @@ void splashScreen() {
 
 #ifdef batteryMonitor
   // Show Battery Level Indicator on waiting for data screen
+  tft.drawBitmap(33 + 40, 280, BATTERY_BMP, 60, 20, ILI9341_GREEN);
 
-  if (BL.getBatteryVolts() <= 3.4 ) {
-    tft.drawBitmap(33 + 40, 280, BATTERY_BMP, 60, 20, ILI9341_RED);
-
-    tft.setCursor(46 + 40, 286 ); // (Left/Right, UP/Down)
-    tft.setTextSize(1);
-    tft.setTextColor(ILI9341_BLACK);
-    tft.print(BL.getBatteryVolts()); tft.print("v");
-    tft.setTextColor(ILI9341_WHITE);
-    tft.setTextSize(2);
-    tft.setCursor(100 + 40, 283 ); // (Left/Right, UP/Down)
-    tft.print(BL.getBatteryChargeLevel());
-    tft.print("% ");
-
-  } else {
-
-    tft.drawBitmap(33 + 40, 280, BATTERY_BMP, 60, 20, ILI9341_GREEN);
-
-    tft.setCursor(46 + 40, 286 ); // (Left/Right, UP/Down)
-    tft.setTextSize(1);
-    tft.setTextColor(ILI9341_BLACK);
-    tft.print(BL.getBatteryVolts()); tft.print("v");
-    tft.setTextColor(ILI9341_WHITE);
-    tft.setTextSize(2);
-    tft.setCursor(100 + 40, 283 ); // (Left/Right, UP/Down)
-    tft.print(BL.getBatteryChargeLevel());
-    tft.print("% ");
-  }
-#endif
-
-#ifdef splashScreenLS // Quick landscape hack job, also in FeatureSet
-  tft.setRotation(0);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
+  tft.setCursor(46 + 40, 286 ); // (Left/Right, UP/Down)
+  tft.setTextSize(1);
+  tft.setTextColor(ILI9341_BLACK);
+  tft.print(BL.getBatteryVolts()); tft.print("v");
+  tft.setTextColor(ILI9341_WHITE);
+  tft.setTextSize(2);
+  tft.setCursor(100 + 40, 283 ); // (Left/Right, UP/Down)
+  tft.print(BL.getBatteryChargeLevel());
+  tft.print("% ");
 #endif
 
 #else // USB
@@ -695,14 +609,11 @@ void splashScreen() {
   tft.drawBitmap(82, 62, WaitingDataBMP_USB, 76, 190, ILI9341_RED);
 #endif
 
-#ifdef enable_BT
+#ifdef enable_DualSerialEvent
   tft.drawRoundRect  (0, 0  , 240, 320, 8,    ILI9341_RED);
-  tft.drawBitmap(82, 62, WaitingDataBMP_BT,  76, 190, ILI9341_BLUE);
+  tft.drawBitmap(82, 62, WaitingDataBMP_USB, 76, 190, ILI9341_BLUE);
 #endif
 
-  backlightON();
-  delay(2000);
-  backlightOFF();// Hide the Screen while drawing
-  tft.fillScreen(ILI9341_BLACK);
+  delay(3000);
 
 }

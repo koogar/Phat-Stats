@@ -127,7 +127,7 @@ String set_GPUram = "xxxxxx"; //in GB
 /* Comment out fixedBacklight for WIO Terminal, or the screen will not turn off */
 /* Uncomment   fixedBacklight for ESP32, PWM is not yet supported */
 
-//#define fixedBacklight // enable a fixed backlight (no PWM) powered from VCC
+#define fixedBacklight // enable a fixed backlight (no PWM) powered from VCC
 
 /*Start Up PWM Brightness if using MCU Pin*/
 /* Wio Terminal LCD backlight brightness Range = 1 to 50, XIAO Range = 1 to 254 */
