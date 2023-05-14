@@ -84,16 +84,13 @@
 #include <SPI.h>
 #include <Adafruit_GFX.h>
 #include <Fonts/Org_01.h>
-#include <Adafruit_ILI9341.h>  // v1.5.6 Adafruit Standard
-#include <Adafruit_NeoPixel.h>
+
+#include "Adafruit_GC9A01A.h"
+
 #include "Configuration_Settings.h" // load settings
 #include "Z_Bitmaps.h"
 
-#ifdef Seeeduino_WIO_ATSAMD51
-//Wio Terminal LCD back light brightness
-#include "lcd_backlight.hpp"
-#include <cstdint>
-#endif
+
 
 /* Declare Prototype voids to the compiler*/
 void Display_LS      ();
@@ -111,20 +108,11 @@ void backlightOFF    ();
 
 
 /*
-  eBay Special Red PCB pinouts VCC(3.3v), GND, CS, RST, D/C, MOSI, SCK, BL, (MISO, T_CLK, T_CS, T_DIN, T_DO, T_IRQ)
 
-  ILI9341 SPI TFT Adafruit QT-PY / XIAO
-  --------------------------------------
 
-  CS     =  5  or D5
-  RST    =  0  or D0 or D9 on ESP32C3
-  DC     =  7  or D7
-  SCLK   =  8  or D8
-  MOSI   =  10 Or D10
-
-  B.LIGHT             = 4
+  B.LIGHT             = 6
   Screen Mode Button  = 1
-  NeoPixel            = 6
+
 
   Onboard LED's
   --------------
@@ -137,169 +125,71 @@ void backlightOFF    ();
 
   ==========================================================================================================
 
-  Seeed Studio WIO Terminal
-  -------------------------
-  (TFT)
-  CS      = LCD_SS_PIN
-  RST     = LCD_RESET
-  DC      = LCD_DC
-  SCLK    = LCD_SCK_PIN
-  MOSI    = LCD_MOSI_PIN
-
-  B.LIGHT = LCD_BACKLIGHT
-  ---------------------
-
-  Buttons
-  -------
-  Screen Mode Button = WIO_5S_PRESS (WIO JoyPad Button)
-
-  LED's
-  -----
-  WIO TERMINAL  Built in LED =  13 or LED_BUILTIN
-
-  ==========================================================================================================
-
-*/
 
 
 
-#if defined(Seeeduino_XIAO_ATSAMD) ^ defined(Adafruit_QTPY_ATSAMD) ^ defined(Seeeduino_XIAO_NRF52840)
-#define NEOPIN      6
-#endif
+  Seeed Studio Round XIAO Display
+  -------------------------------
+   TFT_SCLK D8
+   TFT_MISO D9
+   TFT_MOSI D10
+   TFT_CS   D1  // Chip select control pin
+   TFT_DC   D3  // Data Command control pin
+   TFT_RST  -1  // Reset pin (could connect to RST pin)
 
-#if defined(Seeeduino_XIAO_RP2040) ^ defined(Seeeduino_XIAO_ESP32C3)
-#define NEOPIN      D6
-#endif
+   LCD_BACKLIGHT   D6  // slide dip switch slot 2 to (KE) on the back of the Seeed Round display for backlight control
 
-#if defined Seeeduino_WIO_ATSAMD51
-
-#define NEOPIN      D2 //(Grove Connector???)
-#endif
-
-
-
-
-#if defined(Seeeduino_XIAO_ATSAMD) ^ defined(Seeeduino_WIO_ATSAMD51)
-/*onboard WIO/XIAO BUILD in LED for TX*/
-#define TX_LEDPin   13
-#endif
-
-#ifdef Seeeduino_XIAO_RP2040
-/*onboard XIAO BUILD in LED for TX*/
-#define TX_LEDPin   25
-#endif
-
-#ifdef Adafruit_QTPY_ATSAMD
-/*onboard QT-PY NeoPixel for TX*/
-#define TX_NeoPin   11  //
-#endif
-
-#ifdef Seeeduino_XIAO_NRF52840
-/*onboard XIAO BUILD in LED for TX*/
-#define TX_LEDPin   11
-#endif
-
-#ifdef Adafruit_QTPY_ATSAMD
-Adafruit_NeoPixel TX_pixel(1, TX_NeoPin, NEO_GRB + NEO_KHZ800);
-#endif
-
-Adafruit_NeoPixel pixels(NUM_PIXELS, NEOPIN, NEO_GRB + NEO_KHZ800);
-
-
-/* Pre-define Hex NeoPixel colours,  eg. pixels.setPixelColor(0, BLUE); https://htmlcolorcodes.com/color-names/ */
-#define neo_BLUE       0x0000FF
-#define neo_GREEN      0x008000
-#define neo_RED        0xFF0000
-#define neo_ORANGE     0xFFA500
-#define neo_DARKORANGE 0xFF8C00
-#define neo_YELLOW     0xFFFF00
-#define neo_WHITE      0xFFFFFF
-#define neo_BLACK      0x000000 // OFF
+  ==========================================================================================================*/
 
 
 //----------------------------------------------------------------------------
-/* ILI9321 TFT setup */
+/* GC9A01A TFT setup */
 //----------------------------------------------------------------------------
-
 
 #if defined(Seeeduino_XIAO_RP2040) ^ defined(Seeeduino_XIAO_ESP32C3)
 
-#define TFT_CS     D5
-#define TFT_DC     D7
+#define TFT_CS     D1
+#define TFT_DC     D3
+#define TFT_RST    -1  // ESP32C3 & OLD PCB V0.93
 
-#ifdef  ALT_TFT_RST
-#define TFT_RST    D9  // ESP32C3 & OLD PCB V0.93
-#else
-#define TFT_RST    D0  // changed from previous(9) to allow for MISO connection for Touch
+//#define TFT_SCLK   D8
+//#define TFT_MOSI   D10
+
+Adafruit_GC9A01A tft(TFT_CS, TFT_DC, TFT_RST);
 #endif
 
-#define TFT_SCLK   D8
-#define TFT_MOSI   D10
-
-
-
-Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC, TFT_RST); // Use hardware SPI
-#endif
-
-//--------------------------------------------------
+//--------------
 #if defined(Seeeduino_XIAO_ATSAMD) ^ defined(Adafruit_QTPY_ATSAMD) ^ defined(Seeeduino_XIAO_NRF52840)
 
-#define TFT_CS     5
-#define TFT_DC     7
+#define TFT_CS     1
+#define TFT_DC     3
+#define TFT_RST    -1  // ESP32C3 & OLD PCB V0.93
 
-#ifdef  ALT_TFT_RST
-#define TFT_RST    9  // ESP32C3 & OLD PCB V0.93
-#else
-#define TFT_RST    0  // changed from previous(9) to allow for MISO connection for Touch
+//#define TFT_SCLK   8
+//#define TFT_MOSI   10
+
+Adafruit_GC9A01A tft(TFT_CS, TFT_DC, TFT_RST);
 #endif
 
-#define TFT_SCLK   8
-#define TFT_MOSI   10
 
-Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC, TFT_RST); // Use hardware SPI
-#endif
-
-//--------------------------------------------------
-
-#ifdef Seeeduino_WIO_ATSAMD51
-
-#define LCD_SPI SPI3
-#define TFT_CS       LCD_SS_PIN
-#define TFT_DC       LCD_DC
-#define TFT_MOSI     LCD_MOSI_PIN
-#define TFT_CLK      LCD_SCK_PIN
-#define TFT_RST      LCD_RESET
-#define TFT_MISO     LCD_MISO_PIN
-
-Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC, TFT_MOSI, TFT_CLK, TFT_RST, TFT_MISO);
-
-#endif
 //-----------------------------------------------------------------------------
 
 
-
 #if defined(Seeeduino_XIAO_RP2040) ^ defined(Seeeduino_XIAO_ESP32C3)
 /* Mode Button pin*/
-int mode_Button       = D1;
+int mode_Button       = -1;
 /* Screen TFT backlight Pin */
-int TFT_backlight_PIN = D4;
+int TFT_backlight_PIN = D6;  // slide dip switch slot 2 to (KE) on the back of the Seeed Round display for backlight control
 #endif
 
-#ifdef Seeeduino_WIO_ATSAMD51
-/*Button pin*/
-int mode_Button       = WIO_5S_PRESS; // (WIO JoyPad Button)
-/* Screen TFT backlight Pin */
-int TFT_backlight_PIN = LCD_BACKLIGHT;
-#endif
 
 #if defined(Seeeduino_XIAO_ATSAMD) ^ defined(Adafruit_QTPY_ATSAMD) ^ defined(Seeeduino_XIAO_NRF52840)
 /* Mode Button pin*/
-int mode_Button       = 1;  //Mode Button pin
+int mode_Button       = -1;  //Mode Button pin
 /* Screen TFT backlight Pin */
-int TFT_backlight_PIN = 4;
+int TFT_backlight_PIN = 6;
 #endif
 
-//int display_Button_counter = 0;
 
 //-----------------------------------------------------------------------------
 
@@ -309,17 +199,8 @@ int display_Button_counter = 0;
 /*XIAO TFT Brightness*/
 int brightness_countLast = 0;   // Store Last PWM Value
 
-#ifdef Seeeduino_WIO_ATSAMD51
-/* WioTerminal_Backlight library */
-static LCDBackLight backLight;
-#endif
-
 /* More Display stuff*/
 int displayDraw = 0;
-
-/* Display screen rotation  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)*/
-int ASPECT = 0; //Do not adjust,
-
 
 //-----------------------------------------------------------------------------
 
@@ -334,70 +215,77 @@ boolean stringComplete = false;
 
 //-----------------------------  TFT Colours  ---------------------------------
 
-#define ILI9341_TEST        0x6A4E
-#define ILI9341_BLACK       0x0000
-#define ILI9341_WHITE       0xFFFF
-#define ILI9341_GREY        0x7BEF
-#define ILI9341_LIGHT_GREY  0xC618
-#define ILI9341_GREEN       0x07E0
-#define ILI9341_LIME        0x87E0
-#define ILI9341_BLUE        0x001F
-#define ILI9341_RED         0xF800
-#define ILI9341_AQUA        0x5D1C
-#define ILI9341_YELLOW      0xFFE0
-#define ILI9341_MAGENTA     0xF81F
-#define ILI9341_CYAN        0x07FF
-#define ILI9341_DARK_CYAN   0x03EF
-#define ILI9341_ORANGE      0xFCA0
-#define ILI9341_PINK        0xF97F
-#define ILI9341_BROWN       0x8200
-#define ILI9341_VIOLET      0x9199
-#define ILI9341_SILVER      0xA510
-#define ILI9341_GOLD        0xA508
-#define ILI9341_NAVY        0x000F
-#define ILI9341_MAROON      0x7800
-#define ILI9341_PURPLE      0x780F
-#define ILI9341_OLIVE       0x7BE0
+
+#define GC9A01A_TEST        0x6A4E
+#define GC9A01A_BLACK       0x0000
+#define GC9A01A_WHITE       0xFFFF
+#define GC9A01A_GREY        0x7BEF
+#define GC9A01A_LIGHT_GREY  0xC618
+#define GC9A01A_GREEN       0x07E0
+#define GC9A01A_LIME        0x87E0
+#define GC9A01A_BLUE        0x001F
+#define GC9A01A_RED         0xF800
+#define GC9A01A_AQUA        0x5D1C
+#define GC9A01A_YELLOW      0xFFE0
+#define GC9A01A_MAGENTA     0xF81F
+#define GC9A01A_CYAN        0x07FF
+#define GC9A01A_DARK_CYAN   0x03EF
+#define GC9A01A_ORANGE      0xFCA0
+#define GC9A01A_PINK        0xF97F
+#define GC9A01A_BROWN       0x8200
+#define GC9A01A_VIOLET      0x9199
+#define GC9A01A_SILVER      0xA510
+#define GC9A01A_GOLD        0xA508
+#define GC9A01A_NAVY        0x000F
+#define GC9A01A_MAROON      0x7800
+#define GC9A01A_PURPLE      0x780F
+#define GC9A01A_OLIVE       0x7BE0
 
 
 //------------------------- CRT Style Colour Profiles ----------------------
 
 #ifdef  RETRO_MONO
-#define ILI9341_YELLOW      0xFFFF //ILI9341_WHITE
-#define ILI9341_WHITE       0xFFFF //ILI9341_WHITE
-#define ILI9341_BLUE        0xA510 //ILI9341_SILVER 
-#define ILI9341_GREEN       0x7BEF //ILI9341_GREY 
-#define ILI9341_RED         0xC618 //ILI9341_LIGHT_GREY
+
+#define GC9A01A_YELLOW      0xFFFF //GC9A01A_WHITE
+#define GC9A01A_WHITE       0xFFFF //GC9A01A_WHITE
+#define GC9A01A_BLUE        0xA510 //GC9A01A_SILVER 
+#define GC9A01A_GREEN       0x7BEF //GC9A01A_GREY 
+#define GC9A01A_RED         0xC618 //GC9A01A_LIGHT_GREY
 //--
-#define ILI9341_SILVER      0xA510 //ILI9341_SILVER
-#define ILI9341_GREY        0x7BEF //ILI9341_GREY 
-#define ILI9341_LIGHT_GREY  0xC618 //ILI9341_LIGHT_GREY
+#define GC9A01A_SILVER      0xA510 //GC9A01A_SILVER
+#define GC9A01A_GREY        0x7BEF //GC9A01A_GREY 
+#define GC9A01A_LIGHT_GREY  0xC618 //GC9A01A_LIGHT_GREY
+
 #endif
 
 
 #ifdef  RETRO_AMBER
-#define ILI9341_YELLOW      0xFFE0 //ILI9341_YELLOW
-#define ILI9341_WHITE       0xFFE0 //ILI9341_YELLOW
-#define ILI9341_BLUE        0xA508 //ILI9341_GOLD
-#define ILI9341_GREEN       0xA508 //ILI9341_GOLD
-#define ILI9341_RED         0xA508 //ILI9341_GOLD
+
+#define GC9A01A_YELLOW      0xFFE0 //GC9A01A_YELLOW
+#define GC9A01A_WHITE       0xFFE0 //GC9A01A_YELLOW
+#define GC9A01A_BLUE        0xA508 //GC9A01A_GOLD
+#define GC9A01A_GREEN       0xA508 //GC9A01A_GOLD
+#define GC9A01A_RED         0xA508 //GC9A01A_GOLD
 //--
-#define ILI9341_SILVER      0xFFE0 //ILI9341_YELLOW
-#define ILI9341_GREY        0xA508 //ILI9341_GOLD
-#define ILI9341_LIGHT_GREY  0xA508 //ILI9341_GOLD
+#define GC9A01A_SILVER      0xFFE0 //GC9A01A_YELLOW
+#define GC9A01A_GREY        0xA508 //GC9A01A_GOLD
+#define GC9A01A_LIGHT_GREY  0xA508 //GC9A01A_GOLD
+
 #endif
 
 
 #ifdef  RETRO_GREEN
-#define ILI9341_YELLOW      0x07E0 //ILI9341_GREEN
-#define ILI9341_WHITE       0x07E0 //ILI9341_GREEN
-#define ILI9341_BLUE        0x7BE0 //ILI9341_OLIVE
-#define ILI9341_GREEN       0x7BE0 //ILI9341_OLIVE
-#define ILI9341_RED         0x7BE0 //ILI9341_OLIVE
-//--
-#define ILI9341_SILVER      0x07E0 //ILI9341_GREEN
-#define ILI9341_GREY        0x7BE0 //ILI9341_OLIVE
-#define ILI9341_LIGHT_GREY  0x7BE0 //ILI9341_OLIVE
+
+#define GC9A01A_YELLOW      0x07E0 //GC9A01A_GREEN
+#define GC9A01A_WHITE       0x07E0 //GC9A01A_GREEN
+#define GC9A01A_BLUE        0x7BE0 //GC9A01A_OLIVE
+#define GC9A01A_GREEN       0x7BE0 //GC9A01A_OLIVE
+#define GC9A01A_RED         0x7BE0 //GC9A01A_OLIVE
+//--------
+#define GC9A01A_SILVER      0x07E0 //GC9A01A_GREEN
+#define GC9A01A_GREY        0x7BE0 //GC9A01A_OLIVE
+#define GC9A01A_LIGHT_GREY  0x7BE0 //GC9A01A_OLIVE
+
 #endif
 
 
@@ -410,30 +298,14 @@ void setup() {
   /* String Buffer */
   inputString.reserve(220);
 
-#ifdef Seeeduino_WIO_ATSAMD51
-  /* WioTerminal_Backlight library */
-  backLight.initialize();
-#endif
-
   /* Set up PINs */
   pinMode(mode_Button, INPUT_PULLUP);
-
   pinMode(TFT_backlight_PIN, OUTPUT); // declare backlight pin to be an output:
 
-
-  /* initializes the NeoPixel library */
-  pixels.begin();
 
 #if defined(Seeeduino_XIAO_ATSAMD) ^ defined(Seeeduino_WIO_ATSAMD51)
 #ifdef enableTX_LED
   pinMode(TX_LEDPin, OUTPUT); //  Builtin LED /  HIGH(OFF) LOW (ON)
-#endif
-#endif
-
-#ifdef Adafruit_QTPY_ATSAMD
-#ifdef enableTX_LED
-  /* initializes the NeoPixel library */
-  TX_pixel.begin();
 #endif
 #endif
 
@@ -449,12 +321,8 @@ void setup() {
 #endif
 #endif
 
-
-  pixels.setBrightness(NeoBrightness); // Atmel Global Brightness (does not work for STM32!!!!)
-  pixels.show(); // Turn off all Pixels
-
-
   backlightOFF();
+
 
   /* TFT SETUP */
 
@@ -468,8 +336,8 @@ void setup() {
   tft.setTextWrap(false); // Stop  "Loads/Temps" wrapping and corrupting static characters
 
   /* Clear Screen*/
-  tft.fillScreen(ILI9341_BLACK);
-  tft.setTextColor(ILI9341_WHITE);
+  tft.fillScreen(GC9A01A_BLACK);
+  tft.setTextColor(GC9A01A_WHITE);
 
   splashScreen();
 
@@ -503,13 +371,6 @@ void loop() {
 #endif
 #endif
 
-#ifdef Adafruit_QTPY_ATSAMD
-#ifdef enableTX_LED
-  /* Serial Activity NeoPixel */
-  TX_pixel.setPixelColor(0, 0, 0, 0 ); // turn built in NeoPixel Off
-  TX_pixel.show();
-#endif
-#endif
 
 #ifdef Seeeduino_XIAO_NRF52840
   /*Serial Activity LED */
@@ -518,26 +379,11 @@ void loop() {
 #endif
 #endif
 
-
 }
 
 //-----End of Main Loop -------
 
 
-//-----------------------------  NeoPixels  -----------------------------------
-void allNeoPixelsOff() {
-  for ( int i = 0; i < NUM_PIXELS; i++ ) {
-    pixels.setPixelColor(i, 0, 0, 0 );
-  }
-  pixels.show();
-}
-
-void allNeoPixelsRED() {
-  for ( int i = 0; i < NUM_PIXELS; i++ ) {
-    pixels.setPixelColor(i, 255, 0, 0 );
-  }
-  pixels.show();
-}
 
 //-----------------------------  Serial Events -------------------------------
 
@@ -577,12 +423,7 @@ void serialEvent() {
 #endif
 #endif
 
-#ifdef enableTX_LED
-#ifdef Adafruit_QTPY_ATSAMD
-      TX_pixel.setPixelColor(0, 10, 0, 0 ); // turn built in NeoPixel on
-      TX_pixel.show();
-#endif
-#endif
+
 
 #ifdef enableTX_LED
 #ifdef Seeeduino_XIAO_NRF52840
@@ -607,28 +448,28 @@ void activityChecker() {
 
   if (!activeConn) {
 
-    /* Set Default Adafruit GRFX Font*/
-    tft.setFont();
+ 
+    tft.fillScreen(GC9A01A_BLACK);
+    tft.drawCircle   (120,   120, 119, GC9A01A_RED);
 
-    tft.fillScreen(ILI9341_BLACK);
+    tft.setRotation(ASPECT);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
+    tft.setTextColor(GC9A01A_RED);
 
-    tft.setRotation(0);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
-    //tft.drawRoundRect  (0, 0  , 240, 320, 8,    ILI9341_RED);
-    tft.setTextColor(ILI9341_RED);
-    tft.drawBitmap(82, 80, WaitingDataBMP2_90, 76, 154, ILI9341_RED);
-    tft.setTextSize(2); tft.setCursor(40, 40); tft.println("NO COM DATA!!!");
+    tft.drawBitmap(82, 70, WaitingDataBMP2_90, 76, 154, GC9A01A_RED);
+
+    tft.setCursor(50, 44);
+    tft.setFont(&Org_01);
+    tft.setTextSize(2);
+    tft.println("NO COM DATA!!!");
 
     delay(1000);
 
     /* Clear Screen, Turn Off Backlight & Neopixels when there is no activity, */
-
-    //tft.invertDisplay(0);
     backlightOFF ();
-    allNeoPixelsOff();
-    tft.fillScreen(ILI9341_BLACK);
 
+    tft.fillScreen(GC9A01A_BLACK);
+    tft.setFont(); // Set Default Adafruit GRFX Font
     displayDraw = 0;
-
 
   }
 }
@@ -650,18 +491,9 @@ void backlightON () {
 
   analogWrite(TFT_backlight_PIN, brightness_count); // TFT turn on backlight
 
-#ifdef Seeeduino_WIO_ATSAMD51
-  /* WioTerminal_Backlight library */
-  backLight.setBrightness(brightness_count); // TFT turn on backlight, WioTerminal_Backlight library
-#endif
 }
 void backlightOFF () {
   analogWrite(TFT_backlight_PIN, 0);        // TFT turn off backlight,
-
-#ifdef Seeeduino_WIO_ATSAMD51
-  /* WioTerminal_Backlight library */
-  backLight.setBrightness(0); // TFT turn off backlight,  WioTerminal_Backlight library
-#endif
 
 }
 #endif
@@ -670,131 +502,105 @@ void backlightOFF () {
 void splashScreen() {
 
   /* Initial Boot Screen, */
-  allNeoPixelsOff();
 
-  tft.setRotation(0);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
+  backlightOFF();
+
+  tft.setRotation(ASPECT);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
 
   tft.setFont(&Org_01);
-  tft.fillScreen(ILI9341_BLACK);
-  //tft.drawRoundRect  (0, 0  , 240, 320, 8,    ILI9341_RED);
 
-#ifdef splashScreenLS // Quick landscape hack job, also in FeatureSet
-  tft.setRotation(3);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
-#endif
+  tft.fillScreen(GC9A01A_BLACK);
+  tft.drawCircle   (120,   120, 119, GC9A01A_WHITE); // bottom left corner LS
 
-  tft.drawBitmap(44, 20, HSM_BG_BMP,  142, 128, ILI9341_WHITE);
-  tft.drawBitmap(44, 20, HSM_BG2_BMP, 142, 128, ILI9341_RED);
-  tft.drawBitmap(44, 20, HSM_BMP,     142, 128, ILI9341_GREY);
+
+  tft.drawBitmap(44, 20, HSM_BG_BMP,  142, 128, GC9A01A_WHITE);
+  tft.drawBitmap(44, 20, HSM_BG2_BMP, 142, 128, GC9A01A_RED);
+  tft.drawBitmap(44, 20, HSM_BMP,     142, 128, GC9A01A_GREY);
 
   tft.setTextSize(3);
   tft.setCursor(86, 140);
-  tft.setTextColor(ILI9341_WHITE);
+  tft.setTextColor(GC9A01A_WHITE);
   tft.println("PHAT ");
   tft.setTextSize(3);
   tft.setCursor(78, 160);
   tft.println("STATS");
 
   tft.setTextSize(2);
-  tft.setCursor(22, 190);
-  tft.setTextColor(ILI9341_SILVER);
+  tft.setCursor(24, 178);
+  tft.setTextColor(GC9A01A_SILVER);
   tft.print("PC Hardware Monitor");
 
-  tft.setTextSize(3);
-  tft.setCursor(22, 219);
-  tft.setTextColor(ILI9341_RED);
+  tft.setTextSize(2);
+  tft.setCursor(56, 200);
+  tft.setTextColor(GC9A01A_RED);
   tft.print("tallmanlabs.com");
 
   //------------------------------------------------------------------
 
-#ifdef splashScreenLS
+
 
   /*  Baud Rate */
   tft.setFont(); // Set Default Adafruit GRFX Font
-  tft.setTextColor(ILI9341_WHITE);
+  tft.setTextColor(GC9A01A_WHITE);
   tft.setTextSize(1);
-  tft.setCursor(140 - 130, 12);
+  tft.setCursor(82, 220);
   tft.print("Baud: ");
   tft.print (baudRate);
   tft.print(" bps ");
 
   /* Set version */
   tft.setFont(); // Set Default Adafruit GRFX Font
-  tft.setTextColor(ILI9341_WHITE);
+  tft.setTextColor(GC9A01A_WHITE);
   tft.setTextSize(1);
-  tft.setCursor(140 - 130, 3);
+  tft.setCursor(68, 208);
   tft.print("TFT: v");
   tft.print (CODE_VERS);
 
-#else
-
-  /*  Baud Rate */
-  tft.setFont(); // Set Default Adafruit GRFX Font
-  tft.setTextColor(ILI9341_WHITE);
-  tft.setTextSize(1);
-  tft.setCursor(110, 288);
-  tft.print("Baud: ");
-  tft.print (baudRate);
-  tft.print(" bps ");
-
-  /* Set version */
-  tft.setFont(); // Set Default Adafruit GRFX Font
-  tft.setTextColor(ILI9341_WHITE);
-  tft.setTextSize(1);
-  tft.setCursor(110, 300);
-  tft.print("TFT: v");
-  tft.print (CODE_VERS);
-
-#endif
+  backlightON();
+  delay(1000);
 
   //----------------------------------------------------------------
-  tft.setTextColor(ILI9341_WHITE);
-  tft.setFont(); // Set Default Adafruit GRFX Font
 
-  backlightON();
+  backlightOFF();
+  tft.setTextColor(GC9A01A_WHITE);
+
   FeatureSet_Indicator2(); // Display Icons for enabled features
-
+  backlightON();
   delay(1000);
+
   backlightOFF();// Hide the Screen while drawing
 
-#ifdef enable_NeopixelGauges
-  allNeoPixelsRED();
-#endif
+  tft.setRotation(ASPECT);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
+  tft.fillScreen(GC9A01A_BLACK);
+  tft.drawCircle   (120,   120, 119, GC9A01A_WHITE); // bottom left corner LS
 
-  /**/
 
-#ifdef splashScreenLS // Quick landscape hack job, also in FeatureSet
-#ifdef Seeeduino_WIO_ATSAMD51
-  tft.setRotation(3);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
-  tft.fillScreen(ILI9341_BLACK);
-  //tft.drawRoundRect  (0, 0  , 240, 320, 8,    ILI9341_RED);
-  tft.drawBitmap(120, 26, WaitingDataBMP_USB, 76, 190, ILI9341_RED);
+  tft.setFont(&Org_01);
+  tft.setTextSize(2);
+  tft.setCursor(50, 54);
+  //tft.println("  Initialising ");
+  tft.println("INITIALISING ");
+  tft.drawBitmap(82, 70, WaitingDataBMP2_90, 76, 154, GC9A01A_WHITE);
+
   backlightON();
-#else
-
-  tft.setRotation(0);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
-  tft.fillScreen(ILI9341_BLACK);
-  //tft.drawRoundRect  (0, 0  , 240, 320, 8,    ILI9341_RED);
-  tft.drawBitmap(82, 62, WaitingDataBMP_USB, 76, 190, ILI9341_RED);
-  backlightON();
-#endif
-#endif
 
   delay(2000);
 
   backlightOFF();// Hide the Screen while drawing
-  tft.fillScreen(ILI9341_BLACK);
+  tft.fillScreen(GC9A01A_BLACK);
+  tft.setFont(); // Set Default Adafruit GRFX Font
 
 }
 
 
 void next_display() {
 
-  tft.fillRoundRect  (16,  25, 82,  82, 3,    ILI9341_BLACK);
+  tft.fillRoundRect  (16,  25, 82,  82, 3,    GC9A01A_BLACK);
 
-  tft.drawBitmap(18, 34, nextscreen64_BMP, 79, 64, ILI9341_RED);
-  //tft.drawBitmap(18, 34, nextscreen2_64_BMP, 79, 64, ILI9341_RED);
+  tft.drawBitmap(18, 34, nextscreen64_BMP, 79, 64, GC9A01A_RED);
+  //tft.drawBitmap(18, 34, nextscreen2_64_BMP, 79, 64, GC9A01A_RED);
   delay(500);
-  //tft.drawBitmap(18, 34, nextscreen64_BMP, 79, 64, ILI9341_BLACK);
-  //tft.drawBitmap(18, 34, nextscreen2_64_BMP, 79, 64, ILI9341_BLACK);
+  //tft.drawBitmap(18, 34, nextscreen64_BMP, 79, 64, GC9A01A_BLACK);
+  //tft.drawBitmap(18, 34, nextscreen2_64_BMP, 79, 64, GC9A01A_BLACK);
 
 }
