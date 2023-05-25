@@ -19,20 +19,21 @@
 
 //--------------------------- Uncomment your Micro Processor---------------------------------
 
-//#define Adafruit_QTPY_ATSAMD
+//#define  Adafruit_QTPY_ATSAMD
 //#define Seeeduino_XIAO_ATSAMD
-#define Seeeduino_XIAO_RP2040   // Adafruit QT PY RP2040  (untested)
+//#define Seeeduino_XIAO_RP2040   // Adafruit QT PY RP2040  (untested)
 //#define Seeeduino_XIAO_NRF52840 // Adafruit QT PY NRF52840(untested)
+//#define Seeeduino_WIO_ATSAMD51  // Seed Studio WIO Terminal
 
 
-//--------------------------- Seeeduino_XIAO_ESP32C3 Experimental!!! --------------------------------
+//--------------------------- Seeeduino_XIAO_ESP32C3/S3 Experimental!!! --------------------------------
 /* NOTE: The XIAO ESP32C3 is very problematic when uploading "in circuit" and has to be removed for programming.
   Most of the time it has to be forced into bootloader mode (Hold BOOT button down and power cycle while uploading) */
 
-/* Uncomment ALT_TFT_RST for XIAO ESP32C3 &  OLD PCB v0.93, TFT_RST is on D9 (Miso) as D0 was used for IR */
+/* Uncomment ALT_TFT_RST for XIAO ESP32C3/S3 &  OLD PCB v0.93, TFT_RST is on D9 (Miso) as D0 was used for IR */
 
-//#define Seeeduino_XIAO_ESP32C3   // Adafruit QT PY ESP32S2, QT PY ESP32S3,  QT Py ESP32 Pico (untested)
-///#define ALT_TFT_RST              // Use for XIAO_ESP32C3 or old PCB Version- TFT Reset on PIN D9
+#define Seeeduino_XIAO_ESP32c3s3   // Adafruit QT PY ESP32S2, QT PY ESP32S3,  QT Py ESP32 Pico (untested)
+//#define ALT_TFT_RST              // Use for XIAO_ESP32C3 or old PCB Version- TFT Reset on PIN D9
 
 //--------------------------- Uncomment your CPU/GPU Display  -----------------------------------
 /* Uncomment your CPU,*/
@@ -125,10 +126,12 @@ String set_GPUram = "xxxxxx"; //in GB
 /* Comment out fixedBacklight for WIO Terminal, or the screen will not turn off */
 /* Uncomment   fixedBacklight for ESP32, PWM is not yet supported */
 
-// slide dip switch slot 2 to (KE) on the back of the Seeed Round display for backlight control
-//#define fixedBacklight // enable a fixed backlight (no PWM) powered from VCC
+#define fixedBacklight // enable a fixed backlight (no PWM) powered from VCC
 
-volatile int brightness_count = 60; // Start Up PWM Brightness
+/*Start Up PWM Brightness if using MCU Pin*/
+/* Wio Terminal LCD backlight brightness Range = 1 to 50, XIAO Range = 1 to 254 */
+
+volatile int brightness_count = 100; // Start Up PWM Brightness
 
 //------------------------------- Display Activity Shutdown -----------------------------------
 
@@ -138,15 +141,23 @@ volatile int brightness_count = 60; // Start Up PWM Brightness
 /* How long the display takes to timeout due to inactive serial data from the windows application */
 #define lastActiveDelay 8000
 
+//-------------------------------- NeoPixel Modes -------------------------------------
+#define NUM_PIXELS  4 // define the number of NeoPixels used
+
+/* If  NeoBrightness = 0 Phat-Stats will start with no NeoPixels lit. Turn the Rotary Encoder to turn on the NeoPixels, */
+int NeoBrightness   = 50;           // Global start up brightness
+
+/* Uncomment only one of the below*/
+//#define enable_NeopixelGauges     // NeoPixel Phat-Stats PCB
+#define enable_Thresholdtriggers_PCB // New PCB 4x NeoPixel Rotate States,0,1,2,3  Trigger functions when CPU or GPU thresholds are met 
 
 //-------------------------------- Misco Setting -----------------------------------------
-/* Display screen rotation  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)*/
-int ASPECT = 1; //Do not adjust,
 
 //#define  RETRO_MONO    //CRT Monochrome screen
 //#define  RETRO_AMBER   //CRT Amber screen
 //#define  RETRO_GREEN   //CRT Green screen
 
+#define  splashScreenLS // quick splash screen landscape hack job, also in FeatureSet
 
 /* Debounce  Button, button mode is a bit flaky at present as it needs interrupts, Sometimes it gets caught during a screen refresh
   and does not change. WIO Terminal & ESP32 seem to like 1000ms and works just!!! ok */
@@ -154,7 +165,7 @@ int ASPECT = 1; //Do not adjust,
 int debounceButton = 150; //  Use a 0.1uf/100nf/(104) ceramic capacitor from button Pin to GND
 
 /* Enable the built in LED blinking when transmitting data, can lag the button mode*/
-//#define enableTX_LED
+#define enableTX_LED
 
 int TX_LED_Delay = 0; // TX blink delay, lags button
 

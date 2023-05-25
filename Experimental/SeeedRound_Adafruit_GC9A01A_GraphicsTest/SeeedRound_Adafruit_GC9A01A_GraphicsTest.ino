@@ -1,7 +1,23 @@
+
+
 #include "SPI.h"
 #include "Adafruit_GFX.h"
 #include "Adafruit_GC9A01A.h"
 
+/**/  
+
+//QT PY ATSAMD21,Seeeduino_XIAO_ATSAMD, Seeeduino_XIAO_NRF52840
+#define TFT_SCLK  8
+#define TFT_MISO  9
+#define TFT_MOSI  10
+#define TFT_CS    1  // Chip select control pin
+#define TFT_DC    3  // Data Command control pin
+#define TFT_BL    6
+#define TFT_RST  -1  // Reset pin (could connect to RST pin)
+
+
+/*
+//Seeeduino_XIAO_RP2040, Seeeduino_XIAO_ESP32C3/S3
 #define TFT_SCLK D8
 #define TFT_MISO D9
 #define TFT_MOSI D10
@@ -9,13 +25,13 @@
 #define TFT_DC   D3  // Data Command control pin
 #define TFT_BL   D6
 #define TFT_RST  -1  // Reset pin (could connect to RST pin)
+*/
+
+Adafruit_GC9A01A tft(TFT_CS, TFT_DC, TFT_RST); //XIAO & QT PY
+
 
 // Hardware SPI on Feather or other boards
 //Adafruit_GC9A01A tft(TFT_CS, TFT_DC);
-
-Adafruit_GC9A01A tft(TFT_CS, TFT_DC, TFT_RST);
-
-
 
 
 
@@ -23,7 +39,7 @@ void setup() {
 
   pinMode(TFT_BL, OUTPUT); // declare backlight pin to be an output:
   digitalWrite(TFT_BL, HIGH);
-
+  
   Serial.begin(9600);
   Serial.println("GC9A01A Test!");
 
@@ -108,27 +124,43 @@ unsigned long testFillScreen() {
 unsigned long testText() {
   tft.fillScreen(GC9A01A_BLACK);
   unsigned long start = micros();
-  tft.setCursor(0, 0);
+
   tft.setTextColor(GC9A01A_WHITE);  tft.setTextSize(1);
-  tft.println("Hello World!");
+  tft.setCursor(85, 20);
+  tft.print("Hello World!");
+
   tft.setTextColor(GC9A01A_YELLOW); tft.setTextSize(2);
-  tft.println(1234.56);
+  tft.setCursor(50, 40);
+  tft.print(1234.56);
+
   tft.setTextColor(GC9A01A_RED);    tft.setTextSize(3);
-  tft.println(0xDEADBEEF, HEX);
+  tft.setCursor(25, 65);
+  tft.print(0xDEADBEEF, HEX);
+
   tft.println();
   tft.setTextColor(GC9A01A_GREEN);
+  tft.setCursor(10, 100);
   tft.setTextSize(5);
-  tft.println("Groop");
+  tft.print("Groop");
+
+  tft.setCursor(10, 140);
   tft.setTextSize(2);
   tft.println("I implore thee,");
   tft.setTextSize(1);
-  tft.println("my foonting turlingdromes.");
-  tft.println("And hooptiously drangle me");
-  tft.println("with crinkly bindlewurdles,");
-  tft.println("Or I will rend thee");
-  tft.println("in the gobberwarts");
-  tft.println("with my blurglecruncheon,");
-  tft.println("see if I don't!");
+  tft.setCursor(20, 160);
+  tft.print("my foonting turlingdromes.");
+  tft.setCursor(30, 170);
+  tft.print("And hooptiously drangle me");
+  tft.setCursor(40, 180);
+  tft.print("with crinkly bindlewurdles,");
+  tft.setCursor(50, 190);
+  tft.print("Or I will rend thee");
+  tft.setCursor(60, 200);
+  tft.print("in the gobberwarts");
+  tft.setCursor(70, 210);
+  tft.print("with my blurglecruncheon,");
+  tft.setCursor(80, 220);
+  tft.print("see if I don't!");
   return micros() - start;
 }
 

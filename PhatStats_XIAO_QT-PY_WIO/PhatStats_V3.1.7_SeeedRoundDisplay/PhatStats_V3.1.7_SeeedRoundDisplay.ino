@@ -1,5 +1,5 @@
 
-#define CODE_VERS  "3.1.7.RND.ADV"  // Code version number
+#define CODE_VERS  "3.1.7.RND"  // Code version number
 
 /*
   uVolume, GNATSTATS OLED, PHATSTATS TFT PC Performance Monitor & HardwareSerialMonitor Windows Client
@@ -10,7 +10,7 @@
   ------------------------------------
   Click on File > Preference, and fill Additional Boards Manager URLs with the url below:
 
-  XIAO ATSAMD21 / WIO Terminal
+  XIAO ATSAMD21
   ----------------------------
   https://files.seeedstudio.com/arduino/package_seeeduino_boards_index.json
 
@@ -32,29 +32,17 @@
   !!!Install Arduino ATSAMD then ADD !!!
   https://adafruit.github.io/arduino-board-index/package_adafruit_index.json
 
-  WIO Terminal
-  --------------------------
-  https://files.seeedstudio.com/arduino/package_seeeduino_boards_index.json
-
 
   Libraries
   -------------
 
-  Adafruit Neopixel
-  https://github.com/adafruit/Adafruit_NeoPixel
-
   Adafruit GFX Library
   https://github.com/adafruit/Adafruit-GFX-Library
 
-  Adafruit ILI9341
-  https://github.com/adafruit/Adafruit_ILI9341
-
-  ciniml/WioTerminal_BackLight  // no need to install this library
-  https://github.com/Seeed-Studio/Seeed_Arduino_Sketchbook/tree/master/examples/WioTerminal_BackLight
+  Adafruit GC9A01A
+  https://github.com/PaintYourDragon/Adafruit_GC9A01A
 
 
-  Hookup Guide
-  https://runawaybrainz.blogspot.com/2021/03/phat-stats-ili9341-tft-display-hook-up.html
 
   Library Working Version Checker 18/04/2023
   (some libraries may not be used in this sketch)
@@ -65,14 +53,8 @@
   ESP32_AnalogWrite     v0.2    (Current 04/2023)
   Adafruit BusIO        v1.14.0 (Current 04/2023
   Adafruit_GFX          v1.11.5 (Current 04/2023)
-  Adafruit_NeoPixel     v1.11.0 (Current 04/2023)
-  Adafruit ILI9341      v1.5.12 (Current 04/2023)
-  Adafruit_SH1106_BADZZ v1.1.0  (32u4 only Current 04/2023)
-  Adafruit SH110X       v2.1.8  (Current 04/2023)
-  Adafruit SD1306       v2.5.7  (Current 04/2023)
-  HID-Project           v2.8.4  (Current 04/2023)
-  IRremote              v4.1.2  (Current 04/2023)
-  TML_ErriezRotaryFullStep      (Current 04/2023)
+  Adafruit GC9A01A              (Current 04/2023)
+
 
   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                SEE CONFIGURATION TAB FIRST, FOR QUICK SETTINGS!!!!
@@ -99,7 +81,6 @@ void Display_LS_180  ();
 void Display_Port_180();
 void Display_CircleGauge    ();
 void Display_CircleGauge_180();
-void button_Modes    ();
 void serialEvent     ();
 void activityChecker ();
 void splashScreen    ();
@@ -108,11 +89,6 @@ void backlightOFF    ();
 
 
 /*
-
-
-  B.LIGHT             = 6
-  Screen Mode Button  = 1
-
 
   Onboard LED's
   --------------
@@ -125,8 +101,9 @@ void backlightOFF    ();
 
   ==========================================================================================================
 
-
-
+  This version is specifically for the "Seeed Studio Round Display for XIAO"
+  https://wiki.seeedstudio.com/get_start_round_display/
+  https://www.seeedstudio.com/Seeed-Studio-Round-Display-for-XIAO-p-5638.html
 
   Seeed Studio Round XIAO Display
   -------------------------------
@@ -139,18 +116,19 @@ void backlightOFF    ();
 
    LCD_BACKLIGHT   D6  // slide dip switch slot 2 to (KE) on the back of the Seeed Round display for backlight control
 
-  ==========================================================================================================*/
+  ==========================================================================================================
+*/
 
 
 //----------------------------------------------------------------------------
 /* GC9A01A TFT setup */
 //----------------------------------------------------------------------------
 
-#if defined(Seeeduino_XIAO_RP2040) ^ defined(Seeeduino_XIAO_ESP32C3)
+#if defined(Seeeduino_XIAO_RP2040) ^ defined(Seeeduino_XIAO_ESP32C3S3)
 
 #define TFT_CS     D1
 #define TFT_DC     D3
-#define TFT_RST    -1  // ESP32C3 & OLD PCB V0.93
+#define TFT_RST    -1
 
 //#define TFT_SCLK   D8
 //#define TFT_MOSI   D10
@@ -163,7 +141,7 @@ Adafruit_GC9A01A tft(TFT_CS, TFT_DC, TFT_RST);
 
 #define TFT_CS     1
 #define TFT_DC     3
-#define TFT_RST    -1  // ESP32C3 & OLD PCB V0.93
+#define TFT_RST   -1
 
 //#define TFT_SCLK   8
 //#define TFT_MOSI   10
@@ -175,26 +153,21 @@ Adafruit_GC9A01A tft(TFT_CS, TFT_DC, TFT_RST);
 //-----------------------------------------------------------------------------
 
 
-#if defined(Seeeduino_XIAO_RP2040) ^ defined(Seeeduino_XIAO_ESP32C3)
-/* Mode Button pin*/
-int mode_Button       = -1;
+#if defined(Seeeduino_XIAO_RP2040) ^ defined(Seeeduino_XIAO_ESP32C3S3)
+
 /* Screen TFT backlight Pin */
 int TFT_backlight_PIN = D6;  // slide dip switch slot 2 to (KE) on the back of the Seeed Round display for backlight control
 #endif
 
 
 #if defined(Seeeduino_XIAO_ATSAMD) ^ defined(Adafruit_QTPY_ATSAMD) ^ defined(Seeeduino_XIAO_NRF52840)
-/* Mode Button pin*/
-int mode_Button       = -1;  //Mode Button pin
+
 /* Screen TFT backlight Pin */
 int TFT_backlight_PIN = 6;
 #endif
 
 
 //-----------------------------------------------------------------------------
-
-/* Button Counter */
-int display_Button_counter = 0;
 
 /*XIAO TFT Brightness*/
 int brightness_countLast = 0;   // Store Last PWM Value
@@ -295,11 +268,11 @@ boolean stringComplete = false;
 void setup() {
 
   Serial.begin(baudRate);
+
   /* String Buffer */
   inputString.reserve(220);
 
   /* Set up PINs */
-  pinMode(mode_Button, INPUT_PULLUP);
   pinMode(TFT_backlight_PIN, OUTPUT); // declare backlight pin to be an output:
 
 
@@ -354,8 +327,7 @@ void loop() {
   activityChecker();      // Turn off screen when no activity
 #endif
 
-  /* Mode Button, moved to its own tab*/
-  button_Modes();
+  Display_GC9A01_Port_R0();
 
 #if defined(Seeeduino_XIAO_ATSAMD) ^ defined(Seeeduino_WIO_ATSAMD51)
 #ifdef enableTX_LED
@@ -448,7 +420,7 @@ void activityChecker() {
 
   if (!activeConn) {
 
- 
+
     tft.fillScreen(GC9A01A_BLACK);
     tft.drawCircle   (120,   120, 119, GC9A01A_RED);
 
