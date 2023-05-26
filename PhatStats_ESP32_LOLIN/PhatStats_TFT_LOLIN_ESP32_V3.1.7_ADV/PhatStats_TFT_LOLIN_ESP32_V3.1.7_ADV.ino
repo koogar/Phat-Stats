@@ -1,5 +1,5 @@
 
-#define CODE_VERS  "3.1.6.BT.ADV"  // Code version number
+#define CODE_VERS  "3.1.7.BT.ADV"  // Code version number
 
 /*
   uVolume, GNATSTATS OLED, PHATSTATS TFT PC Performance Monitor & HardwareSerialMonitor Windows Client
@@ -76,14 +76,17 @@
 #include <SPI.h>
 #include <Adafruit_GFX.h>
 #include <Fonts/Org_01.h>
-#include <analogWrite.h>
 #include <TML_ErriezRotaryFullStep.h>
-
 #include "Configuration_Settings.h" // load settings
 #include "BT_Bitmaps.h"
-
 #include "BluetoothSerial.h" //https://www.electronicshub.org/esp32-bluetooth-tutorial/
 
+#ifdef fixedBacklight
+// ignore analogWrite, espressif v2.08+ = ESP32_AnalogWrite compile error, use fixedBacklight option
+#else
+// use analogWrite, only for espressif v2.0.5 
+#include <analogWrite.h>
+#endif 
 
 #if !defined(CONFIG_BT_ENABLED) || !defined(CONFIG_BLUEDROID_ENABLED)
 #error Bluetooth is not enabled!
@@ -348,8 +351,6 @@ void setup() {
 /* End of Set up */
 
 void loop() {
-
-
 
 
 #ifdef enableTX_LED

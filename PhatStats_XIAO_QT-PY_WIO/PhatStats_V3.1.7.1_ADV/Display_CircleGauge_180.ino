@@ -1,5 +1,6 @@
 
-/* Version 3.2 Optimised for ILI9341 320 x 240 in landscape, Do not turn on the screen till there is activity and the Screen is drawn*/
+/* Version 3.3 Optimised for ILI9341 320 x 240 in landscape, 
+Do not turn on the screen till there is activity and the Screen is drawn, #ifdef CPU_OverClocked --->>>> move delay if not enabled */
 
 #define enableSideLevelGauges // Phat-Tacho CircleGauge only
 
@@ -599,8 +600,7 @@ void CustomTriggerCPU_BOOST_Circle_180(int cpuClockString ) {
   float CPUboostfactor = cpuClockString;
 
 
-  delay(350); // Small delay so Turbo frequency gains stay on screen longer
-  //tft.drawRoundRect  (106, 90, 88, 22, 4, ILI9341_WHITE); //
+
 
   if (CPUboostfactor >  CPU_BOOST) {  // i5-9600k boost is 3700Mhz to 4700Mhz
     //Do Something!!!
@@ -610,6 +610,9 @@ void CustomTriggerCPU_BOOST_Circle_180(int cpuClockString ) {
     //Do Nothing!!!
 
 #else
+
+    delay(350); // Small delay so Turbo frequency gains stay on screen longer
+
     /* CPU Turbo Clock, */
     //                 (   X,    Y,   Length, Height, Radius,   Colour    )
     tft.fillRoundRect  (  90 - X_Offset,    35 + Y_Offset,    93,      28,     3,   ILI9341_WHITE); //

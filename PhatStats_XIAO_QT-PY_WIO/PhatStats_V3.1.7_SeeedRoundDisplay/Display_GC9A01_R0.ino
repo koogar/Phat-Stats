@@ -1,4 +1,6 @@
-/* Version 3.2 Optimised for GC9A01 240 x 240 in landscape, Do not turn on the screen till there is activity and the Screen is drawn*/
+
+/* Version 3.3 Optimised for GC9A01 240 x 240 , 
+Do not turn on the screen till there is activity and the Screen is drawn, #ifdef CPU_OverClocked --->>>> move delay if not enabled */
 
 
 

@@ -1,0 +1,5 @@
+#define CPU_OverClocked
+-----------------------
+to do
+
+#ifdef CPU_OverClocked --->>>> move delay if not enabled

@@ -10,7 +10,8 @@
               |_|            |___/                                        |_|
 */
 
-/* Version 3.2 Optimised for ILI9341 320 x 240 in landscape, Do not turn on the screen till there is activity and the Screen is drawn*/
+/* Version 3.3 Optimised for ILI9341 320 x 240 in landscape, 
+Do not turn on the screen till there is activity and the Screen is drawn, #ifdef CPU_OverClocked --->>>> move delay if not enabled */
 
 
 void Display_LS_180 () {
@@ -817,22 +818,22 @@ void CustomTriggerGPU_ThrottleIndicator_LSNB_Flipped(int gpuDegree ) {
 void CustomTriggerCPU_BOOST_LSNB_Flipped(int cpuClockString ) {
   float CPUboostfactor = cpuClockString;
 
-  delay(350); // Small delay so Turbo frequency gains stay on screen longer
-  tft.drawRoundRect  (106, 90, 88, 22, 4, ILI9341_WHITE); //
 
   if (CPUboostfactor >  CPU_BOOST) {  // i5-9600k boost is 3700Mhz to 4700Mhz
     //Do Something!!!
 
 #ifdef CPU_OverClocked //Do Nothing!!
-
-    tft.fillRoundRect  (107, 91, 86, 20, 4, ILI9341_BLACK);   //
-    tft.setTextSize(1);
-    tft.setCursor(118, 97);
-    tft.setTextColor(ILI9341_WHITE);
-    tft.println("OVERCLOCKED"); // CPU Turbo Clock
+    //delay(350); // Small delay so Turbo frequency gains stay on screen longer
+    //tft.drawRoundRect  (106, 90, 88, 22, 4, ILI9341_WHITE); //
+    //tft.fillRoundRect  (107, 91, 86, 20, 4, ILI9341_BLACK);   //
+    //tft.setTextSize(1);
+    //tft.setCursor(118, 97);
+    //tft.setTextColor(ILI9341_WHITE);
+    //tft.println("OVERCLOCKED"); // CPU Turbo Clock
 
 #else
-
+    delay(350); // Small delay so Turbo frequency gains stay on screen longer
+    tft.drawRoundRect  (106, 90, 88, 22, 4, ILI9341_WHITE); //
     /* CPU Turbo Clock, */
     tft.fillRoundRect  (107, 91, 86, 20, 4, ILI9341_GREEN);   //
     tft.setTextSize(2);

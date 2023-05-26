@@ -1,20 +1,21 @@
 
-/* Version 3.2 Optimised for ILI9341 320 x 240 in landscape, Do not turn on the screen till there is activity and the Screen is drawn*/
-
-#define enableSideLevelGauges // Phat-Tacho CircleGauge only
-
-void Display_CircleGauge() {  // Landscape only
+/* Version 3.3 Optimised for GC9A01 240 x 240 , 
+Do not turn on the screen till there is activity and the Screen is drawn, #ifdef CPU_OverClocked --->>>> move delay if not enabled */
 
 
+
+void Display_GC9A01_Port() {  // Round 240x240 portrait
+
+  //#define enableSideLevelGauges // Phat-Tacho CircleGauge only
 
   //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
   /*Optimised for 1.3" SPI Colour Round LCD ST7789V (240x240),
     Same ST7789 library as the square version*/
 
-  /*ST7789 240x240 Portrait & Landscape offsets,*/
-  //#define X_Offset  40 // - Portrait
-  //#define Y_Offset  0  // + Portrait
+  /*ST7789 (0x,0y) 240x240 Portrait & Landscape offsets,*/
+#define X_Offset  17 // - Portrait
+#define Y_Offset  0  // + Portrait
 
   /*ILI9341 240x320 Portrait offsets(centre),*/
   //#define X_Offset  40 // - Portrait
@@ -29,8 +30,8 @@ void Display_CircleGauge() {  // Landscape only
   //#define Y_Offset 63 // + Portrait
 
   /*ILI9341 240x320 Landscape offsets(Middle of PCB 86mm),*/
-#define X_Offset 0// - Landscape
-#define Y_Offset 0 // + Landscape
+  //// #define X_Offset 0// - Landscape
+  //// #define Y_Offset 0 // + Landscape
 
   //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -62,11 +63,12 @@ void Display_CircleGauge() {  // Landscape only
 
     //--------------------------------------- Display Background ----------------------------------------------------
 #ifdef  touchScreen
-    touch.setRotation(3);
+    touch.setRotation(0);
 #endif
 
-    tft.setRotation(3);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
 
+    tft.setRotation(0);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
+    tft.drawRoundRect     (0, 0, 240, 240, 2, ILI9341_RED);  // 240x240 outline guide
 
     //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -529,13 +531,13 @@ void Display_CircleGauge() {  // Landscape only
     //--------------------------Trigger an event when CPU or GPU threshold is met ---------------------------------
 
 #ifdef enable_BoostIndicator
-    CustomTriggerCPU_BOOST_Circle( cpuClockString.toInt     ()); // CPU Frequency
-    CustomTriggerGPU_BOOST_Circle( gpuCoreClockString.toInt ()); // GPU Frequency
+    CustomTriggerCPU_BOOST_Round( cpuClockString.toInt     ()); // CPU Frequency
+    CustomTriggerGPU_BOOST_Round( gpuCoreClockString.toInt ()); // GPU Frequency
 #endif
 
 #ifdef enable_ThrottleIndicator
-    CustomTriggerCPU_ThrottleIndicator_Circle( cpuString1.toInt() ); //  CPU TJMax/Throttle Incicator BMP
-    CustomTriggerGPU_ThrottleIndicator_Circle( gpuString1.toInt() ); //  GPU TJMax/Throttle Incicator BMP
+    CustomTriggerCPU_ThrottleIndicator_Round( cpuString1.toInt() ); //  CPU TJMax/Throttle Incicator BMP
+    CustomTriggerGPU_ThrottleIndicator_Round( gpuString1.toInt() ); //  GPU TJMax/Throttle Incicator BMP
 #endif
 
 
@@ -595,12 +597,9 @@ void Display_CircleGauge() {  // Landscape only
 
 // -------------------  CPU Turbo Boost Indicator Event Portrait --------------------
 
-void CustomTriggerCPU_BOOST_Circle(int cpuClockString ) {
+void CustomTriggerCPU_BOOST_Round(int cpuClockString ) {
   float CPUboostfactor = cpuClockString;
 
-
-  delay(350); // Small delay so Turbo frequency gains stay on screen longer
-  //tft.drawRoundRect  (106, 90, 88, 22, 4, ILI9341_WHITE); //
 
   if (CPUboostfactor >  CPU_BOOST) {  // i5-9600k boost is 3700Mhz to 4700Mhz
     //Do Something!!!
@@ -610,6 +609,9 @@ void CustomTriggerCPU_BOOST_Circle(int cpuClockString ) {
     //Do Nothing!!!
 
 #else
+    delay(350); // Small delay so Turbo frequency gains stay on screen longer
+    //tft.drawRoundRect  (106, 90, 88, 22, 4, ILI9341_WHITE); //
+
     /* CPU Turbo Clock, */
     //                 (   X,    Y,   Length, Height, Radius,   Colour    )
     tft.fillRoundRect  (  90 - X_Offset,    35 + Y_Offset,    93,      28,     3,   ILI9341_WHITE); //
@@ -626,7 +628,7 @@ void CustomTriggerCPU_BOOST_Circle(int cpuClockString ) {
 
 // -------------------  GPU Boost Clock Indicator Event Portrait --------------------
 
-void CustomTriggerGPU_BOOST_Circle(int gpuCoreClockString ) {
+void CustomTriggerGPU_BOOST_Round(int gpuCoreClockString ) {
   float GPUboostfactor = gpuCoreClockString ;
 
   //Do Something!!!
@@ -648,7 +650,7 @@ void CustomTriggerGPU_BOOST_Circle(int gpuCoreClockString ) {
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // -------------------  CPU Throttle Indicator Event Portrait --------------------
 
-void CustomTriggerCPU_ThrottleIndicator_Circle(int cpuDegree ) {  // i5-9600k TJMax is 100c
+void CustomTriggerCPU_ThrottleIndicator_Round(int cpuDegree ) {  // i5-9600k TJMax is 100c
   float CPUtempfactor = cpuDegree ;
 
 
@@ -669,7 +671,7 @@ void CustomTriggerCPU_ThrottleIndicator_Circle(int cpuDegree ) {  // i5-9600k TJ
 
 // -------------------  GPU Throttle Indicator Event Portrait --------------------
 
-void CustomTriggerGPU_ThrottleIndicator_Circle(int gpuDegree ) {
+void CustomTriggerGPU_ThrottleIndicator_Round(int gpuDegree ) {
   float GPUtempfactor = gpuDegree ;
 
 
@@ -696,7 +698,7 @@ void CustomTriggerGPU_ThrottleIndicator_Circle(int gpuDegree ) {
 
 //>>>>>>>>>>>> CPU TEMP
 
-void CPU_tempLevelGauge(int cpuDegree ) {
+void CPU_tempLevelRound(int cpuDegree ) {
 
   /*Top CPU Temp Level Clear Box,*/
   tft.fillRoundRect(293 - X_Offset, 0 + Y_Offset,   8, 102 , 1, ILI9341_BLACK);
@@ -744,7 +746,7 @@ void CPU_tempLevelGauge(int cpuDegree ) {
 
 //>>>>>>>>>>>> CPU LOAD
 
-void CPU_loadLevelGauge(int cpuUsage ) {
+void CPU_loadLevelRound(int cpuUsage ) {
 
   /*Top CPU Load Level Clear Box,*/
   tft.fillRoundRect(306 - X_Offset, 0 + Y_Offset,   8, 102 , 1, ILI9341_BLACK);
@@ -784,7 +786,7 @@ void CPU_loadLevelGauge(int cpuUsage ) {
 
 //>>>>>>>>>>>> GPU TEMP
 
-void GPU_tempLevelGauge(int gpuDegree ) {
+void GPU_tempLevelRound(int gpuDegree ) {
 
   /*Bottom GPU Temp Level Clear Box,*/
   tft.fillRoundRect(293 - X_Offset , 129 + Y_Offset,   8, 102 , 1, ILI9341_BLACK);
@@ -835,7 +837,7 @@ void GPU_tempLevelGauge(int gpuDegree ) {
 
 //>>>>>>>>>>>> GPU LOAD
 
-void GPU_loadLevelGauge(int gpuUsage ) {
+void GPU_loadLevelRound(int gpuUsage ) {
 
   /*Bottom GPU Load Level Clear Box,*/
   tft.fillRoundRect(306 - X_Offset , 129 + Y_Offset,   8, 102 , 1, ILI9341_BLACK);

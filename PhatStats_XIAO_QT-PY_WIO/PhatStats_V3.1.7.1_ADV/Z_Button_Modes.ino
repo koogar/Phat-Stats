@@ -12,7 +12,7 @@ void button_Modes() {
     delay(debounceButton); // Debounce Button
 
     display_Button_counter ++;
-
+    next_display();
     /* Clear Screen*/
     backlightOFF();
     tft.fillScreen(ILI9341_BLACK);

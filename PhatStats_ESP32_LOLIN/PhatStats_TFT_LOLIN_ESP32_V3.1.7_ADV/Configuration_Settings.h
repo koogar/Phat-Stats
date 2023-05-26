@@ -174,9 +174,12 @@ int NeoBrightness   = 20;           // Global start up brightness
 
 
 //----------------------------- TFT Fixed or PWM Brightness ------------------------------------
+
 #define fixedBacklight // enable a fixed backlight (no PWM) powered from VCC
 
+
 /*TFT Start Up Brightness*/
+//PWM Brightness Note: espressif (ESP32)    v2.0.5 (v2.08 = ESP32_AnalogWrite compile error use fixedBacklight option)
 volatile int brightness_count = 250; // Start Up PWM Brightness
 
 //-------------------------- Display Activity Shutdown -----------------------------------

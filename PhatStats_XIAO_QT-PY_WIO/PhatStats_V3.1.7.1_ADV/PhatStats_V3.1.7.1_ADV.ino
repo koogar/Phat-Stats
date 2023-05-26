@@ -1,5 +1,5 @@
 
-#define CODE_VERS  "3.1.6.ADV"  // Code version number
+#define CODE_VERS  "3.1.7.1.ADV"  // Code version number
 
 /*
   uVolume, GNATSTATS OLED, PHATSTATS TFT PC Performance Monitor & HardwareSerialMonitor Windows Client
@@ -91,7 +91,7 @@
 
 #ifdef Seeeduino_WIO_ATSAMD51
 //Wio Terminal LCD back light brightness
-#include "lcd_backlight.hpp"
+#include "WIO_lcd_backlight.hpp"
 #include <cstdint>
 #endif
 
@@ -167,7 +167,7 @@ void backlightOFF    ();
 #define NEOPIN      6
 #endif
 
-#if defined(Seeeduino_XIAO_RP2040) ^ defined(Seeeduino_XIAO_ESP32C3)
+#if defined(Seeeduino_XIAO_RP2040) ^ defined(Seeeduino_XIAO_ESP32c3s3)
 #define NEOPIN      D6
 #endif
 
@@ -222,7 +222,7 @@ Adafruit_NeoPixel pixels(NUM_PIXELS, NEOPIN, NEO_GRB + NEO_KHZ800);
 //----------------------------------------------------------------------------
 
 
-#if defined(Seeeduino_XIAO_RP2040) ^ defined(Seeeduino_XIAO_ESP32C3)
+#if defined(Seeeduino_XIAO_RP2040) ^ defined(Seeeduino_XIAO_ESP32c3s3)
 
 #define TFT_CS     D5
 #define TFT_DC     D7
@@ -248,9 +248,9 @@ Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC, TFT_RST); // Use hardwar
 #define TFT_DC     7
 
 #ifdef  ALT_TFT_RST
-#define TFT_RST    9  // ESP32C3 & OLD PCB V0.93
+#define TFT_RST    9  // (MISO) ESP32C3 & OLD PCB V0.93
 #else
-#define TFT_RST    0  // changed from previous(9) to allow for MISO connection for Touch
+#define TFT_RST    0  // (IR on uVolume) changed from previous(9) to allow for MISO connection for Touch
 #endif
 
 #define TFT_SCLK   8
@@ -278,7 +278,7 @@ Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC, TFT_MOSI, TFT_CLK, TFT_R
 
 
 
-#if defined(Seeeduino_XIAO_RP2040) ^ defined(Seeeduino_XIAO_ESP32C3)
+#if defined(Seeeduino_XIAO_RP2040) ^ defined(Seeeduino_XIAO_ESP32c3s3)
 /* Mode Button pin*/
 int mode_Button       = D1;
 /* Screen TFT backlight Pin */
@@ -783,5 +783,18 @@ void splashScreen() {
 
   backlightOFF();// Hide the Screen while drawing
   tft.fillScreen(ILI9341_BLACK);
+
+}
+
+
+void next_display() {
+
+  tft.fillRoundRect  (16,  25, 82,  82, 3,    ILI9341_BLACK);
+
+  tft.drawBitmap(18, 34, nextscreen64_BMP, 79, 64, ILI9341_RED);
+  //tft.drawBitmap(18, 34, nextscreen2_64_BMP, 79, 64, ILI9341_RED);
+  delay(500);
+  //tft.drawBitmap(18, 34, nextscreen64_BMP, 79, 64, ILI9341_BLACK);
+  //tft.drawBitmap(18, 34, nextscreen2_64_BMP, 79, 64, ILI9341_BLACK);
 
 }
