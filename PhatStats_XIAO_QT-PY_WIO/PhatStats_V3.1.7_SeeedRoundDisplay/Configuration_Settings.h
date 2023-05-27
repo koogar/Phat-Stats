@@ -22,8 +22,8 @@
 //This version is specifically for the "Seeed Studio Round Display for XIAO"
 //https://wiki.seeedstudio.com/get_start_round_display/
 
-#define Adafruit_QTPY_ATSAMD   
-//#define Seeeduino_XIAO_ATSAMD 
+//#define Adafruit_QTPY_ATSAMD   
+#define Seeeduino_XIAO_ATSAMD 
 
 //#define Seeeduino_XIAO_RP2040   // Adafruit QT PY RP2040  (untested)
 //#define Seeeduino_XIAO_NRF52840 // Adafruit QT PY NRF52840(untested)
@@ -133,7 +133,7 @@ String set_GPUram = "xxxxxx"; //in GB
 // slide dip switch slot 2 to (KE) on the back of the Seeed Round display for backlight control
 //#define fixedBacklight // enable a fixed backlight (no PWM) powered from VCC
 
-volatile int brightness_count = 60; // Start Up PWM Brightness
+volatile int brightness_count = 160; // Start Up PWM Brightness
 
 //------------------------------- Display Activity Shutdown -----------------------------------
 
