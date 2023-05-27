@@ -16,6 +16,10 @@ https://runawaybrainz.blogspot.com/2021/03/phat-stats-ili9341-tft-display-hook-u
 
 ![](https://github.com/koogar/Phat-Stats/blob/main/images/PhatStats%20RTX3080_i9-13900k.jpg)
 
+![](https://github.com/koogar/Phat-Stats/blob/main/images/20230526_142556 (Small).jpg)
+
+![](https://github.com/koogar/Phat-Stats/blob/main/images/20230526_142556 (Small).jpg)
+
 ![](https://github.com/koogar/Phat-Stats/blob/main/images/7245421623855690457.JPG)
 
 ![](https://github.com/koogar/Phat-Stats/blob/main/images/5498131627768760558.jpg)
