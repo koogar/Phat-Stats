@@ -22,39 +22,21 @@
 //This version is specifically for the "Seeed Studio Round Display for XIAO"
 //https://wiki.seeedstudio.com/get_start_round_display/
 
+#define Seeeduino_XIAO_ESP32S3   // Adafruit QT PY ESP32S2, QT PY ESP32S3,  QT Py ESP32 Pico (untested)
+
+
 //#define Adafruit_QTPY_ATSAMD   
-#define Seeeduino_XIAO_ATSAMD 
+//#define Seeeduino_XIAO_ATSAMD 
 
 //#define Seeeduino_XIAO_RP2040   // Adafruit QT PY RP2040  (untested)
 //#define Seeeduino_XIAO_NRF52840 // Adafruit QT PY NRF52840(untested)
-
-
 
 //--------------------------- Seeeduino_XIAO_ESP32C3S3 Experimental!!! --------------------------------
 /* NOTE: The XIAO ESP32C3 is very problematic when uploading "in circuit" and has to be removed for programming.
   Most of the time it has to be forced into bootloader mode (Hold BOOT button down and power cycle while uploading) */
 
-/* Uncomment ALT_TFT_RST for XIAO ESP32C3 &  OLD PCB v0.93, TFT_RST is on D9 (Miso) as D0 was used for IR */
+//#define Seeeduino_XIAO_ESP32C3   // Adafruit QT PY ESP32S2, QT PY ESP32S3,  QT Py ESP32 Pico (untested)
 
-//#define Seeeduino_XIAO_ESP32C3S3   // Adafruit QT PY ESP32S2, QT PY ESP32S3,  QT Py ESP32 Pico (untested)
-
-
-//--------------------------- Uncomment your CPU/GPU Display  -----------------------------------
-/* Uncomment your CPU,*/
-
-#define INTEL_CPU
-//#define AMD_CPU
-
-
-/* Uncomment your GPU,*/
-
-#define NVIDIA_GRAPHICS
-//#define NVIDIA_GTX_Ti_GRAPHICS
-//#define NVIDIA_RTX_GRAPHICS
-//#define NVIDIA_RTX_SUPER_GRAPHICS
-
-//#define AMD_GRAPHICS
-//#define INTEL_GRAPHICS
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -145,13 +127,14 @@ volatile int brightness_count = 160; // Start Up PWM Brightness
 
 
 //-------------------------------- Misco Setting -----------------------------------------
+
+
 /* Display screen rotation  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)*/
-int ASPECT = 1; //Do not adjust,
+int ASPECT = 1; // USB socket facing the rear, Do not adjust
 
 //#define  RETRO_MONO    //CRT Monochrome screen
 //#define  RETRO_AMBER   //CRT Amber screen
 //#define  RETRO_GREEN   //CRT Green screen
-
 
 
 /* Enable the built in LED blinking when transmitting data, can lag the button mode*/
@@ -167,53 +150,11 @@ int Serial_eventDelay = 5; //
 
 //--------------------------------------- Versions -----------------------------------------------------
 /*
-  V3.1.1.KiSS     [K]eep [i]t [S]toopid [S]imple
-
-        Bare bones version
-        Button to change aspect
-
-        Add enable_gpuVram, enable_gpuShader, enable_gpuCore
-        Remove specific GPU stats in landscape mode, this helps to make room if your GPU memory is over 9999MB
-        Fix set_GPUram
-
-     V3.1.1.ADV    Advanced
-
-        Button to change aspect
-        NeoPixels
-
-        Add enable_gpuVram, enable_gpuShader, enable_gpuCore
-        Remove specific GPU stats in landscape mode, this helps to make room if your GPU memory is over 9999MB
-        Fix set_GPUram
-        NeoPixels
-
-    V3.1.2  Kiss & ADV
-
-        Add support for:
-                          Seeed Studio XIAO (ATSAMD21) / Adafruit QT PY (ATSAMD21)
-                          Seeed Studio XIAO (NRF52840) / Adafruit QT PY (NRF52840)(untested)
-                          Seeed Studio XIAO (RP2040)   / Adafruit QT PY (RP2040)  (untested)
-                          Seeed Studio XIAO (ESP32C3)    Experimental
-
-    V3.1.3.KiSS
-
-        Add support for:
-                          Seeed Studio WIO Terminal (ATSAMD51)
 
 
-    V3.1.3.ADV
+   v3.1.7.RND
 
-        Add support for:
-                          Seeed Studio WIO Terminal (ATSAMD51)
-                          Retro CRT look option
-                          + Some Fixes
-
-   V3.1.6.ADV/KiSS
-
-       Clean up code
-       Turn off the backlight untill the stats have updated when using button mode.
-       Add PCB_ThresholdTriggerEvents for custom PCB, so neopixels rotate with button mode.
-
-      (ADV) Add option to display the splash screen in landscape.
+         Seeed Round Display For XIAO
 
 */
 

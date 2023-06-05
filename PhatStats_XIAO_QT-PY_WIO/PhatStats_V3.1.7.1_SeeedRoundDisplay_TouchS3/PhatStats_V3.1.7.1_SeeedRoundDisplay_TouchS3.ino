@@ -1,5 +1,5 @@
 
-#define CODE_VERS  "3.1.7.RND"  // Code version number
+#define CODE_VERS  "3.1.7.1.RND"  // Code version number
 
 /*
   uVolume, GNATSTATS OLED, PHATSTATS TFT PC Performance Monitor & HardwareSerialMonitor Windows Client
@@ -42,7 +42,8 @@
   Adafruit GC9A01A
   https://github.com/PaintYourDragon/Adafruit_GC9A01A
 
-
+  CST816S i2c Touch IC XIAO ESP32S3 only
+  https://github.com/fbiego/CST816S/blob/main/CST816S.h
 
   Library Working Version Checker 18/04/2023
   (some libraries may not be used in this sketch)
@@ -72,21 +73,34 @@
 #include "Configuration_Settings.h" // load settings
 #include "Z_Bitmaps.h"
 
+#if defined(Seeeduino_XIAO_ESP32S3)
+//CST816S i2c Touch IC XIAO ESP32S3 only https://github.com/fbiego/CST816S/blob/main/CST816S.h
+//#define CST816S_ADDRESS     0x2E  // change this in the CST816S.h library
+#include <CST816S.h>
+//XIAO ESP32S3
+CST816S touch(D4, D5, -1, D7);  // sda, scl, rst(lcd)?, irq
 
+/*XIAO Round Display Touch Counter*/
+int touch_Button_counter = 0; // Virtual Button
+#define debounceTouchscreenButton 250
+
+#endif
 
 /* Declare Prototype voids to the compiler*/
-void Display_LS      ();
-void Display_Port    ();
-void Display_LS_180  ();
-void Display_Port_180();
-void Display_CircleGauge    ();
-void Display_CircleGauge_180();
+
 void serialEvent     ();
 void activityChecker ();
 void splashScreen    ();
 void backlightON     ();
 void backlightOFF    ();
+void next_display    ();
+void enable_Touch_ESP32S3  ();
+void FeatureSet_Indicator2 ();
 
+void Display_GC9A01_Port_R0();
+void Display_GC9A01_Port_R1();
+void Display_GC9A01_Port_R2();
+void Display_GC9A01_Port_R3();
 
 /*
 
@@ -106,16 +120,30 @@ void backlightOFF    ();
   https://www.seeedstudio.com/Seeed-Studio-Round-Display-for-XIAO-p-5638.html
 
   Seeed Studio Round XIAO Display
+  (Adafruit GC9A01A + GFX Library)
   -------------------------------
-   TFT_SCLK D8
-   TFT_MISO D9
-   TFT_MOSI D10
-   TFT_CS   D1  // Chip select control pin
-   TFT_DC   D3  // Data Command control pin
-   TFT_RST  -1  // Reset pin (could connect to RST pin)
+    TFT_SCLK D8
+    TFT_MISO D9
+    TFT_MOSI D10
+    TFT_CS   D1  // Chip select control pin
+    TFT_DC   D3  // Data Command control pin
+    TFT_RST  -1  // Reset pin (could connect to RST pin)
 
-   LCD_BACKLIGHT   D6  // slide dip switch slot 2 to (KE) on the back of the Seeed Round display for backlight control
+    LCD_BACKLIGHT   D6  // slide dip switch slot 2 to (KE) on the back of the Seeed Round display for backlight control
 
+  CST816S i2c Touch IC, XIAO ESP32S3 Only!!!
+  (https://github.com/fbiego/CST816S/blob/main/CST816S.h)
+  --------------------------------------------
+    TP_SDA D4
+    TP_SCL D5
+    TP_RST -1  // Same As LCD
+    TP_INT D7  // IRQ
+
+    i2c Address 0x2E
+
+  PCF8563T RTC
+  (Adafruit RTClib Library)
+  -------------
   ==========================================================================================================
 */
 
@@ -124,7 +152,7 @@ void backlightOFF    ();
 /* GC9A01A TFT setup */
 //----------------------------------------------------------------------------
 
-#if defined(Seeeduino_XIAO_RP2040) ^ defined(Seeeduino_XIAO_ESP32C3S3)
+#if defined(Seeeduino_XIAO_RP2040) ^ defined(Seeeduino_XIAO_ESP32C3) ^ defined(Seeeduino_XIAO_ESP32S3)
 
 #define TFT_CS     D1
 #define TFT_DC     D3
@@ -153,7 +181,7 @@ Adafruit_GC9A01A tft(TFT_CS, TFT_DC, TFT_RST);
 //-----------------------------------------------------------------------------
 
 
-#if defined(Seeeduino_XIAO_RP2040) ^ defined(Seeeduino_XIAO_ESP32C3S3)
+#if defined(Seeeduino_XIAO_RP2040) ^ defined(Seeeduino_XIAO_ESP32C3) ^ defined(Seeeduino_XIAO_ESP32S3)
 
 /* Screen TFT backlight Pin */
 int TFT_backlight_PIN = D6;  // slide dip switch slot 2 to (KE) on the back of the Seeed Round display for backlight control
@@ -174,6 +202,7 @@ int brightness_countLast = 0;   // Store Last PWM Value
 
 /* More Display stuff*/
 int displayDraw = 0;
+
 
 //-----------------------------------------------------------------------------
 
@@ -296,12 +325,16 @@ void setup() {
 
   backlightOFF();
 
+#if defined (Seeeduino_XIAO_ESP32S3)
+  touch.begin();
+#endif
 
   /* TFT SETUP */
 
   /*Give the micro time to initiate the SPi bus*/
   delay(100);
   tft.begin();
+
 
   tft.setRotation(ASPECT);// Rotate the display :  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
 
@@ -327,7 +360,20 @@ void loop() {
   activityChecker();      // Turn off screen when no activity
 #endif
 
-  Display_GC9A01_Port_R0();
+  //------------------------- Display Modes ------------------------
+
+#if  defined(Seeeduino_XIAO_ESP32S3)
+
+  enable_Touch_ESP32S3(); // use the touchscreen as a button to change screen orientation
+  //touch_S3();
+
+#else
+
+  Display_GC9A01_Port_R1();  // USB Socket at the rear
+
+#endif
+  //----------------------------------------------------------------
+
 
 #if defined(Seeeduino_XIAO_ATSAMD) ^ defined(Seeeduino_WIO_ATSAMD51)
 #ifdef enableTX_LED
@@ -567,12 +613,10 @@ void splashScreen() {
 
 void next_display() {
 
-  tft.fillRoundRect  (16,  25, 82,  82, 3,    GC9A01A_BLACK);
-
-  tft.drawBitmap(18, 34, nextscreen64_BMP, 79, 64, GC9A01A_RED);
-  //tft.drawBitmap(18, 34, nextscreen2_64_BMP, 79, 64, GC9A01A_RED);
-  delay(500);
-  //tft.drawBitmap(18, 34, nextscreen64_BMP, 79, 64, GC9A01A_BLACK);
-  //tft.drawBitmap(18, 34, nextscreen2_64_BMP, 79, 64, GC9A01A_BLACK);
+  tft.fillCircle   (120, 120, 60, GC9A01A_RED); // bottom left corner LS
+  tft.drawCircle   (120, 120, 60, GC9A01A_WHITE); // bottom left corner LS
+  //tft.drawBitmap   (82, 88, nextscreen64_BMP, 79, 64, GC9A01A_RED);
+  tft.drawBitmap   (82,  88, nextscreen2_64_BMP, 79, 64, GC9A01A_BLACK);
+  delay(250);
 
 }

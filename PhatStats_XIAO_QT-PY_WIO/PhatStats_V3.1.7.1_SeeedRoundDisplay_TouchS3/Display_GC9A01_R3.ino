@@ -1,38 +1,13 @@
 
-/* Version 3.3 Optimised for GC9A01 240 x 240 , 
-Do not turn on the screen till there is activity and the Screen is drawn, #ifdef CPU_OverClocked --->>>> move delay if not enabled */
+/* Version 3.3 Optimised for GC9A01 240 x 240 ,
+  Do not turn on the screen till there is activity and the Screen is drawn, #ifdef CPU_OverClocked --->>>> move delay if not enabled */
 
 
+void Display_GC9A01_Port_R3() {  // Round 240x240 portrait
 
-void Display_GC9A01_Port_R0() {  // Round 240x240 portrait
-  // screen rotation  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)*/
-
-  //#define enableSideLevelGauges // Phat-Tacho CircleGauge only
-
-  //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-  /*Optimised for 1.3" SPI Colour Round LCD ST7789V (240x240),
-    Same ST7789 library as the square version*/
-
-  /*ST7789 (0x,0y) 240x240 Portrait & Landscape offsets,*/
 #define X_Offset  17 // - Portrait
 #define Y_Offset  0  // + Portrait
 
-  /*ILI9341 240x320 Portrait offsets(centre),*/
-  //#define X_Offset  40 // - Portrait
-  //#define Y_Offset  40 // + Portrait
-
-  /*ILI9341 240x320 Landscape offsets(centre),*/
-  //#define X_Offset  0 // - Landscape
-  //#define Y_Offset  0 // + Landscape
-
-  /*ILI9341 240x320 Portrait offsets(Middle of PCB 86mm),*/
-  //#define X_Offset 40 // - Portrait
-  //#define Y_Offset 63 // + Portrait
-
-  /*ILI9341 240x320 Landscape offsets(Middle of PCB 86mm),*/
-  //// #define X_Offset 0// - Landscape
-  //// #define Y_Offset 0 // + Landscape
 
   //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -41,12 +16,11 @@ void Display_GC9A01_Port_R0() {  // Round 240x240 portrait
   if (stringComplete) {
 
     if (bootMode) {
+
       backlightOFF();
+
       tft.fillScreen(GC9A01A_BLACK);
 
-
-
-      //tft.fillCircle(136 - X_Offset, 120 + Y_Offset, 112, GC9A01A_RED); // landscape circle 119 for radius -1 for line thickness
       tft.fillCircle  (136 - 17, 120, 112, GC9A01A_BLACK); // landscape circle 119 for radius -1 for line thickness
 
 
@@ -62,31 +36,31 @@ void Display_GC9A01_Port_R0() {  // Round 240x240 portrait
 #endif
 
     //--------------------------------------- Display Background ----------------------------------------------------
-#ifdef  touchScreen
-    touch.setRotation(ASPECT);
-#endif
+
     tft.setFont(); // set to default Adafruit library font
-    // screen rotation  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)*/
-    tft.setRotation(ASPECT);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
-    //tft.drawRoundRect     (0, 0, 240, 240, 2, GC9A01A_RED);  // 240x240 outline guide
+    tft.setRotation(3);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
+
 
     //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-
-    //>>>>>>>>>>>>>>>>>>>>>>>> Left Side Circle Apperture  >>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    tft.fillCircle   (10 - X_Offset,   10, 6, GC9A01A_BLUE); // top left corner  LS 0,0
-    tft.drawCircle   (10 - X_Offset,   10, 7, GC9A01A_WHITE); // top left corner  LS 0,0
-
-    tft.fillCircle   (10 - X_Offset,   228, 6, GC9A01A_RED);  // bottom left corner LS
-    tft.drawCircle   (10 - X_Offset,   228, 7, GC9A01A_WHITE); // bottom left corner LS
-
-    //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
     //tft.drawFastVLine(160 - X_Offset, 10 + Y_Offset, 220, GC9A01A_WHITE);
     tft.drawRect     (26 - X_Offset, 118 + Y_Offset, 220, 4, GC9A01A_RED);
     tft.drawFastHLine(26 - X_Offset, 120 + Y_Offset, 220, GC9A01A_WHITE);
 
+    /* DiplayStyle Number */
+    tft.fillCircle (4 + X_Offset - 2,  105 + Y_Offset + 14, 10, GC9A01A_BLACK); // landscape circle 119 for radius -1 for line thickness
+    tft.drawCircle (4 + X_Offset - 2,  105 + Y_Offset + 14, 10, GC9A01A_RED); // landscape circle 119 for radius -1 for line thickness
+    tft.setCursor  (0 + X_Offset - 2,  102 + Y_Offset + 14); // (Left/Right, UP/Down)
+    tft.setTextSize(1); tft.println("R3");
 
+    tft.fillCircle (204 + X_Offset - 2,  105 + Y_Offset + 14, 10, GC9A01A_BLACK); // landscape circle 119 for radius -1 for line thickness
+    tft.drawCircle (204 + X_Offset - 2,  105 + Y_Offset + 14, 10, GC9A01A_RED); // landscape circle 119 for radius -1 for line thickness
+    //tft.setCursor  (200 + X_Offset - 2,  102 + Y_Offset + 14); // (Left/Right, UP/Down)
+    //tft.setTextSize(1); tft.println("R3");
+
+    tft.setCursor  (200 + X_Offset - 6,  102 + Y_Offset + 14); // (Left/Right, UP/Down)
+    tft.setTextSize(1); tft.println("270");
     //---------------------------------------CPU & GPU Hardware ID---------------------------------------------------------
 
     /* CPU & GPU Hardware ID */
@@ -533,13 +507,13 @@ void Display_GC9A01_Port_R0() {  // Round 240x240 portrait
     //--------------------------Trigger an event when CPU or GPU threshold is met ---------------------------------
 
 #ifdef enable_BoostIndicator
-    CustomTriggerCPU_BOOST_Rot0( cpuClockString.toInt     ()); // CPU Frequency
-    CustomTriggerGPU_BOOST_Rot0( gpuCoreClockString.toInt ()); // GPU Frequency
+    CustomTriggerCPU_BOOST_Rot3( cpuClockString.toInt     ()); // CPU Frequency
+    CustomTriggerGPU_BOOST_Rot3( gpuCoreClockString.toInt ()); // GPU Frequency
 #endif
 
 #ifdef enable_ThrottleIndicator
-    CustomTriggerCPU_ThrottleIndicator_Rot0( cpuString1.toInt() ); //  CPU TJMax/Throttle Incicator BMP
-    CustomTriggerGPU_ThrottleIndicator_Rot0( gpuString1.toInt() ); //  GPU TJMax/Throttle Incicator BMP
+    CustomTriggerCPU_ThrottleIndicator_Rot3( cpuString1.toInt() ); //  CPU TJMax/Throttle Incicator BMP
+    CustomTriggerGPU_ThrottleIndicator_Rot3( gpuString1.toInt() ); //  GPU TJMax/Throttle Incicator BMP
 #endif
 
 
@@ -599,7 +573,7 @@ void Display_GC9A01_Port_R0() {  // Round 240x240 portrait
 
 // -------------------  CPU Turbo Boost Indicator Event Portrait --------------------
 
-void CustomTriggerCPU_BOOST_Rot0(int cpuClockString ) {
+void CustomTriggerCPU_BOOST_Rot3(int cpuClockString ) {
   float CPUboostfactor = cpuClockString;
 
 
@@ -631,7 +605,7 @@ void CustomTriggerCPU_BOOST_Rot0(int cpuClockString ) {
 
 // -------------------  GPU Boost Clock Indicator Event Portrait --------------------
 
-void CustomTriggerGPU_BOOST_Rot0(int gpuCoreClockString ) {
+void CustomTriggerGPU_BOOST_Rot3(int gpuCoreClockString ) {
   float GPUboostfactor = gpuCoreClockString ;
 
   //Do Something!!!
@@ -653,7 +627,7 @@ void CustomTriggerGPU_BOOST_Rot0(int gpuCoreClockString ) {
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // -------------------  CPU Throttle Indicator Event Portrait --------------------
 
-void CustomTriggerCPU_ThrottleIndicator_Rot0(int cpuDegree ) {  // i5-9600k TJMax is 100c
+void CustomTriggerCPU_ThrottleIndicator_Rot3(int cpuDegree ) {  // i5-9600k TJMax is 100c
   float CPUtempfactor = cpuDegree ;
 
 
@@ -674,7 +648,7 @@ void CustomTriggerCPU_ThrottleIndicator_Rot0(int cpuDegree ) {  // i5-9600k TJMa
 
 // -------------------  GPU Throttle Indicator Event Portrait --------------------
 
-void CustomTriggerGPU_ThrottleIndicator_Rot0(int gpuDegree ) {
+void CustomTriggerGPU_ThrottleIndicator_Rot3(int gpuDegree ) {
   float GPUtempfactor = gpuDegree ;
 
 
@@ -698,7 +672,7 @@ void CustomTriggerGPU_ThrottleIndicator_Rot0(int gpuDegree ) {
 
 //>>>>>>>>>>>> CPU TEMP
 
-void CPU_tempLevel_Rot0(int cpuDegree ) {
+void CPU_tempLevel_Rot3(int cpuDegree ) {
 
   /*Top CPU Temp Level Clear Box,*/
   tft.fillRoundRect(293 - X_Offset, 0 + Y_Offset,   8, 102 , 1, GC9A01A_BLACK);
@@ -746,7 +720,7 @@ void CPU_tempLevel_Rot0(int cpuDegree ) {
 
 //>>>>>>>>>>>> CPU LOAD
 
-void CPU_loadLevel_Rot0(int cpuUsage ) {
+void CPU_loadLevel_Rot3(int cpuUsage ) {
 
   /*Top CPU Load Level Clear Box,*/
   tft.fillRoundRect(306 - X_Offset, 0 + Y_Offset,   8, 102 , 1, GC9A01A_BLACK);
@@ -786,7 +760,7 @@ void CPU_loadLevel_Rot0(int cpuUsage ) {
 
 //>>>>>>>>>>>> GPU TEMP
 
-void GPU_tempLevel(int gpuDegree ) {
+void GPU_tempLevel_Rot3(int gpuDegree ) {
 
   /*Bottom GPU Temp Level Clear Box,*/
   tft.fillRoundRect(293 - X_Offset , 129 + Y_Offset,   8, 102 , 1, GC9A01A_BLACK);
@@ -837,7 +811,7 @@ void GPU_tempLevel(int gpuDegree ) {
 
 //>>>>>>>>>>>> GPU LOAD
 
-void GPU_loadLevel_Rot0(int gpuUsage ) {
+void GPU_loadLevel_Rot3(int gpuUsage ) {
 
   /*Bottom GPU Load Level Clear Box,*/
   tft.fillRoundRect(306 - X_Offset , 129 + Y_Offset,   8, 102 , 1, GC9A01A_BLACK);
