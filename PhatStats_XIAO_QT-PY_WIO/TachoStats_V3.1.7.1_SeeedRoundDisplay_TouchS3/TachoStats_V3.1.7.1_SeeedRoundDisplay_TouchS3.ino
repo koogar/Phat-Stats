@@ -536,11 +536,11 @@ void splashScreen() {
   tft.drawBitmap(44, 20, HSM_BMP,     142, 128, GC9A01A_GREY);
 
   tft.setTextSize(3);
-  tft.setCursor(86, 140);
+  tft.setCursor(46, 140);
   tft.setTextColor(GC9A01A_WHITE);
-  tft.println("PHAT ");
+  tft.println("TACHO-");
   tft.setTextSize(3);
-  tft.setCursor(78, 160);
+  tft.setCursor(100, 160);
   tft.println("STATS");
 
   tft.setTextSize(2);
