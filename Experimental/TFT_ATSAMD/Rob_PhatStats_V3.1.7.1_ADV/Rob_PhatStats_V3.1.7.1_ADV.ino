@@ -610,15 +610,15 @@ void activityChecker() {
     /* Set Default Adafruit GRFX Font*/
     tft.setFont();
 
-    tft.fillScreen(ILI9341_BLACK);
+    //tft.fillScreen(ILI9341_BLACK);
 
-    tft.setRotation(0);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
+    //tft.setRotation(0);// Rotate the display at the start:  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)
     //tft.drawRoundRect  (0, 0  , 240, 320, 8,    ILI9341_RED);
-    tft.setTextColor(ILI9341_RED);
-    tft.drawBitmap(82, 80, WaitingDataBMP2_90, 76, 154, ILI9341_RED);
-    tft.setTextSize(2); tft.setCursor(40, 40); tft.println("NO COM DATA!!!");
+    //tft.setTextColor(ILI9341_RED);
+    //tft.drawBitmap(82, 80, WaitingDataBMP2_90, 76, 154, ILI9341_RED);
+    //tft.setTextSize(2); tft.setCursor(40, 40); tft.println("NO COM DATA!!!");
 
-    delay(1000);
+    //delay(1000);
 
     /* Clear Screen, Turn Off Backlight & Neopixels when there is no activity, */
 

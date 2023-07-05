@@ -10,8 +10,8 @@
               |_|            |___/
 */
 
-/* Version 3.3 Optimised for ILI9341 320 x 240 in portrait, 
-Do not turn on the screen till there is activity and the Screen is drawn, #ifdef CPU_OverClocked --->>>> move delay if not enabled */
+/* Version 3.3 Optimised for ILI9341 320 x 240 in portrait,
+  Do not turn on the screen till there is activity and the Screen is drawn, #ifdef CPU_OverClocked --->>>> move delay if not enabled */
 
 
 void Display_Port_180 () {
@@ -495,7 +495,7 @@ void Display_Port_180 () {
     double totalGPUmemSum = totalGPUmem / 1024;    // divide by 1024 to get the correct value
     float  totalGPUmemSumDP = totalGPUmemSum ;     // float to handle the decimal point when printed (totalGPUmemSumDP, 0)
 
-    tft.setCursor(120, 128);  // Position GPU Total Memory
+    tft.setCursor(120 + gpuTotalMemPos, 128); // Position GPU Total Memory
     //tft.print(gpuMemoryString); // Show Value in MB
 
 #ifdef Manual_gpuRam

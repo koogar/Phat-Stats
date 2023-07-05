@@ -107,10 +107,6 @@ void Display_Port_180 () {
     tft.drawBitmap(16, 144, NvidiaRTX_Logo_BMP, 82, 82, ILI9341_GREEN); // Nvidia Logo
 #endif
 
-#ifdef NVIDIA_RTX_Ti_GRAPHICS
-    tft.drawBitmap(16, 144, NvidiaRTX_Ti_Logo_BMP, 82, 82, ILI9341_GREEN); // Nvidia Logo
-#endif
-
 #ifdef NVIDIA_RTX_SUPER_GRAPHICS
     tft.drawBitmap(16, 144, NvidiaRTXSuper_Logo_BMP, 82, 82, ILI9341_GREEN); // Nvidia Logo
 #endif

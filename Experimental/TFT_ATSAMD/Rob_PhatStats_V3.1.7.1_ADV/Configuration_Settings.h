@@ -44,10 +44,9 @@
 
 /* Uncomment your GPU,*/
 
-#define NVIDIA_GRAPHICS
+//#define NVIDIA_GRAPHICS
 //#define NVIDIA_GTX_Ti_GRAPHICS
-//#define NVIDIA_RTX_GRAPHICS
-//#define NVIDIA_RTX_Ti_GRAPHICS
+#define NVIDIA_RTX_GRAPHICS
 //#define NVIDIA_RTX_SUPER_GRAPHICS
 
 //#define AMD_GRAPHICS
@@ -80,7 +79,7 @@ String set_GPUram = "xxxxxx"; //in GB
 //---------------------------------------------------------------------------------------
 
 /* CPU is overclocked with Turbo boost disabled, to stop "TURBO" indicator,*/
-//#define CPU_OverClocked
+#define CPU_OverClocked
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -132,7 +131,7 @@ String set_GPUram = "xxxxxx"; //in GB
 /*Start Up PWM Brightness if using MCU Pin*/
 /* Wio Terminal LCD backlight brightness Range = 1 to 50, XIAO Range = 1 to 254 */
 
-volatile int brightness_count = 80; // Start Up PWM Brightness
+volatile int brightness_count = 160; // Start Up PWM Brightness
 
 //------------------------------- Display Activity Shutdown -----------------------------------
 
@@ -226,11 +225,7 @@ int Serial_eventDelay = 5; //
 
       (ADV) Add option to display the splash screen in landscape.
 
-  V3.1.7.ADV
 
-       Optimisations
-
-       
 
 */
 

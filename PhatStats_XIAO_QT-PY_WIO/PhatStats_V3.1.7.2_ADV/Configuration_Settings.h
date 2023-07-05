@@ -19,30 +19,46 @@
 
 //--------------------------- Uncomment your Micro Processor---------------------------------
 
-//This version is specifically for the "Seeed Studio Round Display for XIAO"
-//https://wiki.seeedstudio.com/get_start_round_display/
-
-#define Seeeduino_XIAO_ESP32S3   // Adafruit QT PY ESP32S2, QT PY ESP32S3,  QT Py ESP32 Pico (untested)
-
-
-//#define Adafruit_QTPY_ATSAMD   
-//#define Seeeduino_XIAO_ATSAMD 
-
+//#define  Adafruit_QTPY_ATSAMD
+#define Seeeduino_XIAO_ATSAMD
 //#define Seeeduino_XIAO_RP2040   // Adafruit QT PY RP2040  (untested)
 //#define Seeeduino_XIAO_NRF52840 // Adafruit QT PY NRF52840(untested)
+//#define Seeeduino_WIO_ATSAMD51  // Seed Studio WIO Terminal
 
-//--------------------------- Seeeduino_XIAO_ESP32C3S3 Experimental!!! --------------------------------
+
+//--------------------------- Seeeduino_XIAO_ESP32C3/S3 Experimental!!! --------------------------------
 /* NOTE: The XIAO ESP32C3 is very problematic when uploading "in circuit" and has to be removed for programming.
   Most of the time it has to be forced into bootloader mode (Hold BOOT button down and power cycle while uploading) */
 
-//#define Seeeduino_XIAO_ESP32C3   // Adafruit QT PY ESP32S2, QT PY ESP32S3,  QT Py ESP32 Pico (untested)
+/* Uncomment ALT_TFT_RST for XIAO ESP32C3/S3 &  OLD PCB v0.93, TFT_RST is on D9 (Miso) as D0 was used for IR */
 
+//#define Seeeduino_XIAO_ESP32c3s3   // Adafruit QT PY ESP32S2, QT PY ESP32S3,  QT Py ESP32 Pico (untested)
+//#define ALT_TFT_RST              // Use for XIAO_ESP32C3 or old PCB Version- TFT Reset on PIN D9
+
+//--------------------------- Uncomment your CPU/GPU Display  -----------------------------------
+/* Uncomment your CPU,*/
+
+#define INTEL_CPU
+//#define AMD_CPU
+
+
+/* Uncomment your GPU,*/
+
+#define NVIDIA_GRAPHICS
+//#define NVIDIA_GTX_Ti_GRAPHICS
+//#define NVIDIA_RTX_GRAPHICS
+//#define NVIDIA_RTX_Ti_GRAPHICS
+//#define NVIDIA_RTX_SUPER_GRAPHICS
+
+//#define AMD_GRAPHICS
+//#define INTEL_GRAPHICS
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 /* Characters to delete from the start of the CPU/GPU name eg: Remove "Intel" or "Nvidia" to save space*/
-#define cpuNameStartLength 10 //i5-9600k = 10 / i9-13900k = 19
-#define gpuNameStartLength 18
+#define cpuNameStartLength 10 //eg: i5-9600k = 10 / i9-13900k = 19
+#define gpuNameStartLength 18 //eg: Geforce GTX1080 (non Ti) = 18 
+#define gpuTotalMemPos     13 //Shift right the GPU memory total position in pixels eg: so not to block "Ti"
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>
 /* Manually name the CPU,*/
@@ -65,7 +81,7 @@ String set_GPUram = "xxxxxx"; //in GB
 //---------------------------------------------------------------------------------------
 
 /* CPU is overclocked with Turbo boost disabled, to stop "TURBO" indicator,*/
-#define CPU_OverClocked
+//#define CPU_OverClocked
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -112,10 +128,12 @@ String set_GPUram = "xxxxxx"; //in GB
 /* Comment out fixedBacklight for WIO Terminal, or the screen will not turn off */
 /* Uncomment   fixedBacklight for ESP32, PWM is not yet supported */
 
-// slide dip switch slot 2 to (KE) on the back of the Seeed Round display for backlight control
 //#define fixedBacklight // enable a fixed backlight (no PWM) powered from VCC
 
-volatile int brightness_count = 160; // Start Up PWM Brightness
+/*Start Up PWM Brightness if using MCU Pin*/
+/* Wio Terminal LCD backlight brightness Range = 1 to 50, XIAO Range = 1 to 254 */
+
+volatile int brightness_count = 80; // Start Up PWM Brightness
 
 //------------------------------- Display Activity Shutdown -----------------------------------
 
@@ -123,22 +141,33 @@ volatile int brightness_count = 160; // Start Up PWM Brightness
 #define enableActivityChecker
 
 /* How long the display takes to timeout due to inactive serial data from the windows application */
-#define lastActiveDelay 8000
+#define lastActiveDelay 10000
 
+//-------------------------------- NeoPixel Modes -------------------------------------
+#define NUM_PIXELS  4 // define the number of NeoPixels used
 
-//-------------------------------- Misco Setting -----------------------------------------
+/* If  NeoBrightness = 0 Phat-Stats will start with no NeoPixels lit. Turn the Rotary Encoder to turn on the NeoPixels, */
+int NeoBrightness   = 50;           // Global start up brightness
 
+/* Uncomment only one of the below*/
+//#define enable_NeopixelGauges     // NeoPixel Phat-Stats PCB
+#define enable_Thresholdtriggers_PCB // New PCB 4x NeoPixel Rotate States,0,1,2,3  Trigger functions when CPU or GPU thresholds are met 
 
-/* Display screen rotation  0, 1, 2 or 3 = (0, 90, 180 or 270 degrees)*/
-int ASPECT = 1; // USB socket facing the rear, Do not adjust
+//-------------------------------- Miso Setting -----------------------------------------
 
 //#define  RETRO_MONO    //CRT Monochrome screen
 //#define  RETRO_AMBER   //CRT Amber screen
 //#define  RETRO_GREEN   //CRT Green screen
 
+#define  splashScreenLS // quick splash screen landscape hack job, also in FeatureSet
+
+/* Debounce  Button, button mode is a bit flaky at present as it needs interrupts, Sometimes it gets caught during a screen refresh
+  and does not change. WIO Terminal & ESP32 seem to like 1000ms and works just!!! ok */
+
+int debounceButton = 150; //  Use a 0.1uf/100nf/(104) ceramic capacitor from button Pin to GND
 
 /* Enable the built in LED blinking when transmitting data, can lag the button mode*/
-//#define enableTX_LED
+#define enableTX_LED
 
 int TX_LED_Delay = 0; // TX blink delay, lags button
 
@@ -150,11 +179,63 @@ int Serial_eventDelay = 5; //
 
 //--------------------------------------- Versions -----------------------------------------------------
 /*
+  V3.1.1.KiSS     [K]eep [i]t [S]toopid [S]imple
+
+        Bare bones version
+        Button to change aspect
+
+        Add enable_gpuVram, enable_gpuShader, enable_gpuCore
+        Remove specific GPU stats in landscape mode, this helps to make room if your GPU memory is over 9999MB
+        Fix set_GPUram
+
+     V3.1.1.ADV    Advanced
+
+        Button to change aspect
+        NeoPixels
+
+        Add enable_gpuVram, enable_gpuShader, enable_gpuCore
+        Remove specific GPU stats in landscape mode, this helps to make room if your GPU memory is over 9999MB
+        Fix set_GPUram
+        NeoPixels
+
+    V3.1.2  Kiss & ADV
+
+        Add support for:
+                          Seeed Studio XIAO (ATSAMD21) / Adafruit QT PY (ATSAMD21)
+                          Seeed Studio XIAO (NRF52840) / Adafruit QT PY (NRF52840)(untested)
+                          Seeed Studio XIAO (RP2040)   / Adafruit QT PY (RP2040)  (untested)
+                          Seeed Studio XIAO (ESP32C3)    Experimental
+
+    V3.1.3.KiSS
+
+        Add support for:
+                          Seeed Studio WIO Terminal (ATSAMD51)
 
 
-   v3.1.7.RND
+    V3.1.3.ADV
 
-         Seeed Round Display For XIAO
+        Add support for:
+                          Seeed Studio WIO Terminal (ATSAMD51)
+                          Retro CRT look option
+                          + Some Fixes
+
+   V3.1.6.ADV/KiSS
+
+       Clean up code
+       Turn off the backlight untill the stats have updated when using button mode.
+       Add PCB_ThresholdTriggerEvents for custom PCB, so neopixels rotate with button mode.
+
+      (ADV) Add option to display the splash screen in landscape.
+
+  V3.1.7.ADV
+
+       Optimisations
+       
+  V3.1.7.2.ADV
+
+       Add RTX Ti BMP Logo
+       Option to shift GPU total memory in pixels
+       
 
 */
 

@@ -89,17 +89,19 @@ int TX_LED_Delay = 0; // TX blink delay
 
 /* Uncomment your GPU,*/
 
-#define NVIDIA_GRAPHICS
+//#define NVIDIA_GRAPHICS
 //#define NVIDIA_GTX_Ti_GRAPHICS
 //#define NVIDIA_RTX_GRAPHICS
+#define NVIDIA_RTX_Ti_GRAPHICS
 //#define NVIDIA_RTX_SUPER_GRAPHICS
 
 //#define AMD_GRAPHICS
 //#define INTEL_GRAPHICS
 
 /* Characters to delete from the start of the CPU/GPU name eg: Remove "Intel" or "Nvidia" to save space*/
-#define cpuNameStartLength 10  // i5-9600k = 10 / i9-13900k = 19
-#define gpuNameStartLength 18
+#define cpuNameStartLength 10 //eg: i5-9600k = 10 / i9-13900k = 19
+#define gpuNameStartLength 18 //eg: Geforce GTX1080 (non Ti) = 18 
+#define gpuTotalMemPos     13 //Shift right the GPU memory total position in pixels eg: so not to block "Ti"
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -190,7 +192,7 @@ volatile int brightness_count = 250; // Start Up PWM Brightness
 /* How long the display takes to timeout due to inactive serial data from the windows application */
 #define lastActiveDelay 8000
 
-//-------------------------------- Misco Setting -----------------------------------------
+//-------------------------------- Miso Setting -----------------------------------------
 
 //#define  RETRO_MONO    //CRT Monochrome screen
 //#define  RETRO_AMBER   //CRT Amber screen
@@ -246,6 +248,11 @@ int baudRate  = 9600; // set serial baud rate to match that of HardwareSerialMon
        Add PCB_ThresholdTriggerEvents for custom PCB, so neopixels rotate with button mode.
 
       (ADV) Add option to display the splash screen in landscape.
+
+    V3.1.7.2.ADV
+
+       Add RTX Ti BMP Logo
+       Option to shift GPU total memory in pixels
 
   Note: Gnat-Stats/Phat-Stats is optimised for desktop CPU's with dedicated graphics cards, such as Nvidia/Radeon.
       You may get wierd results on mobile CPUs and integrated GPU's (iGPU's) on laptops.

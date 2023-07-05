@@ -1,5 +1,5 @@
 
-#define CODE_VERS  "3.1.7.BT.ADV"  // Code version number
+#define CODE_VERS  "3.1.7.2.BT.ADV"  // Code version number
 
 /*
   uVolume, GNATSTATS OLED, PHATSTATS TFT PC Performance Monitor & HardwareSerialMonitor Windows Client

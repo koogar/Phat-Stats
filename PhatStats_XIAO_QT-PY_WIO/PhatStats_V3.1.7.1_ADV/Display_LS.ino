@@ -111,6 +111,10 @@ void Display_LS () {
     tft.drawBitmap(16, 148, NvidiaRTX_Logo_BMP, 82, 82, ILI9341_GREEN); // Nvidia Logo
 #endif
 
+#ifdef NVIDIA_RTX_Ti_GRAPHICS
+    tft.drawBitmap(16, 148, NvidiaRTX_Ti_Logo_BMP, 82, 82, ILI9341_GREEN); // Nvidia Logo
+#endif
+
 #ifdef NVIDIA_RTX_SUPER_GRAPHICS
     tft.drawBitmap(16, 148, NvidiaRTXSuper_Logo_BMP, 82, 82, ILI9341_GREEN); // Nvidia Logo
 #endif

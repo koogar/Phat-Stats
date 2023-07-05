@@ -146,6 +146,10 @@ void Display_LS_Batt_180 () {
       tft.drawBitmap(16, 148, NvidiaRTX_Logo_BMP, 82, 82, ILI9341_GREEN); // Nvidia Logo
 #endif
 
+#ifdef NVIDIA_RTX_Ti_GRAPHICS
+      tft.drawBitmap(16, 148, NvidiaRTX_Ti_Logo_BMP, 82, 82, ILI9341_GREEN); // Nvidia Logo
+#endif
+
 #ifdef NVIDIA_RTX_SUPER_GRAPHICS
       tft.drawBitmap(16, 148, NvidiaRTXSuper_Logo_BMP, 82, 82, ILI9341_GREEN); // Nvidia Logo
 #endif
@@ -557,7 +561,7 @@ void Display_LS_Batt_180 () {
       float  totalGPUmemSumDP = totalGPUmemSum ;     // float to handle the decimal point when printed (totalGPUmemSumDP, 0)
 
       tft.setTextSize(1);
-      tft.setCursor(120, 130);  // Position GPU Total Memory
+      tft.setCursor(120 + gpuTotalMemPos, 130);  // Position GPU Total Memory
 
 #ifdef Manual_gpuRam
       tft.print(set_GPUram);

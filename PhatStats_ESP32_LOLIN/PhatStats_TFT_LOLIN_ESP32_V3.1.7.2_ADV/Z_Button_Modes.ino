@@ -16,7 +16,7 @@ void button_Modes() {
     tft.fillScreen(ILI9341_BLACK);
 
     /* Reset count if over max mode number, */
-    if (display_Button_counter == 5) // Number of screens available when button pressed
+    if (display_Button_counter == 4) // Number of screens available when button pressed
     {
       display_Button_counter = 0;
     }
@@ -47,9 +47,9 @@ void button_Modes() {
 
         break;
 
-      case 4: // 5th SCREEN
-        Display_CircleGauge_Batt();
-       break;
+      //case 4: // 5th SCREEN
+       // Display_CircleGauge_Batt();
+       //break;
 
     }
 }
