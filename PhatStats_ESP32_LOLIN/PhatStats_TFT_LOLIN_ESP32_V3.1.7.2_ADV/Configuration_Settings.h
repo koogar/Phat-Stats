@@ -127,12 +127,11 @@ String set_GPUram = "xx";
 
 /* CPU & GPU Thermal Junction Max Temperature in "c" before throttling,*/
 #define CPU_TJMAX 100  //  TJ Max for the Intel 9900K    = 100c
-#define GPU_TJMAX 83   //  TJ Max for the Nvidia GTX1080 = 83c
+#define GPU_TJMAX 105   //  TJ Max for the Nvidia GTX1080 = 83c TJ Max for the Nvidia RTX3080 = 110c
 
 /* CPU & GPU Turbo/Boost Frequency Values in Mhz */
 #define CPU_BOOST 3700  //  Enter Stock CPU Frequency eg. Intel Core i5 9600k = 3700MHz
-#define GPU_BOOST 1683  //  Enter Stock GPU Frequency eg. MSi GamingX 1080  = 1683MHz
-
+#define GPU_BOOST 1830  //  Enter Stock GPU Frequency eg. MSI  RTX3080 Suprim X = 1845/1830 /MSi GamingX 1080  = 1683MHz /
 //-------------------------------- Show GPU Stats ------------------------------------
 
 /* Remove Specific GPU stats in landscape mode(enable_gpuVram, enable_gpuShader),
