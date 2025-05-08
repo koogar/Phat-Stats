@@ -1,7 +1,8 @@
-![](https://github.com/koogar/Phat-Stats/blob/main/images/PhatStats%20RTX3080_i9-13900k.jpg)
+
 
 Phat-Stats is an open-source Arduino project that transforms a TFT display into a real-time PC hardware performance monitor. Developed by Rupert Hirst and Colin Conway, it serves as a larger, color-enhanced counterpart to the Gnat-Stats OLED monitor, offering a visually rich interface for tracking system metrics.([GitHub][1], [GitHub][2])
 
+![](https://github.com/koogar/Phat-Stats/blob/main/images/PhatStats%20RTX3080_i9-13900k.jpg)
 ---
 
 ### 🔧 Features
