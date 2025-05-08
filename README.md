@@ -104,8 +104,8 @@ https://runawaybrainz.blogspot.com/2021/03/phat-stats-ili9341-tft-display-hook-u
   
   GPL v2
   
-Gnat-Stats, Phat-Stats & Hardware Serial Monitor 
-Copyright (C) 2016  Colin Conway, Rupert Hirst and contributors
+Gnat-Stats, Phat-Stats, Tacho-Stats, uVolume & HardwareSerialMonitor
+Copyright (C) 2016 -2025  Colin Conway, Rupert Hirst and contributors
  
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
