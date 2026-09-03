@@ -1,0 +1,44 @@
+
+
+
+----------------------------------------------------------------------------------
+
+#define USER_SETUP_ID 66
+
+#define GC9A01_DRIVER  // Full configuration option, define additional parameters below for this display
+
+#define TFT_RGB_ORDER TFT_RGB  // Colour order Blue-Green-Red
+#define TFT_HEIGHT 240 // GC9A01 240 x 240
+
+#define TFT_SCLK D8
+#define TFT_MISO D9
+#define TFT_MOSI D10
+#define TFT_CS   D1  // Chip select control pin
+#define TFT_DC   D3  // Data Command control pin
+#define TFT_BL   D6
+#define TFT_RST  -1  // Reset pin (could connect to RST pin)
+
+
+
+----------------------------------------------------------------------------------
+
+
+
+#include <Arduino.h>
+#include <lvgl.h>
+#include <SPI.h>
+#include <Wire.h>
+
+#define SCREEN_WIDTH 240
+#define SCREEN_HEIGHT 240
+#define LVGL_BUFF_SIZE 10 // Number of rows
+
+#define CHSC6X_I2C_ID 0x2e
+#define CHSC6X_MAX_POINTS_NUM 1
+#define CHSC6X_READ_POINT_LEN 5
+#define TOUCH_INT D7
+
+#define XIAO_BL D6
+#define XIAO_DC D3
+#define XIAO_CS D1
+
